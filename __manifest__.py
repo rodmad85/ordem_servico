@@ -31,8 +31,6 @@
         'views/ordem_servico.xml',
         'data/ir_sequence_data.xml',
         'report/capa.xml',
-        'report/purchase.xml',
-        'report/sale.xml',
         'report/external_layout_boxed.xml',
     ],
     'demo': [
