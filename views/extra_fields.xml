@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2022 Madureira License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="extra_fields_attendence" model="ir.ui.view">
+       <field name="name">Adiciona valor hora e valor total</field>
+       <field name="inherit_id" ref="hr_attendance.view_attendance_tree" />
+       <field name="model">hr.attendance</field>
+       <field name="arch" type="xml">
+           <xpath expr="//field[@name='employee_id']" position="after">
+               <field name="ordem_servico" widget="many2many_tags"/>
+           </xpath>
+           <xpath expr="//field[@name='employee_id']" position="after">
+               <field name="retrabalho"/>
+           </xpath>
+           <xpath expr="//field[@name='check_out']" position="after">
+               <field name="valor_hora"/>
+           </xpath>
+           <xpath expr="//field[@name='worked_hours']" position="after">
+               <field name="valor_total"/>
+           </xpath>
+       </field>
+   </record>
+
+
+    <record id="valor_hora_employee" model="ir.ui.view">
+       <field name="name">Adiciona valor hora</field>
+       <field name="inherit_id" ref="hr.view_employee_form" />
+       <field name="model">hr.employee</field>
+       <field name="arch" type="xml">
+
+           <xpath expr="//field[@name='coach_id']" position="after">
+               <field name="valor_hora"/>
+           </xpath>
+
+       </field>
+   </record>
+
+    <record id="sale_order_orcamento" model="ir.ui.view">
+       <field name="name">sale.order.orcamento</field>
+       <field name="inherit_id" ref="sale.view_order_form" />
+       <field name="model">sale.order</field>
+       <field name="arch" type="xml">
+         <xpath expr="//form/sheet/notebook/page[1]" position="after">
+              <page string="Orçamento">
+                   <group>
+                        <field name="horas_mo" string="Total Horas"/>
+                        <field name="valor_horas" string="Valor Total Horas" widget="monetary"/>
+                        <field name="terceiros" widget="monetary"/>
+                        <field name="materia_prima" string="Valor Matéria Prima" widget="monetary"/>
+                        <field name="resultado" invisible="0"/>
+                   </group>
+              </page>
+          </xpath>
+          <xpath expr="//field[@name='partner_id']" position="after">
+                  <field name="ordem_servico" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}"/>
+          </xpath>
+           <xpath expr="//field[@name='payment_term_id']" position="after">
+            <xpath expr="//field[@name='fiscal_position_id']" position="move"/>
+          </xpath>
+
+           <xpath expr="//field[@name='analytic_account_id']" position="after">
+            <xpath expr="//field[@name='pricelist_id']" position="move"/>
+          </xpath>
+
+           <xpath expr="//field[@name='fiscal_position_id']" position="after">
+            <xpath expr="//field[@name='tag_ids']" position="move"/>
+          </xpath>
+
+          <xpath expr="//field[@name='ordem_servico']" position="before">
+            <xpath expr="//field[@name='client_order_ref']" position="move"/>
+          </xpath>
+
+
+
+       </field>
+    </record>
+
+
+
+<record id="sale_order_os" model="ir.ui.view">
+    <field name="name">sale.order.os</field>
+    <field name="inherit_id" ref="sale.view_quotation_tree" />
+    <field name="model">sale.order</field>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="after">
+            <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="mrp_production_os" model="ir.ui.view">
+    <field name="name">mrp.production.os</field>
+    <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
+    <field name="model">mrp.production</field>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="before">
+            <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="mrp_production_os_form" model="ir.ui.view">
+    <field name="name">mrp.production.os.form</field>
+    <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+    <field name="model">mrp.production</field>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='user_id']" position="after">
+            <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="purchase_os_form_line" model="ir.ui.view">
+       <field name="name">purchase.os.form</field>
+       <field name="inherit_id" ref="purchase.purchase_order_form" />
+       <field name="model">purchase.order</field>
+       <field name="arch" type="xml">
+           <xpath expr="//field[@name='order_line']/tree" position="inside">
+               <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+           </xpath>
+
+           <xpath expr="//field[@name='origin']" position="after">
+               <field name="forma_pagamento" string="Forma de Pagamento" />
+           </xpath>
+       </field>
+</record>
+
+<record id="purchase_os_form" model="ir.ui.view">
+       <field name="name">purchase.os.form</field>
+       <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit" />
+       <field name="model">purchase.order</field>
+       <field name="arch" type="xml">
+           <xpath expr="//field[@name='order_line']/form//field[@name='account_analytic_id']" position="before">
+                <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+            </xpath>
+       </field>
+</record>
+
+  <record id="stock_os_form" model="ir.ui.view">
+       <field name="name">stock.os.form</field>
+       <field name="inherit_id" ref="stock.view_picking_form" />
+       <field name="model">stock.picking</field>
+       <field name="arch" type="xml">
+           <xpath expr="//field[@name='move_ids_without_package']/tree" position="inside">
+               <field name="ordem_servico" widget="many2many_tags"/>
+           </xpath>
+       </field>
+   </record>
+
+<record id="os_impostos_position" model="ir.ui.view">
+    <field name="name">os.impostos.position</field>
+    <field name="model">account.fiscal.position</field>
+    <field name="inherit_id" ref="account.view_account_position_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+            <page name="Taxas" string="Taxas">
+                <field name="meses" string="Meses" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+                    <field name="name" invisible="1"/>
+
+                    <tree string="Taxas" editable="bottom">
+                        <field name="mes" options="{'datepicker': {'showType': 'months'}}"/>
+                        <field name="percentual"/>
+                    </tree>
+                </field>
+            </page>
+        </xpath>
+    </field>
+</record>
+
+
+
+
+</odoo>

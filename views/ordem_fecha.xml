@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <data>
+
+<!--        <record id="report_os_capa" model="ir.actions.report">-->
+<!--            <field name="name">Impressão Capa OS</field>-->
+<!--            <field name="model">ordem.servico</field>-->
+<!--            <field name="report_type">qweb-pdf</field>-->
+<!--            <field name="report_name">ordem_servico_capa</field>-->
+<!--            <field name="report_file">ordem_servico.capa"</field>-->
+<!--            <field name="binding_model_id" ref="model_ordem_servico"></field>-->
+<!--            <field name="binding_type">report</field>-->
+<!--        </record>-->
+
+<!--        <template id="report_ModelName_view">-->
+<!--            <t t-call="web.html_container">-->
+<!--                <t t-foreach="docs" t-as="doc">-->
+<!--                    <t t-call="web.external_layout">-->
+<!--                        <div class="page">-->
+
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </t>-->
+<!--            </t>-->
+<!--        </template>-->
+
+         <template id="assets_backend" inherit_id="web.assets_backend" name="Progress bar">
+          <xpath expr="." position="inside">
+               <link rel="stylesheet" type="text/scss"
+                href="/ordem_servico/static/src/css/progress_bar_color.css"/>
+               <script type="text/javascript"
+                src="/ordem_servico/static/src/js/progress_bar_color.js"/>
+          </xpath>
+        </template>
+        <record model="ir.ui.view" id="os_fechamento_pivot_view">
+        <field name="name">os.fechamento.pivot</field>
+        <field name="model">os.fechamento</field>
+        <field name="arch" type="xml">
+            <pivot string="Ordens de Serviço" display_quantity="true" sample="1" default_order="name desc">
+                <field name="currency_id" invisible="1"/>
+                <field name="os_ids" type="row"/>
+                <field name="mp_prevista" widget="monetary" type="measure"/>
+                <field name="mp_real" widget="monetary" type="measure"/>
+                <field name="mo_prevista" widget="monetary" type="measure"/>
+                <field name="mo_real" widget="monetary" type="measure"/>
+                <field name="horas_prevista" type="measure"/>
+                <field name="horas_real" type="measure"/>
+                <field name="comissao" widget="monetary" type="measure"/>
+                <field name="custo_fixo" type="measure"/>
+<!--                <field name="impostos" type="measure"/>-->
+                <field name="horas_resultado" type="measure"/>
+                <field name="mp_resultado" widget="monetary" type="measure"/>
+                <field name="mo_resultado" widget="monetary" type="measure"/>
+                <field name="resultado" widget="monetary"  type="measure" decoration-bf="1"/>
+                <field name="resultado_percen" type="measure" decoration-bf="1"/>
+            </pivot>
+        </field>
+        </record>
+
+     <record model="ir.ui.view" id="os_fechamento_search_view">
+        <field name="name">os.fechamento.search</field>
+        <field name="model">os.fechamento</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="os_ids"/>
+                <field name="cliente"/>
+
+                <separator/>
+                <filter name="os_ids" string="OS"/>
+                <filter name="cliente" string="Cliente"/>
+                <filter name="state" string="Status"/>
+                <filter name="status_fat" string="Faturamento"/>
+                <filter name="data_base" string="Data Base"/>
+                <filter name="entrega_efetiva" string="Data Entrega"/>
+
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Cliente"
+                        name="cliente"
+                        domain="[]"
+                        context="{'group_by':'cliente'}"
+                    />
+
+                    <filter
+                        string="Status"
+                        name="state_group"
+                        domain="[]"
+                        context="{'group_by':'state'}"
+
+                    />
+                      <filter
+                        string="Faturamento"
+                        name="status_fat"
+                        domain="[]"
+                        context="{'group_by':'status_fat'}"
+
+                    />
+
+                    <filter
+                        string="Data Base"
+                        name="data_base"
+                        domain="[]"
+                        context="{'group_by':'data_base'}"
+
+
+                    />
+
+                    <filter
+                        string="Data Entrega"
+                        name="entrega_efetiva"
+                        domain="[]"
+                        context="{'group_by':'entrega_efetiva'}"
+
+
+                    />
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+        <record model="ir.ui.view" id="os_fechamento_tree_view">
+        <field name="name">os.fechamento.tree</field>
+        <field name="model">os.fechamento</field>
+        <field name="arch" type="xml">
+
+            <tree decoration-danger="resultado &lt;= -1" decoration-success="resultado &gt;= 1" default_order="os_ids desc" edit="false" create="false">
+                        <header>
+                            <button name="updt" string="Atualizar" class="btn-primary" invisible="0" type="object"/>
+                        </header>
+                        <field name="os_ids" string="OS"/>
+                        <field name="cliente" string="Cliente"/>
+						<field name="valor_pedido" string="Valor Pedido"/>
+                        <field name="data_base" string="Data Base" optional="hide"/>
+                        <field name="entrega_efetiva" string="Data Entrega" optional="hide"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="mp_prevista" sum="MP Prevista" optional="show" widget="monetary" />
+                        <field name="mp_real" sum="MO Real" widget="monetary" optional="show"/>
+                        <field name="progress_compra" widget="progressbar" optional="show"/>
+                        <field name="mo_prevista" sum="MO Prevista" widget="monetary" optional="show"/>
+                        <field name="valor_horas_retrabalho" widget="monetary" optional="hide"/>
+                        <field name="mo_real" sum="Total MO" widget="monetary" optional="show"/>
+                        <field name="horas_prevista" sum="Horas Prevista" optional="show"/>
+                        <field name="horas_real" sum="Horas Reais" optional="show"/>
+                        <field name="comissao" sum="Comissão" widget="monetary" optional="hide"/>
+                        <field name="custo_fixo" optional="hide"/>
+<!--                        <field name="impostos" sum="Impostos" optional="show"/>-->
+                        <field name="horas_resultado" sum="Horas Resultado" optional="show"/>
+                        <field name="mp_resultado" sum="MP Resultado" widget="monetary" optional="show"/>
+                        <field name="mo_resultado" sum="MO Resultado" widget="monetary" optional="show"/>
+                        <field name="resultado" sum="Resultado" widget="monetary" optional="show"/>
+                        <field name="resultado_percen"/>
+                </tree>
+
+        </field>
+        </record>
+
+          <record model="ir.ui.view" id="os_fechamento_form_view">
+        <field name="name">os.fechamento.form</field>
+        <field name="model">os.fechamento</field>
+        <field name="arch" type="xml">
+
+            <form create="false">
+                     <header>
+                        <button name="updt" string="Atualizar" class="btn-primary" invisible="0" type="object"/>
+                    </header>
+                   <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="os_ids" readonly="1"/> - <field name="cliente" readonly="1"/>
+                        </h1>
+                        <field name="posicao" readonly="1"/>
+                    </div>
+                    <group>
+                        <field name="currency_id" invisible="1"/>
+                       <group string="Mão de Obra">
+                           <group>
+                            <field name="horas_prevista" />
+                            <field name="mo_prevista" widget="monetary"/>
+                           </group>
+                           <group>
+                               <field name="horas_real" string="Horas Normais" />
+                               <field name="horas_retrabalho"/>
+                               <field name="horas_total" string="Horas Normal + Retrabalho"/>
+                               <field name="valor_horas_retrabalho" widget="monetary"/>
+                               <field name="mo_real" string="Total MO" widget="monetary"/>
+                           </group>
+                       </group>
+                        <group string="Materia Prima/Terceiros">
+                           <group>
+                                <field name="mp_prevista" widget="monetary" />
+                                <field name="tc_prevista" widget="monetary"/>
+                            </group>
+                            <group>
+                                    <field name="mp_real" string="Total MP/Terceiros Real" widget="monetary"/>
+                            </group>
+                            <group>
+                                <field name="comissao" widget="monetary"/>
+                            </group>
+                            <group string="Impostos">
+
+                            <field name="imposto_real" widget="percentage"/>
+                            <field name="impostos_resultado" widget="monetary"/>
+                        </group>
+                        </group>
+                         <group string="Diferenças">
+                                <field name="horas_resultado" />
+                                <field name="mo_resultado" widget="monetary"/>
+                                <field name="mp_resultado" widget="monetary"/>
+                                <field name="progress_compra" widget="progressbar"/>
+
+                            </group>
+                        <group string="Resultados">
+                              <group>
+                                <field name="valor_pedido" widget="monetary"/>
+                                <field name="orcado" widget="monetary"/>
+                                <field name="total_gasto" widget="monetary"/>
+                                <field name="orcado_gasto" widget="monetary"/>
+                            </group>
+                                <group>
+                                    <field name="resultado" widget="monetary"/>
+                                    <field name="resultado_percen" widget="percentage"/>
+                                </group>
+
+
+                        </group>
+
+                    </group>
+                    </sheet>
+                </form>
+
+        </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2022 Madureira
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+     <record model="ir.ui.view" id="ordem_servico_search_view">
+        <field name="name">ordem.servico.search</field>
+        <field name="model">ordem.servico</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="cliente_id"/>
+                <field name="responsavel"/>
+                <field name="pedido_venda"/>
+                <separator/>
+                <filter name="name" string="Número da OS"/>
+                <filter name="cliente" string="Cliente"/>
+                <filter name="pedido_venda" string="Pedido de Venda"/>
+                <filter name="state" string="Status" domain="[('state','!=','concluida'),('state','!=','cancel')]"/>
+                <filter name="status_fat" string="Faturamento"/>
+
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Cliente"
+                        name="cliente_id"
+                        domain="[]"
+                        context="{'group_by':'cliente_id'}"
+                    />
+                    <filter
+                        string="Empresa"
+                        name="empresa"
+                        domain="[]"
+                        context="{'group_by':'empresa'}"
+                    />
+                    <filter
+                        string="Status"
+                        name="state_group"
+                        domain="[]"
+                        context="{'group_by':'state'}"
+
+                    />
+                      <filter
+                        string="Faturamento"
+                        name="status_fat"
+                        domain="[]"
+                        context="{'group_by':'status_fat'}"
+
+                    />
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ordem_servico_tree_view">
+        <field name="name">ordem.servico.tree</field>
+        <field name="model">ordem.servico</field>
+        <field name="arch" type="xml">
+            <tree default_order="name desc" decoration-info="state == 'aberta'" decoration-success="state == 'concluida'">
+                <field name="name" string="Número da OS" readonly="1" decoration-bf="1"/>
+				<field name="cliente_id" string="Cliente" readonly="1" decoration-bf="1"/>
+                <field name="empresa" string="Empresa"/>
+				<field name="pedido_venda" string="Pedido de Venda" widget="many2many_tags" readonly="1"/>
+				<field name="data_base" string="Data Base"/>
+				<field name="data_entrega" string="Data de Entrega"/>
+                <field name="inspecoes" string="Inspeções" widget="many2many_tags"/>
+				<field name="state" string="Status"/>
+				<field name="status_fat" string="Faturamento"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="ordem_servico_form" model="ir.ui.view">
+        <field name="name">ordem.servico.form</field>
+        <field name="model">ordem.servico</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="abrir_os" type="object" states="draft" string="Abrir OS" class="oe_highlight" />
+                    <button name="parcial_os" type="object" states="aberta" string="Entregar Parcialmente" class="oe_highlight" />
+                    <button name="concluida_os" type="object" states="aberta,parcial" string="Encerrar OS" class="oe_highlight" />
+                    <button name="provisoria_os" type="object" states="cancel,aberta,parcial,concluida" string="Voltar para Provisória" class="oe_highlight" />
+                    <button name="cancelar_os" states="parcial,aberta,concluida" string="Cancelar" type="object" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,aberta,parcial,concluida" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <field name="tipo_os"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="cliente_id" readonly="1" force_save="1"/>
+                            <field name="responsavel" string="Responsável Técnico" widget="many2many_tags"/>
+                            <field name="data_base"/>
+                            <field name="data_entrega"/>
+                            <field name="entrega_efetiva"/>
+                             <field name="empresa" string="Empresa" readonly="1"  force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="pedido_venda_original" widget="many2many_tags" attrs="{'required':[('tipo_os','=','repeticao')], 'invisible':[('tipo_os','!=','repeticao')]}"/>
+                            <field name="pedido_venda" widget="many2many_tags" attrs="{'required':[('tipo_os','=','normal')],'required':[('tipo_os','=','repeticao')]}"/>
+                            <field name="vendedor"/>
+                            <field name="status_fat"/>
+
+                            <field name="user_id" string="Elaborado Por" />
+                            <field name="liberado" string="Liberado Por"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="observacoes"/>
+                    </group>
+					<notebook>
+
+					<page string="Produtos" name="produtos">
+                        <field name="produtos" widget="many2many" mode="tree,kanban" nolabel="1">
+                            <tree editable="bottom">
+<!--                                <field name="ordem_servico" string="OS" readonly="1" decoration-bf="1" domain="[('ordem_servico','=','name')]"/>-->
+                                <field name="product_id" string="Produto" readonly="1"/>
+                                <field name="product_qty" string="Produto" readonly="1"/>
+                                <field name="date_planned_start" readonly="1" optional="show" widget="remaining_days"/>
+                                <field name="date_deadline" widget="remaining_days" attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}" optional="hide"/>
+                                <field name="components_availability" optional="show" string="Status Material"/>
+                                <field name="state" optional="show" widget="badge"/>
+                            </tree>
+                        </field>
+                    </page>
+					<page string="Apontamento" name="Apontamento">
+                           <field name="apontamento" widget="section_and_note_one2many" mode="tree,kanban">
+								<tree string="Employee attendances" editable="bottom">
+									<field name="employee_id"/>
+                                    <field name="retrabalho"/>
+									<field name="check_in"/>
+									<field name="check_out"/>
+                                	<field name="valor_hora"/>
+									<field name="worked_hours" string="Total de Horas" widget="float_time" sum="Total de Horas"/>
+									<field name="valor_total" string="Valor Total" sum="Valor Total" />
+                              </tree>
+                           </field>
+                    </page>
+
+						<page string="Desenhos/Fotos" name="Arquivos">
+                            <field name="desenhos" widget="section_and_note_one2many" mode="tree,kanban">
+                                <tree string="Desenhos/Fotos" editable="top">
+                                    <field name="documento"/>
+                                    <field name="arquivo" string="Arquivo" widget="many2many_binary" />
+                                    <field name="tipo"/>
+                                    <field name="setor"/>
+                                    <field name="data_criacao"/>
+									<field name="os_arq" invisible="1"/>
+                                </tree>
+                            </field>
+						</page>
+
+                      <page string="Pedidos" name="Pedidos">
+                          <group>
+                               <group name="pedidos_compra" string="Pedidos de Compra">
+                                <field name="pedidos_compra" mode="tree,kanban" widget="many2many" nolabel="1">
+                                            <tree string="Pedidos de Compra">
+                                                <field name="order_id" string="Pedido"/>
+                                                <field name="partner_id" string="Fornecedor"/>
+                                                <field name="product_id"/>
+                                                <field name="product_qty"/>
+                                                <field name="product_uom"/>
+                                                <field name="product_uom_category_id" invisible="True"/>
+                                                <field name="price_unit"/>
+                                                <field name="price_subtotal" sum="Total"/>
+                                            </tree>
+                                </field>
+                            </group>
+                              <group name="pedidos_cliente" string="Pedidos do Cliente">
+                                <field name="pedidos_cliente" widget="section_and_note_one2many"  mode="tree,kanban" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="data_criacao"/>
+                                        <field name="pedido" widget="many2many_binary"/>
+                                    </tree>
+                                </field>
+                             </group>
+
+                          </group>
+
+
+                        </page>
+
+                        <page string="Certificados" name="Certificados">
+                              <field name="certificados" mode="tree,kanban" nolabel="1">
+                                    <tree string="Certificados" editable="bottom">
+                                        <field name="nota_fiscal" widget="many2one_tags"/>
+                                        <field name="certificado" widget="many2many_binary" class="oe_inline"/>
+                                        <field name="data_criacao"/>
+                                    </tree>
+                              </field>
+						</page>
+
+						<page string="Inspeções" name="inspecoes">
+							<field name="inspecoes" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+
+                                <tree>
+                                        <field name="name"/>
+                                        <field name="tipo"/>
+                                        <field name="produto_desenho"/>
+                                        <field name="produto_descricao"/>
+                                        <field name="ordem_servico"/>
+                                    </tree>
+                            </field>
+						</page>
+
+                        <page string="NF'S" name="nfs">
+                            <group>
+                                <group name="NFEntrada" string = "NF's de Entrada">
+                                    <field name="nf_entrada" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+                                         <tree string="nfentrada" editable="top">
+                                            <field name="numero_nfe" widget="many2many_tags" domain="[('fiscal_operation_id','=','Compras')]"/>
+                                            <field name="partner_id"/>
+    <!--                                        <field name="natureza_operacao"/>-->
+    <!--                                        <field name="data_emissao"/>-->
+                                         </tree>
+                                    </field>
+                                </group>
+                                <group name="NFSaída" string="NF's de Saída">
+                                    <field name="nf_saida" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+                                        <tree editable="top">
+                                            <field name="nfe_saida" widget="many2many_tags" domain="[('fiscal_operation_id','!=','Compras')]"/>
+                                            <field name="partner_id_saida"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Movimentações" name="movimentacoes">
+
+                                    <field name="movimentacoes" mode="tree,kanban" widget="many2many" nolabel="1" >
+<!--                                        <field name="origin" />-->
+<!--                                        <field name="fornecedor"/>-->
+<!--                                        <field name="produto_id"/>-->
+<!--                                        <field name="location_id"/>-->
+<!--                                        <field name="location_dest_id"/>-->
+<!--                                        <field name="qty_done"/>-->
+<!--                                        <field name="state"/>-->
+<!--                                        <field name="date"/>-->
+                                    </field>
+
+
+						</page>
+<!--                        <page string="Fechamento" groups="ordem_servico.ordem_admin">-->
+
+<!--                            <group>-->
+<!--                                <field name="fechamento_ids"/>-->
+<!--                            <group string="Orçado">-->
+<!--                                <field name="horas_prevista" readonly="1"/>-->
+<!--                                <field name="mp_prevista" readonly="1" widget="monetary" />-->
+<!--                                <field name="mo_prevista" readonly="1" widget="monetary" />-->
+<!--                                <field name="tc_prevista" readonly="1" widget="monetary" />-->
+<!--                                <field name="impostos" readonly="1"/>-->
+<!--                                <field name="comissao" readonly="1" widget="monetary" />-->
+<!--                                <field name="total_prevista" readonly="1" widget="monetary" />-->
+<!--                            </group>-->
+<!--                            <group string="Medido">-->
+<!--                               <field name="horas_retrabalho" readonly="1"/>-->
+
+<!--                               <field name="horas_real" string="Total Normal + Retrabalho" readonly="1"/>-->
+<!--                               <field name="valor_horas_retrabalho" readonly="1"/>-->
+<!--                               <field name="mo_real"  string="Mão de Obra" readonly="1" widget="monetary" />-->
+<!--                               <field name="mp_real" string="Compras/Terceiros" readonly="1" widget="monetary" />-->
+
+<!--                            </group>-->
+<!--                                <group string="Resultado">-->
+<!--                                    <field name="horas_resultado" readonly="1"/>-->
+<!--                                    <field name="mp_resultado" string="Compras/Terceiros" readonly="1" />-->
+<!--                                    <field name="mo_resultado"  string="Mão de Obra" readonly="1" />-->
+<!--                                </group>-->
+<!--                                <group>-->
+<!--                                    <field name="orcado" readonly="1"/>-->
+<!--                                    <field name="total_gasto" readonly="1"/>-->
+<!--                                    <field name="resultado" readonly="1"/>-->
+<!--                                    <field name="resultado_percen" widget="percentage" readonly="1"/>-->
+
+<!--                                </group>-->
+
+<!--                        </group>-->
+<!--                        <group>-->
+<!--&lt;!&ndash;                            <group string="Resultados">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <group>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="data_entrega" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="entrega_efetiva" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </group>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <group>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="mp_resultado" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="mo_resultado" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="horas_resultado" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="impostos_resultado" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </group>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <group>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="orcado" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="total_gastos" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="resultado" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="resultado_percen" readonly="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </group>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
+<!--                        </group>-->
+<!--                        </page>-->
+					</notebook>
+                    <field name="observacoes" string="Observações" widget="note"/>
+                </sheet>
+               <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+
+
+</odoo>

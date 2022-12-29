@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2022 Madureira
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <record model="ir.ui.view" id="ordem_servico_certificados_search_view">
+        <field name="name">ordem_servico_certificados_search</field>
+        <field name="model">os.relatorios</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+
+            </search>
+        </field>
+    </record>
+
+     <record model="ir.ui.view" id="ordem_servico_certificados_tree_view">
+        <field name="name">ordem_servico_certificados_tree</field>
+        <field name="model">os.certificados</field>
+        <field name="arch" type="xml">
+            <tree>
+
+            </tree>
+
+        </field>
+     </record>
+
+    <record model="ir.ui.view" id="ordem_servico_certificados_form_view">
+        <field name="name">ordem_servico_certificados_form</field>
+        <field name="model">os.certificados</field>
+        <field name="arch" type="xml">
+            <form>
+
+            </form>
+
+        </field>
+     </record>
+</odoo>

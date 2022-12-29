@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2022 Madureira
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <record model="ir.ui.view" id="ordem_servico_relatorios_search_view">
+        <field name="name">ordem_servico_relatorios_search</field>
+        <field name="model">os.relatorios</field>
+        <field name="arch" type="xml">
+            <search>
+
+            </search>
+        </field>
+    </record>
+
+     <record model="ir.ui.view" id="ordem_servico_relatorios_tree_view">
+        <field name="name">ordem_servico_relatorios_tree</field>
+        <field name="model">os.relatorios</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="tipo"/>
+                <field name="ordem_servico"/>
+                <field name="produto_desenho"/>
+                <field name="produto_descricao"/>
+            </tree>
+
+        </field>
+     </record>
+
+    <record model="ir.ui.view" id="ordem_servico_relatorios_form_view">
+        <field name="name">ordem_servico_relatorios_form</field>
+        <field name="model">os.relatorios</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="ordem_servico"/>
+                            <field name="tipo" />
+                            <field name="produto_desenho"/>
+                            <field name="produto_descricao"/>
+                        </group>
+                        <group>
+                           <field name="processo"/>
+                           <field name="conclusao"/>
+                           <field name="data_criacao"/>
+                           <field name="nota"/>
+                        </group>
+                    </group>
+					<notebook>
+					<page string="Medidas" name="medidas">
+                        <field name="medidas" widget="section_and_note_one2many" mode="tree,kanban" attrs="{'required':[('tipo','=','Dimensional')]}" nolabel="1">
+                            <tree editable="top">
+                                <field name="posicao" />
+                                <field name="medida_sol" string="Medida Solicitada" />
+                                <field name="medida_real" string="Medida Real" />
+                                <field name="medida_total" string="Desvio Total"/>
+                            </tree>
+                        </field>
+                    </page>
+                    </notebook>
+<!--                    <div class="oe_chatter">-->
+<!--                        <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                        <field name="activity_ids"/>-->
+<!--                        <field name="message_ids" widget="mail_thread"/>-->
+<!--                    </div>-->
+                </sheet>
+            </form>
+        </field>
+     </record>
+</odoo>

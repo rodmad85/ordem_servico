@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="inspecoes_form_view" model="ir.ui.view">
+            <field name="name">os.inspecoes.form</field>
+            <field name="model">os.inspecoes</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="ordem_servico" context="{'default_ordem_servico':name}"/>
+                                <field name="tipo"/>
+                                <field name="produto_descricao"/>
+                                <field name="produto_desenho"/>
+                                <field name="responsavel"/>
+                            </group>
+                            <group>
+                                <field name="setor"/>
+                                <field name="processo"/>
+                                <field name="desvio"/>
+                                <field name="nota"/>
+                            </group>
+                            <group>
+                                <field name="conclusao"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page>
+                                <field name="medidas" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+                                     <tree editable="bottom">
+                                        <field name="posicao" />
+                                        <field name="medida_sol"/>
+                                        <field name="medida_real"/>
+                                        <field name="medida_total" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="inspecoes_tree_view" model="ir.ui.view">
+            <field name="name">os.inspecoes.tree</field>
+            <field name="model">os.inspecoes</field>
+            <field name="arch" type="xml">
+                <tree string="Inspeções">
+                    <field name="name"/>
+                    <field name="tipo"/>
+                    <field name="produto_desenho"/>
+                    <field name="produto_descricao"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="inspecoes_search_view" model="ir.ui.view">
+            <field name="name">os.inspecoes.search</field>
+            <field name="model">os.inspecoes</field>
+            <field name="arch" type="xml">
+                <search string="ModelTitle">
+                    <group expand="1" string="Group By">
+                        <filter string="Nome" name="name" domain="[]"
+                                context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>
