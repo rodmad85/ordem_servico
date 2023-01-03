@@ -85,7 +85,7 @@
                     <filter
                         string="Status"
                         name="state_group"
-                        domain="[]"
+                        domain="[('state','!=','concluida'),('state','!=','cancel')]"
                         context="{'group_by':'state'}"
 
                     />
