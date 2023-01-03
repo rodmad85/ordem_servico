@@ -142,11 +142,21 @@ class OsSale(models.Model):
     @api.model
     def _action_cancel(self):
 
-        if self.env['ordem.servico'].search([('id', '=', self.ordem_servico.id)]):
-            self.env['ordem.servico'].search([('id', '=', self.ordem_servico.id)]).write({'state': 'draft'})
+        oss = self.ordem_servico.ids
+        for os in oss:
+            self.env['ordem.servico'].browse(os).write({'state': 'draft'})
+
         res = super(OsSale, self)._action_cancel()
         return res
 
+    def _action_confirm(self):
+
+        oss = self.ordem_servico.ids
+        for os in oss:
+            self.env['ordem.servico'].browse(os).write({'state': 'aberta'})
+
+        res = super(OsSale, self)._action_confirm()
+        return res
 
 class OsImpostos(models.Model):
 

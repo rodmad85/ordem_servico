@@ -55,8 +55,7 @@ class OrdemServico(models.Model):
                                     string='Pedido de Venda Original', store=True, copy=True)
     produtos = fields.Many2many('mrp.production', 'mrp_rel_os', 'mrp_production_id', 'os_id',
                                 string='Produtos', store=True, copy=True)
-    inspecoes = fields.Many2many('os.inspecoes', 'inspecoes_rel_os', 'os_inspecoes_id', 'os_id',
-                                  string='Inspeções', store=True, copy=True)
+    inspecoes = fields.Many2many('os.inspecoes', 'inspecoes_rel_os', 'os_inspecoes_id', 'os_id', string='Inspeções', store=True, copy=True)
     state = fields.Selection(
         [('draft', 'Provisória'),('aberta', 'Aberta'), ('parcial', 'Parcialmente Entregue'), ('concluida', 'Concluida'), ('cancel', 'Cancelada')],
         string='Status', store=True, copy=True, default='draft')
@@ -118,7 +117,9 @@ class OrdemServico(models.Model):
         self.write({'state': 'aberta'})
         self.write({'status_fat': 'nao'})
 
-        self.env['sale.order'].search([('id','=', self.pedido_venda.id)]).write({'state': 'sale'})
+        pedidos = self.pedido_venda.ids
+        for ped in pedidos:
+            self.env['sale.order'].browse(ped).write({'state': 'sale'})
 
         return {}
 
@@ -142,6 +143,10 @@ class OrdemServico(models.Model):
 
         self.write({'state': 'cancel'})
         self.write({'status_fat': ''})
+
+        pedidos = self.pedido_venda.ids
+        for ped in pedidos:
+            self.env['sale.order'].browse(ped).write({'state': 'draft'})
 
 
 class OsFechamento(models.Model):
@@ -259,7 +264,7 @@ class OsFechamento(models.Model):
             mpreal = sum(rec.os_ids.pedidos_compra.mapped('price_total')) if rec.os_ids.pedidos_compra else 0
             if mpprev:
                 if mpreal:
-                    total = mpreal / mprev
+                    total = mpreal / mpprev
                     rec.progress_compra = total * 100
 
     @api.depends('os_ids.state')

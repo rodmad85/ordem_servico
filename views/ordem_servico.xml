@@ -118,7 +118,6 @@
 					<page string="Produtos" name="produtos">
                         <field name="produtos" widget="many2many" mode="tree,kanban" nolabel="1">
                             <tree editable="bottom">
-<!--                                <field name="ordem_servico" string="OS" readonly="1" decoration-bf="1" domain="[('ordem_servico','=','name')]"/>-->
                                 <field name="product_id" string="Produto" readonly="1"/>
                                 <field name="product_qty" string="Produto" readonly="1"/>
                                 <field name="date_planned_start" readonly="1" optional="show" widget="remaining_days"/>
