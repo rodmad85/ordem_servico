@@ -15,7 +15,7 @@ class HrFields(models.Model):
     _inherit = "hr.attendance"
 
     ordem_servico = apontamento = fields.Many2many('ordem.servico', 'hr_attendance_os_rel', 'hr_attendance_id', 'ordem_servico_id',
-                                   string='Linha Apontamento', store=True, copy=True, index=True)
+                                   string='Linha Apontamento', store=True, copy=True)
     valor_hora = fields.Float(string='Valor Hora', related='employee_id.valor_hora', readonly=True, store=True)
     retrabalho = fields.Boolean(string='Retrabalho', store=True)
     valor_total = fields.Float(string='Valor Total', readonly=True, store=True, compute='_total')

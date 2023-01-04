@@ -249,7 +249,22 @@
         </field>
     </record>
 
-
+    <record id="parcial_wizard_view" model="ir.ui.view">
+            <field name="name">os.parcial.wizard</field>
+            <field name="model">os.parcial.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Warning">
+                    <group>
+                        <field name="msg" nolabel="1"/>
+                    </group>
+                    <footer>
+                        <button name="comfat" string="Entregar e Faturar" type="object" class="oe_highlight"/>
+                        <button name="semfat" string="Somente Entregar" type="object" class="oe_highlight"/>
+                        <button string="Cancelar" class="btn_secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
 
 
 </odoo>

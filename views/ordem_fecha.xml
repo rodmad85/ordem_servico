@@ -69,8 +69,8 @@
                 <separator/>
                 <filter name="os_ids" string="OS"/>
                 <filter name="cliente" string="Cliente"/>
-                <filter name="state" string="Status"/>
-                <filter name="status_fat" string="Faturamento"/>
+                <filter name="state" string="Status" domain="[('state','in', ('aberta','parcial'))]"/>
+                <filter name="status_fat" string="Faturamento" domain="[('status_fat','in', ('nao','parcial'))]"/>
                 <filter name="data_base" string="Data Base"/>
                 <filter name="entrega_efetiva" string="Data Entrega"/>
 
@@ -85,7 +85,7 @@
                     <filter
                         string="Status"
                         name="state_group"
-                        domain="[('state','!=','concluida'),('state','!=','cancel')]"
+                        domain="[]"
                         context="{'group_by':'state'}"
 
                     />
@@ -151,6 +151,7 @@
                         <field name="mo_resultado" sum="MO Resultado" widget="monetary" optional="show"/>
                         <field name="resultado" sum="Resultado" widget="monetary" optional="show"/>
                         <field name="resultado_percen"/>
+                        <field name="state"/>
                 </tree>
 
         </field>

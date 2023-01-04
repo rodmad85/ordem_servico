@@ -59,10 +59,10 @@
                                   <span t-field="line.product_qty" t-options='{"widget": "float", "precision": 0}'/>
                                 </td>
                                 <td id="product">
-                                  <span t-field="line.product_id" />
+                                  <span t-field="line.product_id.name" />
                                 </td>
                                 <td class="text-center">
-                                  <!--<span t-field="line.default_code"/>-->
+                                  <span t-field="line.product_id.default_code"/>
                                 </td>
                                 <td class="text-center">
                                     <span t-field="line.date_planned_start" t-options='{"widget": "date"}'/>

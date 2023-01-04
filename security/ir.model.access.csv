@@ -17,5 +17,6 @@ access_os_inspecoes_linhas_user,ordem.servico.user.os.inspecoes.linhas,model_os_
 access_os_inspecoes_linhas_admin,ordem.servico.admin.os.inspecoes.linhas,model_os_inspecoes_linhas,ordem_admin,1,1,1,1
 access_os_fechamento_admin,ordem.servico.admin.os.fechamento,model_os_fechamento,sales_team.group_sale_manager,1,1,1,1
 access_os_impostos_line_admin,ordem.servico.admin.os.impostos.line,model_os_impostos_line,ordem_admin,1,1,1,1
-
+access_os_parcial_user,ordem.servico.user.parcial.wizard,model_os_parcial_wizard,ordem_user,1,1,1,0
+access_os_parcial_admin,ordem.servico.admin.parcial.wizard,model_os_parcial_wizard,ordem_admin,1,1,1,1
 ,,,,,,,

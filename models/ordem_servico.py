@@ -117,6 +117,7 @@ class OrdemServico(models.Model):
         self.write({'state': 'aberta'})
         self.write({'status_fat': 'nao'})
 
+
         pedidos = self.pedido_venda.ids
         for ped in pedidos:
             self.env['sale.order'].browse(ped).write({'state': 'sale'})
@@ -125,8 +126,17 @@ class OrdemServico(models.Model):
 
 
     def parcial_os(self):
-        self.write({'state': 'parcial'})
-        return {}
+
+        # self.env['os.fechamento'].browse(self.id).write({'state': 'parcial'})
+        return {
+            'name': "Entrega Parcial",
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'os.parcial.wizard',
+            'view_id': self.env.ref('ordem_servico.parcial_wizard_view').id,
+            'target': 'new',
+        }
 
     def concluida_os(self):
         self.write({'state': 'concluida'})
@@ -147,6 +157,24 @@ class OrdemServico(models.Model):
         pedidos = self.pedido_venda.ids
         for ped in pedidos:
             self.env['sale.order'].browse(ped).write({'state': 'draft'})
+
+    class OsParcialWizard(models.TransientModel):
+        _name = 'os.parcial.wizard'
+        _description = 'Entrega Parcial'
+
+        msg = fields.Text(string="Deseja entregar parcialmente a OS?", default="Deseja entregar parcialmente a OS?", readonly=True)
+
+        def comfat(self):
+            records = self.env['ordem.servico'].browse(self.env.context.get('active_ids'))
+            for rec in records:
+                rec.write({'state': 'parcial'})
+                rec.write({'status_fat': 'parcial'})
+
+        def semfat(self):
+            records = self.env['ordem.servico'].browse(self.env.context.get('active_ids'))
+            for rec in records:
+                rec.write({'state': 'parcial'})
+                rec.write({'status_fat': 'nao'})
 
 
 class OsFechamento(models.Model):
