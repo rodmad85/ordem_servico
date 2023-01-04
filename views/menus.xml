@@ -45,13 +45,6 @@
         <field name="view_id" ref="ordem_servico.os_fechamento_tree_view"/>
     </record>
 
-    <record model="ir.actions.act_window" id="parcial_wizard_action" >
-        <field name="name">Entrega Parcial</field>
-        <field name="res_model">os.parcial.wizard</field>
-        <field name="view_id" ref="parcial_wizard_view"/>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-    </record>
 
 
     <menuitem id="ordem_root"
