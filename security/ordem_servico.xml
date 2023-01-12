@@ -16,6 +16,11 @@
             <field name="name">Usuário</field>
             <field name="category_id" ref="ordem_servico"/>
         </record>
+     <record id="ordem_user" model="res.groups">
+            <field name="name">Criador</field>
+            <field name="implied_ids" eval="[(4, ref('ordem_user'))]"/>
+            <field name="category_id" ref="ordem_servico"/>
+        </record>
         <record id="ordem_admin" model="res.groups">
             <field name="name">Administrador</field>
             <field name="category_id" ref="ordem_servico"/>
