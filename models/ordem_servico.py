@@ -92,6 +92,9 @@ class OrdemServico(models.Model):
             if vals.get('tipo_os') == 'normal':
                 vals['name'] = self.env['ir.sequence'].next_by_code('ordem.seq') or _('New')
 
+            if vals.get('tipo_os') == 'repeticao':
+                vals['name'] = self.env['ir.sequence'].next_by_code('ordem.seq') or _('New')
+
             if vals.get('tipo_os') == 'manutencao':
                 vals['name'] = self.env['ir.sequence'].next_by_code('ordem.manu') or _('New')
 
@@ -202,6 +205,7 @@ class OsFechamento(models.Model):
             rec._amount_mo_resultado()
             rec._amount_mp_resultado()
             rec._amount_total_gasto()
+            rec._amount_valor_pedido()
 
     os_ids = fields.Many2one('ordem.servico', string='Ordem de Serviço', required=True)
     cliente = fields.Many2one('res.partner', 'Company', store=True,
@@ -211,7 +215,7 @@ class OsFechamento(models.Model):
         domain="[('company_id', '=', company_id)]", check_company=True, related='os_ids.pedido_venda.fiscal_position_id')
     data_base = fields.Date(string='Data Base', store=True, copy=True, related='os_ids.data_base')
     entrega_efetiva = fields.Date(string='Entrega Efetiva', store=True, copy=True, related='os_ids.entrega_efetiva')
-    valor_pedido = fields.Monetary(string='Valor da Venda', store=True, related='os_ids.pedido_venda.amount_total')
+    valor_pedido = fields.Monetary(string='Valor da Venda', store=True, compute='_amount_valor_pedido')
     state = fields.Selection(
         [('draft', 'Provisória'), ('aberta', 'Aberta'), ('parcial', 'Parcialmente Entregue'),
          ('concluida', 'Concluida'), ('cancel', 'Cancelada')],
@@ -284,6 +288,12 @@ class OsFechamento(models.Model):
         for rec in self:
             total = sum(rec.os_ids.pedido_venda.mapped('horas_mo')) if rec.os_ids.pedido_venda else 0
             rec.horas_prevista = total
+
+    @api.depends('os_ids.state')
+    def _amount_valor_pedido(self):
+        for rec in self:
+            total = sum(rec.os_ids.pedido_venda.mapped('amount_total')) if rec.os_ids.pedido_venda else 0
+            rec.valor_pedido = total
 
     @api.depends('os_ids.state')
     def _compute_compra(self):
@@ -389,20 +399,9 @@ class OsFechamento(models.Model):
             gasto = mp + mo + rec.comissao + rec.imposto_real
             rec.resultado = valor_pedido - gasto
 
-            # if gasto != 0:
-            #     rec.resultado_percen = ((gasto / valor_pedido)-1) * -1
-            # else:
-            #     rec.resultado_percen = 1
 
 
-
-
-
-
-
-
-
-class OsInspecoes(models.Model):
+class OsInspecoes(models.TransientModel):
     _name = "os.inspecoes"
     _description = "Inspeções"
 
@@ -438,7 +437,11 @@ class OsInspecoes(models.Model):
 
         return result
 
-
+    def default_get(self, fields):
+        res = super(OsInspecoes, self).default_get(fields)
+        teste = self.env['ordem.servico'].browse('id')
+        res['ordem_servico'] = self.env['ordem.servico'].browse(self.env.context.get('active_ids'))
+        return res
 
     @api.constrains('tipo', 'medidas')
     def valida_medidas(self):

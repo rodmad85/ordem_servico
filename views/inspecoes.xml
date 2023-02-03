@@ -15,7 +15,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="ordem_servico" context="{'default_ordem_servico':name}"/>
+                                <field name="ordem_servico" />
                                 <field name="tipo"/>
                                 <field name="produto_descricao"/>
                                 <field name="produto_desenho"/>

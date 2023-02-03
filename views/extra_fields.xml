@@ -71,6 +71,10 @@
             <xpath expr="//field[@name='client_order_ref']" position="move"/>
           </xpath>
 
+           <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+               <field name="mo_line" optional="show"/>
+               <field name="mp_line" optional="show"/>
+           </xpath>
 
 
        </field>
@@ -86,6 +90,7 @@
         <xpath expr="//field[@name='name']" position="after">
             <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
         </xpath>
+
     </field>
 </record>
 
@@ -123,6 +128,20 @@
            <xpath expr="//field[@name='origin']" position="after">
                <field name="forma_pagamento" string="Forma de Pagamento" />
            </xpath>
+
+             <xpath expr="//form/sheet/notebook/page[2]" position="after">
+              <page string="Total OS">
+                <group>
+                    <field name="oss" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+                        <tree string="Total OS" editable="bottom">
+                            <field name="os" string="Ordem de Serviço"/>
+                            <field name="valor" sum="Total Geral"/>
+
+                        </tree>
+                    </field>
+                </group>
+              </page>
+            </xpath>
        </field>
 </record>
 

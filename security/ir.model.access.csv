@@ -19,4 +19,6 @@ access_os_fechamento_admin,ordem.servico.admin.os.fechamento,model_os_fechamento
 access_os_impostos_line_admin,ordem.servico.admin.os.impostos.line,model_os_impostos_line,ordem_admin,1,1,1,1
 access_os_parcial_user,ordem.servico.user.parcial.wizard,model_os_parcial_wizard,ordem_user,1,1,1,0
 access_os_parcial_admin,ordem.servico.admin.parcial.wizard,model_os_parcial_wizard,ordem_admin,1,1,1,1
+access_os_total_purchase_user,ordem.servico.user.total.purchase,model_os_total_purchase,ordem_user,1,1,1,0
+access_os_total_purchase_admin,ordem.servico.admin.total.purchase,model_os_total_purchase,ordem_admin,1,1,1,1
 ,,,,,,,

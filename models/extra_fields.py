@@ -3,6 +3,7 @@ from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
 
+
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
     valor_hora = fields.Float(string='Valor Hora', store=True)
@@ -20,10 +21,50 @@ class HrFields(models.Model):
 
     @api.depends('valor_hora', 'worked_hours', 'valor_total')
     def _total(self):
+        entnormal = "07:12:00"
+        sainormal = "17:00:00"
+        entalm ="12:00:00"
+        saialm="13:00:00"
+        ininot = "22:00:00"
+
         for line in self:
-            line.update({
-                'valor_total': line.valor_hora * line.worked_hours
-            })
+            entrada = datetime.strptime(self.check_in, "%H:%M:%S")
+            saida = datetime.strptime(self.check_out, "%H:%M:%S")
+
+#Calcula horas normais e subtrai o horario do almoço.
+            if entrada >= entnormal and saida <= sainormal:
+                if saida >= saialm and entrada <= entalm:
+                    line.update({
+                        'valor_total': line.valor_hora * (line.worked_hours - 3600)
+                    })
+#calcula hora extra
+
+            if saida > sainormal and saida <= ininot:
+                extra = saida - entrada
+                extra = extra.total_seconds() / 3600
+#Hora noturna-------------------------------
+                if entrada > sainormal:
+                    extra = saida - entrada
+                    line.update({
+                        'valor_total': line.valor_hora * (line.worked_hours - 3600)
+                    })
+#Verifica se teve horario de almoço
+                    if saida >= saialm and entrada <= entalm:
+                        line.update({
+                            'valor_total': (line.valor_hora * (line.worked_hours - 3600)) + (extra * line.valor_hora * 1.5)
+                        })
+                    else:
+                        line.update({
+                            'valor_total': line.valor_hora * (line.worked_hours - extra) + (extra * line.valor_hora * 1.5)
+                        })
+#Extra normal--------------------------------
+                else:
+                    extra = saida - sainormal
+                    line.update({
+                        'valor_total': line.valor_hora * (line.worked_hours - 3600)
+                    })
+            if entrada >= "00:01:00" and entrada < entnormal:
+
 
 
 class OsCertificados(models.Model):
@@ -87,13 +128,35 @@ class OsPurchaseLine(models.Model):
         return vals
 
 
+
 class OsPurchase(models.Model):
     _inherit = "purchase.order"
 
     forma_pagamento = fields.Many2one('payment.acquirer', string='Forma de Pagamento', required=False,
                                       ondelete='restrict', index=True, copy=False)
 
+    oss = fields.One2many('os.total.purchase', 'id', string='Total OS', compute='get_values', copy=True)
+    @api.model
+    def get_values(self):
+        ids =self.order_line
+        ordens = tuple(set(ids.ordem_servico))
+        total = 0
 
+        for rec in ordens:
+            total = 0
+            for id in ids:
+                contagem = len(id.ordem_servico)
+                for o in id.ordem_servico:
+                    if rec.id == o.id:
+                        total += id.price_total / contagem
+            self.oss += self.env['os.total.purchase'].create({'os': rec.name, 'valor': total})
+
+
+
+class TotalOs(models.Model):
+    _name = "os.total.purchase"
+    os = fields.Char(string="Ordem de Serviço")
+    valor = fields.Float(string="Total")
 class OsStock(models.Model):
     _inherit = "stock.move"
 
@@ -134,6 +197,7 @@ class OsSale(models.Model):
         required=True, change_default=True, index=True, tracking=1,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", )
 
+
     @api.depends('valor_horas', 'materia_prima', 'terceiros')
     def _amount_resultado(self):
         for rec in self:
@@ -163,6 +227,11 @@ class OsSale(models.Model):
         res = super(OsSale, self)._action_confirm()
         return res
 
+class OsSaleLine(models.Model):
+    _inherit = ["sale.order.line"]
+
+    mo_line = fields.Monetary(string='Mão de Obra', store=True)
+    mp_line = fields.Monetary(string='Materia Prima', store=True)
 
 class OsImpostos(models.Model):
     _inherit = ["account.fiscal.position"]
