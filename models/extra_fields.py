@@ -63,7 +63,7 @@ class HrFields(models.Model):
                     line.update({
                         'valor_total': line.valor_hora * (line.worked_hours - 3600)
                     })
-            if entrada >= "00:01:00" and entrada < entnormal:
+            # if entrada >= "00:01:00" and entrada < entnormal:
 
 
 
