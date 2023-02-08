@@ -132,7 +132,8 @@
 								<tree string="Employee attendances" editable="bottom">
 									<field name="employee_id"/>
                                     <field name="retrabalho"/>
-									<field name="check_in"/>
+                                    <field name="hora_not"/>
+           							<field name="check_in"/>
 									<field name="check_out"/>
                                 	<field name="valor_hora"/>
 									<field name="worked_hours" string="Total de Horas" widget="float_time" sum="Total de Horas"/>

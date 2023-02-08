@@ -30,7 +30,7 @@ class HrFields(models.Model):
             entnormal = datetime.strptime("07:12:00", '%H:%M:%S').time()
             entnormal = datetime.combine(dtent,entnormal)
             sainormal = datetime.strptime("17:00:00", '%H:%M:%S').time()
-            sainormal = datetime.combine(dtsai,sainormal)
+            sainormal = datetime.combine(dtent,sainormal)
             entalm = datetime.strptime("12:00:00", '%H:%M:%S').time()
             entalm =datetime.combine(dtent, entalm)
             saialm = datetime.strptime("13:00:00", '%H:%M:%S').time()
@@ -40,6 +40,8 @@ class HrFields(models.Model):
             fimnot = datetime.strptime("05:00:00", '%H:%M:%S').time()
             fimnot = datetime.combine(dtsai, fimnot)
             noturna = 0
+            extra = 0
+            almoco = 0
             for line in self:
 
                 if self.check_in and self.check_out:
@@ -73,7 +75,7 @@ class HrFields(models.Model):
 #Calculos----------------------------------------------------
 #Hora normal--------------------------------------------
                 if entrada >= entnormal and saida <= sainormal:
-                    if almoco:
+                    if almoco < 0:
                         line.update({
                             'valor_total': line.valor_hora * (line.worked_hours + almoco)
                         })
@@ -82,8 +84,8 @@ class HrFields(models.Model):
                             'valor_total': line.valor_hora * line.worked_hours
                         })
 #Hora Extra--------------------------------------------------------------
-                if extra:
-                    if almoco:
+                if extra > 0 and noturna == 0:
+                    if almoco < 0:
                         line.update({
                             'valor_total': line.valor_hora * (line.worked_hours - extra + almoco) + (extra * line.valor_hora * 1.5)
                         })
@@ -95,7 +97,7 @@ class HrFields(models.Model):
 #Hora noturna------------------------------------------------------------------------------------------
 #hora com periodo noturno
                 if noturna > 0 and self.hora_not:
-                    if almoco:
+                    if almoco < 0:
                         line.update({
                             'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna + almoco * line.valor_hora))
                         })
@@ -105,8 +107,8 @@ class HrFields(models.Model):
                         })
 
 #hora normal + noturno + extra
-                if noturna > 0 and extra and not self.hora_not:
-                    if almoco:
+                if noturna > 0 and extra > 0 and not self.hora_not:
+                    if almoco < 0:
                         line.update({
                             'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra + almoco * line.valor_hora) + (extra * 1.5 * line.valor_hora))
                         })
