@@ -60,15 +60,10 @@ class HrFields(models.Model):
                     extra = self.check_out - sainormal
                     extra = extra.total_seconds() / 3600
 
-
-                    # line.update({
-                    #     'valor_total': line.valor_hora * (line.worked_hours - extra) + (extra * line.valor_hora * 1.5)
-                    # })
-
 #Hora noturna-------------------------------
                 if saida >= ininot and saida <= fimnot:
                     noturna = saida - ininot
-                    noturna = noturna.total_seconds() / 3600
+                    noturna = float (noturna.total_seconds() / 3600)
 
 #Almoço-------------------------------------------------------
                 if line.worked_hours >= 6:
