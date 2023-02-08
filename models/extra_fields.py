@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
@@ -12,60 +12,119 @@ class HrEmployee(models.Model):
 class HrFields(models.Model):
     _inherit = "hr.attendance"
 
+
+
     ordem_servico = apontamento = fields.Many2many('ordem.servico', 'hr_attendance_os_rel', 'hr_attendance_id',
                                                    'ordem_servico_id',
                                                    string='Linha Apontamento', store=True, copy=True)
     valor_hora = fields.Float(string='Valor Hora', related='employee_id.valor_hora', readonly=True, store=True)
     retrabalho = fields.Boolean(string='Retrabalho', store=True)
+    hora_not = fields.Boolean(string='Noturno', store=True)
     valor_total = fields.Float(string='Valor Total', readonly=True, store=True, compute='_total')
 
-    @api.depends('valor_hora', 'worked_hours', 'valor_total')
+    @api.depends('check_in','check_out','valor_hora', 'worked_hours', 'valor_total')
     def _total(self):
-        entnormal = "07:12:00"
-        sainormal = "17:00:00"
-        entalm ="12:00:00"
-        saialm="13:00:00"
-        ininot = "22:00:00"
+        dtent = self.check_in.date()
+        if self.check_out:
+            dtsai = self.check_out.date()
+            entnormal = datetime.strptime("07:12:00", '%H:%M:%S').time()
+            entnormal = datetime.combine(dtent,entnormal)
+            sainormal = datetime.strptime("17:00:00", '%H:%M:%S').time()
+            sainormal = datetime.combine(dtsai,sainormal)
+            entalm = datetime.strptime("12:00:00", '%H:%M:%S').time()
+            entalm =datetime.combine(dtent, entalm)
+            saialm = datetime.strptime("13:00:00", '%H:%M:%S').time()
+            saialm=datetime.combine(dtent, saialm)
+            ininot = datetime.strptime("22:00:00", '%H:%M:%S').time()
+            ininot = datetime.combine(dtent, ininot)
+            fimnot = datetime.strptime("05:00:00", '%H:%M:%S').time()
+            fimnot = datetime.combine(dtsai, fimnot)
+            for line in self:
 
-        for line in self:
-            entrada = datetime.strptime(self.check_in, "%H:%M:%S")
-            saida = datetime.strptime(self.check_out, "%H:%M:%S")
+                if self.check_in and self.check_out:
+                    entrada = self.check_in - timedelta(hours=3)
+                    saida = self.check_out - timedelta(hours=3)
+                else:
+                    return
 
-#Calcula horas normais e subtrai o horario do almoço.
-            if entrada >= entnormal and saida <= sainormal:
-                if saida >= saialm and entrada <= entalm:
-                    line.update({
-                        'valor_total': line.valor_hora * (line.worked_hours - 3600)
-                    })
-#calcula hora extra
+#Calcula horas normais.-----------------------------------------------------------
+                if entrada >= entnormal and saida <= sainormal:
+                    if entrada >= saialm and saida <= sainormal:
+                        normal = line.worked_hours
+                    if entrada < entalm and saida <= entalm:
+                        normal = line.worked_hours
 
-            if saida > sainormal and saida <= ininot:
-                extra = saida - entrada
-                extra = extra.total_seconds() / 3600
+#calcula hora extra-----------------------------------------------------
+
+                if saida > sainormal:
+                    extra = self.check_out - sainormal
+                    extra = extra.total_seconds() / 3600
+
+
+                    # line.update({
+                    #     'valor_total': line.valor_hora * (line.worked_hours - extra) + (extra * line.valor_hora * 1.5)
+                    # })
+
 #Hora noturna-------------------------------
-                if entrada > sainormal:
-                    extra = saida - entrada
-                    line.update({
-                        'valor_total': line.valor_hora * (line.worked_hours - 3600)
-                    })
-#Verifica se teve horario de almoço
-                    if saida >= saialm and entrada <= entalm:
+                if saida >= ininot and saida <= fimnot:
+                    noturna = saida - ininot
+                    noturna = noturna.total_seconds() / 3600
+
+#Almoço-------------------------------------------------------
+                if line.worked_hours >= 6:
+                    almoco = -1
+
+#Calculos----------------------------------------------------
+#Hora normal--------------------------------------------
+                if entrada >= entnormal and saida <= sainormal:
+                    if almoco:
                         line.update({
-                            'valor_total': (line.valor_hora * (line.worked_hours - 3600)) + (extra * line.valor_hora * 1.5)
+                            'valor_total': line.valor_hora * (line.worked_hours + almoco)
                         })
+                    else:
+                        line.update({
+                            'valor_total': line.valor_hora * line.worked_hours
+                        })
+#Hora Extra--------------------------------------------------------------
+                if extra and not noturna:
+                    if almoco:
+                        line.update({
+                            'valor_total': line.valor_hora * (line.worked_hours - extra + almoco) + (extra * line.valor_hora * 1.5)
+                        })
+
                     else:
                         line.update({
                             'valor_total': line.valor_hora * (line.worked_hours - extra) + (extra * line.valor_hora * 1.5)
                         })
-#Extra normal--------------------------------
-                else:
-                    extra = saida - sainormal
-                    line.update({
-                        'valor_total': line.valor_hora * (line.worked_hours - 3600)
-                    })
-            # if entrada >= "00:01:00" and entrada < entnormal:
+#Hora noturna------------------------------------------------------------------------------------------
+#hora com periodo noturno
+                if noturna and self.hora_not:
+                    if almoco:
+                        line.update({
+                            'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna + almoco * line.valor_hora))
+                        })
+                    else:
+                        line.update({
+                            'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna * line.valor_hora))
+                        })
 
+#hora normal + noturno + extra
+                if noturna and extra and not self.hora_not:
+                    if almoco:
+                        line.update({
+                            'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra + almoco * line.valor_hora) + (extra * 1.5 * line.valor_hora))
+                        })
+                    else:
+                        line.update({
+                            'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra * line.valor_hora) + (extra * 1.5 * line.valor_hora))
+                        })
 
+    def entradasai(self):
+        atual = fields.Datetime.now.date()
+        entnormal = datetime.strptime("07:12:00", '%H:%M:%S').time()
+        sainormal = datetime.strptime("17:00:00", '%H:%M:%S').time()
+        self.check_in = datetime.combine(atual,entnormal)
+        self.check_out = datetime.combine(atual,sainormal)
 
 class OsCertificados(models.Model):
     _name = "os.certificados"

@@ -13,6 +13,9 @@
            <xpath expr="//field[@name='employee_id']" position="after">
                <field name="retrabalho"/>
            </xpath>
+           <xpath expr="//field[@name='retrabalho']" position="after">
+               <field name="hora_not"/>
+           </xpath>
            <xpath expr="//field[@name='check_out']" position="after">
                <field name="valor_hora"/>
            </xpath>
