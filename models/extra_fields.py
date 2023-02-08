@@ -39,6 +39,7 @@ class HrFields(models.Model):
             ininot = datetime.combine(dtent, ininot)
             fimnot = datetime.strptime("05:00:00", '%H:%M:%S').time()
             fimnot = datetime.combine(dtsai, fimnot)
+            noturna = 0
             for line in self:
 
                 if self.check_in and self.check_out:
@@ -81,7 +82,7 @@ class HrFields(models.Model):
                             'valor_total': line.valor_hora * line.worked_hours
                         })
 #Hora Extra--------------------------------------------------------------
-                if extra and not noturna:
+                if extra:
                     if almoco:
                         line.update({
                             'valor_total': line.valor_hora * (line.worked_hours - extra + almoco) + (extra * line.valor_hora * 1.5)
@@ -93,7 +94,7 @@ class HrFields(models.Model):
                         })
 #Hora noturna------------------------------------------------------------------------------------------
 #hora com periodo noturno
-                if noturna and self.hora_not:
+                if noturna > 0 and self.hora_not:
                     if almoco:
                         line.update({
                             'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna + almoco * line.valor_hora))
@@ -104,7 +105,7 @@ class HrFields(models.Model):
                         })
 
 #hora normal + noturno + extra
-                if noturna and extra and not self.hora_not:
+                if noturna > 0 and extra and not self.hora_not:
                     if almoco:
                         line.update({
                             'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra + almoco * line.valor_hora) + (extra * 1.5 * line.valor_hora))
