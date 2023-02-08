@@ -12,7 +12,9 @@ class HrEmployee(models.Model):
 class HrFields(models.Model):
     _inherit = "hr.attendance"
 
-
+    def upaponta(self):
+        for rec in self:
+            rec._total()
 
     ordem_servico = apontamento = fields.Many2many('ordem.servico', 'hr_attendance_os_rel', 'hr_attendance_id',
                                                    'ordem_servico_id',
@@ -117,12 +119,7 @@ class HrFields(models.Model):
                             'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra * line.valor_hora) + (extra * 1.5 * line.valor_hora))
                         })
 
-    def entradasai(self):
-        atual = fields.Datetime.now.date()
-        entnormal = datetime.strptime("07:12:00", '%H:%M:%S').time()
-        sainormal = datetime.strptime("17:00:00", '%H:%M:%S').time()
-        self.check_in = datetime.combine(atual,entnormal)
-        self.check_out = datetime.combine(atual,sainormal)
+
 
 class OsCertificados(models.Model):
     _name = "os.certificados"
