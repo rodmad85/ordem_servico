@@ -7,9 +7,11 @@
        <field name="inherit_id" ref="hr_attendance.view_attendance_tree" />
        <field name="model">hr.attendance</field>
        <field name="arch" type="xml">
-           <header>
-                <button name="upaponta" string="Atualizar" class="btn-primary" invisible="0" type="object"/>
-           </header>
+           <xpath expr="//tree" position="inside">
+               <header>
+               <button name="upaponta" string="Atualizar" class="btn-primary" invisible="0" type="object"/>
+               </header>
+           </xpath>
            <xpath expr="//field[@name='employee_id']" position="after">
                <field name="ordem_servico" widget="many2many_tags"/>
            </xpath>

@@ -27,6 +27,7 @@ class HrFields(models.Model):
     @api.depends('check_in','check_out','valor_hora', 'worked_hours', 'valor_total')
     def _total(self):
         dtent = self.check_in.date()
+
         if self.check_out:
             dtsai = self.check_out.date()
             entnormal = datetime.strptime("07:12:00", '%H:%M:%S').time()
@@ -44,6 +45,7 @@ class HrFields(models.Model):
             noturna = 0
             extra = 0
             almoco = 0
+
             for line in self:
 
                 if self.check_in and self.check_out:
@@ -72,7 +74,10 @@ class HrFields(models.Model):
 
 #Almoço-------------------------------------------------------
                 if line.worked_hours >= 6:
-                    almoco = -1
+                    if entrada >= saialm:
+                        almoco = 0
+                    else:
+                        almoco = -1
 
 #Calculos----------------------------------------------------
 #Hora normal--------------------------------------------
