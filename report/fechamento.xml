@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_os_fecha" model="ir.actions.report">
+        <field name="name">Fechamento OS</field>
+        <field name="model">os.fechamento</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ordem_servico.report_fecha</field>
+        <field name="report_file">ordem_servico.report_fecha</field>
+        <field name="print_report_name">'Fechamento OS - %s' % (object.name or '')</field>
+        <field name="binding_model_id" ref="model_os_fechamento"/>
+        <field name="binding_type">report</field>
+    </record>
+
+<template id="report_fecha">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                <div class="oe_structure"/>
+                    <table style="width:100%" class="table table-sm o_main_table table-bordered">
+
+                        <tr class="border: 1px solid black">
+                            <td width="70%" class="text-center">
+                                <p><span><h3><strong>OS: <span t-field="o.name"/></strong> - <span t-field="o.cliente"/></h3></span></p>
+                            </td>
+                            <td colspan="3" class="text-center border:1pt solid black">
+                                <p align="center"> <h3><strong><span t-field="o.posicao"/></strong></h3></p>
+                            </td>
+
+                        </tr>
+                    </table>
+                        <table style="width:100%" class="table table-sm o_main_table table-bordered">
+                         <tr>
+                            <td width="20%" class="text-left">
+                                <span align="center"><h6><strong>Data Base: </strong><br/><span t-field="o.data_base" /> </h6></span>
+                             </td>
+
+                            <td width="20%" class="text-left">
+                                <span align="center"><h6><strong>Data Entrega: </strong><br/><span t-field="o.data_entrega" /> </h6></span>
+                             </td>
+                             <td width="20%" class="text-left">
+                                <span align="center"><h6><strong>Entrega Efetiva: </strong><span t-field="o.entrega_efetiva" /> </h6></span>
+                             </td>
+                             <td width="20%" class="text-left">
+                                <span align="center"><h6><strong>Atraso: </strong><br/><span t-esc="o.atraso" /> dia(s) </h6></span>
+                             </td>
+                             <td width="20%" class="text-left">
+                                <span align="center"><h6><strong>Pagamento: </strong><br/><span t-esc="o.condicao.name" /></h6></span>
+                             </td>
+                         </tr>
+                        </table>
+
+                <table class="table table-bordered table-sm o_main_table">
+                    <tr class="border: 1px solid black">
+
+                             <td colspan="3" class="text-center bg-200 font-weight-bold o_line_section">
+                                 <p align="left"><h5><strong>Mão de Obra</strong></h5></p>
+                             </td>
+                        </tr>
+                        <tr>
+                             <td width="34%"  class="text-center">
+                                 <span><h5><strong>Previsto</strong></h5></span>
+                             </td>
+                             <td width="33%"  class="text-center">
+                                 <span><h5><strong>Real</strong></h5></span>
+                             </td>
+                             <td width="33%"  class="text-center">
+                                 <span><h5><strong>Resultado</strong></h5></span>
+                             </td>
+                        </tr>
+
+                    <tr>
+                            <td class="text-left">
+                                <p align="center"><h5><strong><span>Horas Previstas: </span></strong><span t-field="o.horas_prevista" t-options="{'widget':'float_time',}" /></h5></p>
+
+                                <p align="center"><h5><strong><span>Valor H. Previstas: </span></strong><span t-field="o.mo_prevista" /></h5></p>
+
+                            </td>
+                            <td class="text-left">
+                                <span><strong>Horas Normais: </strong><span t-field="o.horas_real" t-options='{"widget": "float_time"}'/></span><br/>
+                                <span><strong>Horas Extras: </strong><span t-field="o.extra_real" t-options='{"widget": "float_time"}'/></span><br/>
+                                <span><strong>Horas Retrabalho: </strong><span t-field="o.horas_retrabalho" t-options='{"widget": "float_time"}'/></span><br/>
+                                <span><strong>Horas Totais: </strong><span t-field="o.horas_total" t-options='{"widget": "float_time"}'/></span><br/>
+                                <span><strong>Valor Extra: </strong><span t-field="o.valor_extra" /></span><br/>
+                                <span><strong>Valor Horas Retrabalho: </strong><span t-field="o.valor_horas_retrabalho" /></span><br/>
+                                <p><h5><strong>Total MO: </strong><span t-field="o.mo_real" /></h5></p>
+                            </td>
+
+                            <td class="text-center">
+                                <p align="center"><h5><strong>Horas: </strong><span t-field="o.horas_resultado" t-options='{"widget": "float_time"}'/></h5></p>
+                                <p align="center"><h5><strong>Valor Horas: </strong><span t-field="o.mo_resultado"/></h5></p>
+                            </td>
+                        </tr>
+                </table>
+                <table class="table table-bordered table-sm o_main_table">
+                             <tr>
+                             <td class="text-center bg-200 font-weight-bold o_line_section" colspan="3">
+                                 <p align="center"><h5><strong>Materia Prima - Terceiros</strong></h5></p>
+                             </td>
+                            </tr>
+                        <tr>
+                             <td class="text-center" width="33%">
+                                 <p align="center"><h5><strong>Previsto</strong></h5></p>
+                             </td>
+                             <td class="text-center" width="34%">
+                                 <p align="center"><h5><strong>Real</strong></h5></p>
+                             </td>
+                             <td class="text-center" width="33%">
+                                 <p align="center"><h5><strong>Resultado</strong></h5></p>
+                             </td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-left">
+                                <span align="center"><strong>Matéria Prima: </strong><span t-field="o.mp_prevista" /></span><br/>
+                                <span align="center"><strong>Terceiros: </strong><span t-field="o.tc_prevista" /></span>
+                            </td>
+
+
+                            <td>
+                                <span align="center"><strong>Comissão: </strong><span t-field="o.comissao" /></span><br/>
+                                <span align="center"><strong>MP / Terceiros: </strong><span t-field="o.mp_real" /></span>
+                            </td>
+
+                    <td>
+
+                        <strong><span align="center">Resultado: </span></strong><span t-field="o.mp_resultado" /><br/>
+                            <strong><span align="center">% Compras: </span></strong><span t-field="o.progress_compra" />
+
+                    </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered table-sm o_main_table">
+                     <tr>
+                         <td class="text-center bg-200 font-weight-bold o_line_section" colspan="2">
+                             <p align="center"><h5><strong>Impostos</strong></h5></p>
+                         </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <strong><span align="center">% Imposto: </span></strong><span t-esc="o.imposto_real * 100" t-options='{"widget": "float", "precision": 2}' />
+                        </td>
+                        <td class="text-center">
+                            <strong><span align="center">Valor: </span></strong><span t-field="o.impostos_resultado" />
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered table-sm o_main_table">
+                     <tr>
+                         <td class="text-center bg-200 font-weight-bold o_line_section" colspan="3">
+                             <p align="center"><h5><strong>Resultado</strong></h5></p>
+                         </td>
+                    </tr>
+                        <tr>
+                             <td class="text-center" width="33%">
+                                 <p align="center"><h5><strong>Previsto</strong></h5></p>
+                             </td>
+                             <td class="text-center" width="34%">
+                                 <p align="center"><h5><strong>Real</strong></h5></p>
+                             </td>
+                             <td class="text-center" width="33%">
+                                 <p align="center"><h5><strong>Resultado</strong></h5></p>
+                             </td>
+                        </tr>
+                    <tr>
+                        <td>
+                            <strong><span align="center">Valor Venda: </span></strong><span t-field="o.valor_pedido" /><br/>
+                            <strong><span align="center">Valor Orçado: </span></strong><span t-field="o.orcado" />
+                        </td>
+                        <td>
+                            <strong><span align="center">Total Gastos: </span></strong><span t-field="o.total_gasto" />
+                        </td>
+                        <td>
+                            <strong><span align="center">Resultado %: </span><span t-esc="o.resultado_percen * 100" t-options='{"widget": "float", "precision": 2}'/></strong><br/>
+                            <strong><span align="center">Resultado:  </span><span t-field="o.resultado" /></strong>
+                        </td>
+
+                    </tr>
+                </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+</odoo>

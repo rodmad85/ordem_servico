@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  -->
+
+<odoo>
+    <data>
+        <record id="purchase_os_form_line" model="ir.ui.view">
+        <field name="name">purchase.os.form</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="model">purchase.order</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree" position="inside">
+                <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+            </xpath>
+
+            <xpath expr="//field[@name='origin']" position="after">
+               <field name="forma_pagamento" string="Forma de Pagamento" />
+            </xpath>
+
+            <xpath expr="//form/sheet/notebook/page[2]" position="after">
+                <page string="Total OS">
+
+                    <group>
+                        <button name="uposs" string="Atualizar" class="btn-primary" invisible="0" type="object"/>
+                        <field name="oss" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+
+                            <tree string="Total OS" editable="bottom">
+                                <field name="os" string="Ordem de Serviço"/>
+                                <field name="valor" sum="Total Geral"/>
+
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+        </record>
+
+        <record id="purchase_os_form" model="ir.ui.view">
+           <field name="name">purchase.os.form</field>
+           <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit" />
+           <field name="model">purchase.order</field>
+           <field name="arch" type="xml">
+               <xpath expr="//field[@name='order_line']/form//field[@name='account_analytic_id']" position="before">
+                    <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+                </xpath>
+           </field>
+        </record>
+
+    </data>
+</odoo>

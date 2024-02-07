@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2022 Madureira
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.actions.act_window" id="ordem_servico_act_window">
+        <field name="name">Ordem Serviço</field>
+        <field name="res_model">ordem.servico</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_state':1}</field>
+
+
+    </record>
+
+    <record model="ir.actions.act_window" id="ordem_movimentacoes_act_window">
+        <field name="name">Movimentações</field>
+        <field name="res_model">stock.move.line</field>
+        <field name="domain">[('state', 'not in', ('done', 'cancel'))]</field>
+        <field name="view_mode">tree,form</field>
+
+    </record>
+
+<!--    <record model="ir.actions.act_window" id="ordem_inspecoes_act_window">-->
+<!--        <field name="name">Inspeções</field>-->
+<!--        <field name="res_model">os.inspecoes</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--        <field name="context">{'default_ordem_servico': active_id}</field>-->
+
+<!--    </record>-->
+
+     <record model="ir.actions.act_window" id="ordem_inspecoes_wizard_act_window">
+        <field name="name">Inspeções</field>
+        <field name="res_model">os.inspecoes</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="inspecoes_form_view"/>
+        <field name="context">{'default_ordem_servico': active_id}</field>
+
+
+
+    </record>
+
+<!--    <record model="ir.actions.act_window" id="ordem_stockcert_wizard_act_window">-->
+<!--        <field name="name">Certificados</field>-->
+<!--        <field name="res_model">os.stockcert</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="view_id" ref="stockcert_wizard_view"/>-->
+<!--        <field name="context">{'default_linhas': active_id}</field>-->
+
+
+
+<!--    </record>-->
+
+     <record model="ir.actions.act_window" id="ordem_fecha_act_window">
+        <field name="name">Fechamento</field>
+        <field name="res_model">os.fechamento</field>
+        <field name="view_mode">tree,pivot,graph,form</field>
+        <field name="view_id" ref="ordem_servico.os_fechamento_tree_view"/>
+    </record>
+
+
+
+    <menuitem id="ordem_root"
+              groups="ordem_user,ordem_admin"
+              name="Ordem de Serviço"
+              action="ordem_servico_act_window"
+              web_icon="ordem_servico,static/img/icon.png"
+              sequence="10"/>
+
+
+    <menuitem id="ordem_movimentacoes"
+              groups="ordem_user,ordem_admin"
+              name="Movimentações"
+              action="ordem_movimentacoes_act_window"
+              parent="ordem_root"
+              sequence="12"/>
+
+    <menuitem id="ordem_rel"
+              groups="ordem_admin"
+              name="Relatorios"
+              parent="ordem_root"
+              sequence="13"/>
+
+    <menuitem id="ordem_relatorio_fecha"
+              groups="ordem_admin"
+              name="Fechamento"
+              action="ordem_fecha_act_window"
+              parent="ordem_rel"
+              sequence="14"/>
+
+
+
+
+</odoo>

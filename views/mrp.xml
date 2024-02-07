@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  -->
+
+<odoo>
+    <data>
+        <record id="mrp_production_os" model="ir.ui.view">
+            <field name="name">mrp.production.os</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="andamento" string="Andamento" optional="show"/>
+                    <field name="terceiros" string="Terceiros" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="mrp_production_os_form" model="ir.ui.view">
+            <field name="name">mrp.production.os.form</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//field[@name='bom_id']" position="after">
+                    <field name="andamento" string="Andamento"/>
+                    <field name="terceiros" string="Terceiros"
+                           attrs="{'invisible':[('andamento','!=','terceiro')],'required':[('andamento','=','terceiro')]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_id']"
+                       position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
+                    <field name="dimensoes"/>
+
+                </xpath>
+                <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom']"
+                       position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
+                    <field name="estoque"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="mrp_bom_os" model="ir.ui.view">
+            <field name="name">mrp.bom.os</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="model">mrp.bom</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']"
+                       position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
+                    <field name="dimensoes"/>
+                </xpath>
+                <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']" position="replace">
+                    <field name="product_id" domain="[('type', 'in',('product', 'consu'))]"/>
+                </xpath>
+                <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_uom_id']"
+                       position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
+                    <field name="estoque"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

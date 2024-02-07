@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for ordem de servico -->
+       <record id="ordem_sequence" model="ir.sequence">
+            <field name="name">Ordem de Serviço</field>
+            <field name="code">ordem.seq</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="ordem_seq_manu" model="ir.sequence">
+            <field name="name">Ordem de Serviço</field>
+            <field name="code">ordem.manu</field>
+            <field name="prefix">MN-%(range_month)s/%(range_year)s-</field>
+            <field name="padding">4</field>
+            <field name="use_date_range">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="ordem_seq_rafa" model="ir.sequence">
+            <field name="name">Ordem de Serviço</field>
+            <field name="code">ordem.rafa</field>
+            <field name="prefix">RF-%(range_month)s/%(range_year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+           <record id="ordem_inspecoes_sequence" model="ir.sequence">
+            <field name="name">Inspeções</field>
+            <field name="code">insp_os.seq</field>
+            <field name="prefix">INS</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

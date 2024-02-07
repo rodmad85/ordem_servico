@@ -1,0 +1,2725 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ordem_servico
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-09 19:58+0000\n"
+"PO-Revision-Date: 2024-01-09 17:07-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__progress_compra
+msgid "% Compras"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.report,print_report_name:ordem_servico.action_os_fecha
+msgid "'Fechamento OS - %s' % (object.name or '')"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.report,print_report_name:ordem_servico.action_materiais
+msgid "'Lista de Materiais OS %s' % (object.name or '')"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.report,print_report_name:ordem_servico.action_capa_os
+msgid "'OS - %s' % (object.name or '')"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.report,print_report_name:ordem_servico.action_os_inspecoes
+msgid "'Relatorio - %s' % (object.name or '')"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_os_fechamento__mp_resultado
+msgid "(MP Prevista + Terceiros Previsto) - (MP Real + Terceiros Real)"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__pro_solda__um
+msgid "01-02A"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__pro_solda__doisa
+msgid "02A"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__pro_solda__tres
+msgid "03-06"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__pro_solda__tresa
+msgid "03-06A"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__pro_solda__quatro
+msgid "04-10"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__cem_porcento
+msgid "100%"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid ""
+"<br/>\n"
+"                                    <span>PROCESSO REALIZADO CONFORME EPSC______ REV.______</span>\n"
+"                                    <span>           ▢ Visual   ▢ Outras ______________________________________</span>\n"
+"                                    Responsável:__________________________________            DATA: _______/_______/_______"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid ""
+"<br/>\n"
+"                                   <span> ▢ Visual    ▢ Dimensional    ▢ Outras ________________________</span>\n"
+"                                <br/>Responsável:________________________ - _______/_______/_______"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid ""
+"<br/>\n"
+"                                   <span> ▢ Visual   ▢ Dimensional   ▢ Outras ________________________</span>\n"
+"                                <br/>Responsável:________________________ - _______/_______/_______"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid ""
+"<br/>\n"
+"                            <strong><span align=\"center\">% Compras: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid ""
+"<br/>\n"
+"                            <strong><span align=\"center\">Valor Orçado: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid ""
+"<br/>\n"
+"                      <span class=\"m-0\"><strong>Finalidade: </strong></span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid ""
+"<br/>\n"
+"                      <strong>E-mail: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid ""
+"<br/>\n"
+"                    <strong>E-mail: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid ""
+"<br/>\n"
+"                    <strong>Telefone: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<span align=\"center\">Relatório de Inspeção </span> -"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<span align=\"center\">Resultado %: </span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<span align=\"center\">Resultado:  </span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<span align=\"right\">Status: </span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<span class=\"m-0\"><strong>Condição de Pagamento: </strong></span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<span class=\"m-0\"><strong>Forma de Pagamento: </strong></span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<span class=\"m-0\"><strong>Frete: </strong></span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
+"                            <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
+msgstr ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Total</span>\n"
+"                            <span groups=\"account.group_show_line_subtotals_tax_included\">Total</span>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<span>Atenciosamente,</span><br/><br/>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<span>Disc.%</span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_web_external_layout_boxed
+msgid "<span>E-mail: </span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<span>Pro-Forma Invoice # </span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_web_external_layout_boxed
+msgid "<span>Telefone: </span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong><span align=\"center\">% Imposto: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong><span align=\"center\">Resultado: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong><span align=\"center\">Total Gastos: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong><span align=\"center\">Valor Venda: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong><span align=\"center\">Valor: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong><span>Horas Previstas: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong><span>Valor H. Previstas: </span></strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Amount</strong>"
+msgstr "<strong>Total</strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Assinatura: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Atraso: </strong><br/>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Cliente: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Comissão: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Commitiment: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Comprador(a): </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Conclusão: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Contato: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Data Base: </strong><br/>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Data Entrega: </strong><br/>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+msgid "<strong>Data de Entrega: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Data do Pedido: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Data: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Date Req.</strong>"
+msgstr "<strong>Dt. Entrega</strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Description</strong>"
+msgstr "<strong>Descrição</strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Desenho: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "<strong>Desenho</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Desvio: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Desvio</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Discount</strong>"
+msgstr "<strong>Desconto</strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "<strong>Ent. Produção</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Entrega Efetiva: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Expiration: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Fiscal Position Remark:</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Fornecedor: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Horas Extras: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Horas Normais: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Horas Retrabalho: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Horas Totais: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Horas: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Impostos</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "<strong>Itens Comerciais</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>MP / Terceiros: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Materia Prima - Terceiros</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Matéria Prima: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "<strong>Matéria Prima</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Medida Real</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Medida Solicitada</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Mão de Obra</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+msgid "<strong>No. Of Minutes</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Nota: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>OS: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>OS</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "<strong>Observações</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+msgid "<strong>Operation</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Order Date: </strong>"
+msgstr "<strong>Data do Pedido: </strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Payment: </strong>"
+msgstr "<strong>Condições de Pagamento: </strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Pedido do Cliente: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Posição</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Previsto</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Produto: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "<strong>Produto</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "<strong>Qtd.</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Qty</strong>"
+msgstr "<strong>Qtd</strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+msgid "<strong>Quantidade: </strong><br/>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Quotation Date: </strong>"
+msgstr "<strong>Data da Cotação: </strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Real</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+msgid "<strong>Responsável: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
+msgid "<strong>Resposável: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Resultado</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Shipping address:</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Signature</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Subtotal</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Taxes</strong>"
+msgstr "<strong>Impostos</strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Terceiros: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Total MO: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Total</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Unit Price</strong>"
+msgstr "<strong>Preço Unitário</strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Valor Extra: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Valor Horas Retrabalho: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "<strong>Valor Horas: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+msgid "<strong>WorkCenter</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Your Order Reference:</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "<strong>Your Reference: </strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "ACABAMENTO"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__state__aberta
+msgid "Aberta"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Abrir OS"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__acabamento
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__setor__acabamento
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Acabamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: ordem_servico
+#: model:res.groups,name:ordem_servico.ordem_admin
+msgid "Administrador"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__material
+msgid "Aguardando Material"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_production__andamento
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_production__terceiros
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_production_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_production_os_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Andamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Apontamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__status__aprovado
+msgid "Aprovado"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__desenhos
+msgid "Arquivos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_ir_attachment
+msgid "Attachment"
+msgstr "Anexo"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_hr_attendance
+msgid "Attendance"
+msgstr "Frequência"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence
+msgid "Atualiza Valor Hora"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence
+msgid "Atualiza Valor Total"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+msgid "Atualizar"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr "Linha da Lista de Materias"
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__hr_employee__tipo_contrato__clt
+msgid "CLT"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "CORTE E DOBRA"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__setor__caldeiraria
+msgid "Caldeiraria"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__state__cancel
+msgid "Cancelada"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.parcial_wizard_view
+msgid "Cancelar"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "Cancelled Purchase Order #"
+msgstr "Pedido de Compra Cancelado #"
+
+#. module: ordem_servico
+#: model:ir.actions.report,name:ordem_servico.action_capa_os
+msgid "Capa OS"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__certificado
+#: model:ir.model.fields,field_description:ordem_servico.field_os_certificados__certificado
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__certificado
+msgid "Certificado"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_certificados
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Certificados"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__check_in
+msgid "Check In"
+msgstr "Entrada"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__cliente_id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__cliente_id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__partner_id_saida
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_kanban
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Cliente"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__comissao
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Comissão"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__comissao_real
+msgid "Comissão Real"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__empresa
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__cliente
+msgid "Company"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__mp_real
+msgid "Compras Real"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__state__concluida
+msgid "Concluida"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__conclusao
+msgid "Conclusão"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Conforme vossa solicitação apresentamos nossa proposta."
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__corte
+msgid "Corte"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__setor__corte_e_dobra
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Corte e Dobra"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_certificados__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__create_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_certificados__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__create_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__currency_id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order_line__cost
+msgid "Custo"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__custo_fixo
+msgid "Custo Fixo"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "DATA:"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__data_criacao
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__data_criacao
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__mes
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__data_criacao
+msgid "Data"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__data_base
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__data_base
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Data Base"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__data_entrega
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__data_entrega
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Data Entrega"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__data_criacao
+msgid "Data de Criação"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+msgid "Data de Entrega"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Description"
+msgstr "Descrição"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__msg
+msgid "Deseja entregar parcialmente a OS?"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__arquivo
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__produto_desenho
+msgid "Desenho"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_desenhos
+msgid "Desenhos"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Desenhos/Fotos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__desvio
+msgid "Desvio"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__medida_total
+msgid "Desvio Total"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+msgid "Diferenças"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dimen_aca
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dimen_corte
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dimen_fin
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dimen_fura
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dimen_mont
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dimen_usi
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__tipo__dimensional
+msgid "Dimensional"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_bom_line__dimensoes
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__dimensoes
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__dimensoes
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "Dimensões"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_account_incoterms__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_account_move__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_ir_attachment__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_l10n_br_fiscal_document__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_l10n_br_fiscal_operation__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_mgmtsystem_nonconformity__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_bom_line__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_certificados__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_product_category__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_quant__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__dobra
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__terceiros__dobra
+msgid "Dobra"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__documento
+msgid "Documento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dt_aca
+msgid "Dt. Acabamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dt_corte
+msgid "Dt. Corte"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dt_fura
+msgid "Dt. Furação"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dt_fin
+msgid "Dt. Insp. Final"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dt_mont
+msgid "Dt. Montagem"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dt_solda
+msgid "Dt. Solda"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__dt_usi
+msgid "Dt. Usinagem"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "ELABORADO POR:"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Elaborado Por"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__user_id
+msgid "Elaborado por"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_bom_line__estoque
+msgid "Em estoque"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_hr_employee
+msgid "Employee"
+msgstr "Funcionário"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Employee attendances"
+msgstr "Apontamentos"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__empresa
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_kanban
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+msgid "Empresa"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Encerrar OS"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.movimentacoes_tree_view
+msgid "Entradas e Saídas"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__entrega_efetiva
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__entrega_efetiva
+msgid "Entrega Efetiva"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_parcial_wizard
+msgid "Entrega Parcial"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Entregar Parcialmente"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.parcial_wizard_view
+msgid "Entregar e Faturar"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__setor__equipamentos
+msgid "Equipamentos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__tipo__estanqueidade
+msgid "Estanqueidade"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__estoque
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__estoque
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "Estoque"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "FURAÇÃO"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__status_fat__faturada
+msgid "Faturada"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__status_fat__parcial
+msgid "Faturada Parcialmente"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__status_fat
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__status_fat
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_search_view
+msgid "Faturamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.act_window,name:ordem_servico.ordem_fecha_act_window
+#: model:ir.model,name:ordem_servico.model_os_fechamento
+#: model:ir.ui.menu,name:ordem_servico.ordem_relatorio_fecha
+msgid "Fechamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.report,name:ordem_servico.action_os_fecha
+msgid "Fechamento OS"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__fechamentos_ids
+msgid "Fechamentos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_l10n_br_fiscal_document
+msgid "Fiscal Document"
+msgstr "Documento Fiscal"
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_l10n_br_fiscal_operation
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__posicao
+msgid "Fiscal Operation"
+msgstr "Operação Fiscal"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__forma_pagamento
+#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+msgid "Forma de Pagamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__partner_id
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line__fornecedor
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Fornecedor"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__tipo__foto
+msgid "Foto"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_fotos
+msgid "Fotos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__setor__furação
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Furação"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_search_view
+msgid "Group By"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__grupo
+msgid "Grupo"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__hr_employee__tipo_contrato__ht
+msgid "HT"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__horas_resultado
+msgid "Horas"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__extra_total
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__extra_real
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+msgid "Horas Extras"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__normal_total
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+msgid "Horas Normais"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Horas Prevista"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__horas_prevista
+msgid "Horas Previstas"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__horas_real
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__horas_total
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Horas Reais"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_os_fechamento__horas_resultado
+#: model:ir.model.fields,help:ordem_servico.field_os_fechamento__mo_resultado
+msgid "Horas Reais - Horas Previstas"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Horas Resultado"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__horas_retrabalho
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+msgid "Horas Retrabalho"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+msgid "Horas Totais"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_web_external_layout_boxed
+msgid "I. Mun.:"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_web_external_layout_boxed
+msgid "I.E.:"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_account_incoterms__id
+#: model:ir.model.fields,field_description:ordem_servico.field_account_move__id
+#: model:ir.model.fields,field_description:ordem_servico.field_account_move_line__id
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__id
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_employee__id
+#: model:ir.model.fields,field_description:ordem_servico.field_ir_attachment__id
+#: model:ir.model.fields,field_description:ordem_servico.field_l10n_br_fiscal_document__id
+#: model:ir.model.fields,field_description:ordem_servico.field_l10n_br_fiscal_operation__id
+#: model:ir.model.fields,field_description:ordem_servico.field_mgmtsystem_nonconformity__id
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_bom_line__id
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_production__id
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_certificados__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__id
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__id
+#: model:ir.model.fields,field_description:ordem_servico.field_product_category__id
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__id
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__id
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order_line__id
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__id
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line__id
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_quant__id
+msgid "ID"
+msgstr "Identificação"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "INSPEÇÃO FINAL"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "ISO 9001"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__message_needaction
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__message_has_error
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__imposto
+msgid "Imposto %"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__imposto_real
+msgid "Imposto Real"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__impostos_resultado
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Impostos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__impostos_resultado_percen
+msgid "Impostos %"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.inspecoes_form_view
+msgid "Imprimir"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_sale_order_line__cost
+msgid ""
+"In Standard Price & AVCO: value of the product (automatically computed in AVCO).\n"
+"        In FIFO: value of the next unit that will leave the stock (automatically computed).\n"
+"        Used to value the product when the purchase cost is not known (e.g. inventory adjustment).\n"
+"        Used to compute margins on sale orders."
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_account_incoterms
+msgid "Incoterms"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__name
+msgid "Inspeção"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__setor__inspeção_final
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Inspeção Final"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.act_window,name:ordem_servico.ordem_inspecoes_wizard_act_window
+#: model:ir.actions.report,name:ordem_servico.action_os_inspecoes
+#: model:ir.model,name:ordem_servico.model_os_inspecoes
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__inspecoes
+#: model_terms:ir.ui.view,arch_db:ordem_servico.inspecoes_tree_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Inspeções"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_product_category__comercial
+msgid "Item Comercial"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento de Diário"
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_account_move_line
+msgid "Journal Item"
+msgstr "Item de Diário"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "LIBERADO PARA PRODUÇÃO  ________/________/________"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "LIBERADO POR:"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__terceiros__laser
+msgid "Laser"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_account_incoterms____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_account_move____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_employee____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_ir_attachment____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_l10n_br_fiscal_document____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_l10n_br_fiscal_operation____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_mgmtsystem_nonconformity____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_bom_line____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_production____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_certificados____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_product_category____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order_line____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line____last_update
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_quant____last_update
+msgid "Last Modified on"
+msgstr "Última modificação em"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_certificados__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__write_uid
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_certificados__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__write_date
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Liberado Por"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__data_faturamento
+msgid "Liberado para Faturamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__data_producao
+msgid "Liberado para Produção"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__liberado
+msgid "Liberado por"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__apontamento
+msgid "Linha Apontamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_inspecoes_linhas
+msgid "Linhas Inspeções"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.report,name:ordem_servico.action_materiais
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__lista_produtos
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Lista de Materiais"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "Lista de Materiais - OS:"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_web_external_layout_boxed
+msgid "Logo"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__tipo__líquido_penetrante
+msgid "Líquido Penetrante"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__pro_solda__mag
+msgid "MAG-AC1"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__mo_prevista
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "MO Prevista"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "MO Real"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "MO Resultado"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "MONTAGEM"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__mp_prevista
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "MP Prevista"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "MP Resultado"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__mp_resultado
+msgid "MP/Terceiros"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__tipo_os__manutencao
+msgid "Manutencao"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__margem
+msgid "Margem"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order_line__mp_line
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Materia Prima"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+msgid "Materia Prima/Terceiros"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__materia_prima
+msgid "Matéria Prima"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__medida_real
+msgid "Medida Encontrada"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__medida_sol
+msgid "Medida Solicitada"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__medidas
+msgid "Medidas"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+msgid "Mensagem"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__ultimamsg
+msgid "Mensagens"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_impostos_position
+msgid "Meses"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__montagem
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__tipo__montagem
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__setor__montagem
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Montagem"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.act_window,name:ordem_servico.ordem_movimentacoes_act_window
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__movimentacoes
+#: model:ir.ui.menu,name:ordem_servico.ordem_movimentacoes
+msgid "Movimentações"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order_line__mo_line
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Mão de Obra"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__nf_entrada
+msgid "NF Entrada"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__nf_saida
+msgid "NF Saida"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__name
+msgid "Name"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__terceiros__nenhum
+msgid "Nenhum"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.module.category,description:ordem_servico.category_ordem_servico
+msgid "Nivel de Acesso OS"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__name
+msgid "Nome"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_mgmtsystem_nonconformity
+msgid "Nonconformity"
+msgstr "Não Conformidade"
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__tipo_os__normal
+msgid "Normal"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__nota
+msgid "Nota"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__hora_not
+msgid "Noturno"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__nao_conform
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Não Conformidades"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__status_fat__nao
+msgid "Não Faturada"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__name
+msgid "Número"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__nfe_saida
+#: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__numero_nfe
+msgid "Número NFE"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_kanban
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+msgid "Número da OS"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__os_tree
+#: model_terms:ir.ui.view,arch_db:ordem_servico.account_move_os_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.account_move_os_tree
+#: model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_production_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_production_os_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fiscal_document
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_mgmt_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+#: model_terms:ir.ui.view,arch_db:ordem_servico.sale_order_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.stock_move_line_os_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.stock_move_line_os_tree
+msgid "OS"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "OS:"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__observacoes
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_quant__obs
+msgid "Observações"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+msgid "Operations Done"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+msgid "Operations Planned"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.actions.act_window,name:ordem_servico.ordem_servico_act_window
+#: model:ir.module.category,name:ordem_servico.category_ordem_servico
+msgid "Ordem Serviço"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_ordem_servico
+msgid "Ordem de Servico"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_account_bank_statement_line__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_account_move__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_account_payment__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_l10n_br_fiscal_document__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_mgmtsystem_nonconformity__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_mrp_production__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__os_ids
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__os
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__os
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line__ordem_servico
+#: model:ir.ui.menu,name:ordem_servico.ordem_root
+#: model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence
+#: model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence_search
+#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+msgid "Ordem de Serviço"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_pivot_view
+msgid "Ordens de Serviço"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Order #"
+msgstr "Pedido #"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__orcado
+msgid "Orçado"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__orcado_gasto
+msgid "Orçado X Gastos"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.sale_order_orcamento
+msgid "Orçamento"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__outras_aca
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__outras_corte
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__outras_fin
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__outras_fura
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__outras_mont
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__outras_solda
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__outras_usi
+msgid "Outras"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__setor__outros
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__tipo__outros
+msgid "Outros"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "PEDIDO DO CLIENTE:"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__hr_employee__tipo_contrato__pj
+msgid "PJ"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "PRAZO:"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__status_fat__paga
+msgid "Paga"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_web_external_layout_boxed
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr "Pagina: <span class=\"page\"/> / <span class=\"topage\"/>"
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__state__parcial
+msgid "Parcialmente Entregue"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__parcial
+msgid "Parcialmente Pronto"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_mgmtsystem_nonconformity__partner_id
+msgid "Partner"
+msgstr "Parceiro"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__pedido
+#: model_terms:ir.ui.view,arch_db:ordem_servico.movimentacoes_tree_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Pedido"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+msgid "Pedido de Venda"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__pedido_venda_original
+msgid "Pedido de Venda Original"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Pedidos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_pedcli
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__pedidos_cliente
+msgid "Pedidos Cliente"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__pedidos_compra
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order_line__ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Pedidos de Compra"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__pedido_venda
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__pedido_venda
+msgid "Pedidos de Venda"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Pedidos do Cliente"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__percentual
+msgid "Percentual"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__tipo__peça
+msgid "Peça"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__terceiros__pintura
+msgid "Pintura"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__tipo__plano_de_corte
+msgid "Plano de Corte"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__posicao
+msgid "Posição"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__fiscal_position
+msgid "Posição Fiscal"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Prezado Sr(a).:"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__pro_solda
+msgid "Processo EPSC"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__processo
+msgid "Processo Utilizado"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_product_category
+msgid "Product Category"
+msgstr "Categoria de Produtos"
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimentos do produto (Linha do Movimento do Estoque)"
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_mrp_production
+msgid "Production Order"
+msgstr "Ordem de Produção"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__producao
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__produto
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "Produto"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__produtos
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Produtos"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Prontos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__state__draft
+msgid "Provisória"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__public
+msgid "Public"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "Purchase Order #"
+msgstr "Pedido de Compra #"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "Purchase Order Confirmation #"
+msgstr "Pedido de Compra Confirmado #"
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Linha de Pedido de Compra"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_materiais
+msgid "Qtd."
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__qtd
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Quantidade"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Quantity"
+msgstr "Qtd."
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_stock_quant
+msgid "Quants"
+msgstr "Qtds"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Quotation #"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "REGISTROS DE INSPEÇÕES"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__tipo_os__rafael
+msgid "Rafael"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Registros de Inspeções"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.ui.menu,name:ordem_servico.ordem_rel
+msgid "Relatorios"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Relatórios de Inspeções"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__tipo_os__repeticao
+msgid "Repetição"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__status__reprovado
+msgid "Reprovado"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "Request for Quotation #"
+msgstr "Cotação #"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__resp_aca
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__resp_corte
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__resp_fin
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__resp_fura
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__resp_mont
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__resp_solda
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__resp_usi
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__responsavel
+msgid "Responsável"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__responsavel
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Responsável Técnico"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__resultado
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Resultado"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__resultado_percen
+msgid "Resultado %"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+msgid "Resultados"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__retrabalho
+msgid "Retrabalho"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "SOLDAGEM"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venda"
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Linha de pedidos de venda"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__setor
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__setor
+msgid "Setor"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__solda
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__setor__solda
+msgid "Solda"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Soldagem"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.parcial_wizard_view
+msgid "Somente Entregar"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__state
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__state
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__status
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_search_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_search_view
+msgid "Status"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento de Estoque"
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__pro_solda__tig
+msgid "TIG-AC1"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_l10n_br_fiscal_operation__meses
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_impostos_position
+msgid "Taxas"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Taxes"
+msgstr "Impostos"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__terceiros
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__terceiro
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_production_os
+#: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_production_os_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Terceiros"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__tc_prevista
+msgid "Terceiros Previsto"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__teste
+msgid "Testando"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__tipo_os
+#: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__tipo
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__tipo
+msgid "Tipo"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__tipo_contrato
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_employee__tipo_contrato
+msgid "Tipo de Contrato"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__pronto
+msgid "Todos Prontos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__valor
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Total"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Total Extra"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+msgid "Total Geral"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__horas_mo
+#: model_terms:ir.ui.view,arch_db:ordem_servico.sale_order_orcamento
+msgid "Total Horas"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Total MO"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
+msgid "Total MP/Terceiros Real"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Total Normal"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__pedido
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__oss
+#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+msgid "Total OS"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__resultado
+msgid "Total Sem Imposto"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__total_gasto
+msgid "Total de Gastos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__soma_total
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Total de Horas"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_os_fechamento__total_gasto
+msgid "Total de MP Real + Total de MO Real + Comissao + Impostos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__terceiros__tratamento
+msgid "Tratamento Químico"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
+msgid "USINAGEM"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__tipo__ultrasom_em_solda
+msgid "Ultrasom em Solda"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Unit Price"
+msgstr "Preço Unitário"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__usinagem
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__setor__usinagem
+#: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__setor__usinagem
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Usinagem"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__ultiuser
+#: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__user_id
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
+msgid "Usuario"
+msgstr ""
+
+#. module: ordem_servico
+#: model:res.groups,name:ordem_servico.ordem_user
+msgid "Usuário"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_account_move_line__l10n_br_payment_value
+msgid "Valor"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order_line__valordesc
+msgid "Valor Desconto"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__valor_extra
+msgid "Valor Extra"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__valor_extra_total
+msgid "Valor Extras"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__valor_hora
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_employee__valor_hora
+msgid "Valor Hora"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__mo_resultado
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__valor_horas
+#: model:ir.model.fields,field_description:ordem_servico.field_sale_order__valor_horas
+msgid "Valor Horas"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__valor_horas_retrabalho
+msgid "Valor Horas Retrabalho"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.sale_order_orcamento
+msgid "Valor Matéria Prima"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
+msgid "Valor Pedido"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__valor_total
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Valor Total"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.sale_order_orcamento
+msgid "Valor Total Horas"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__mo_real
+msgid "Valor Total MO"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__valor_pedido
+msgid "Valor da Venda"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_os_fechamento__resultado
+msgid "Valor de Venda - Total de Gastos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__vendedor
+msgid "Vendedor"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__visual_aca
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__visual_corte
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__visual_fin
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__visual_fura
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__visual_mont
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__visual_solda
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__visual_usi
+msgid "Visual"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+msgid "Voltar para Provisória"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.parcial_wizard_view
+msgid "Warning"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
+msgid "dias"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_impostos_line
+msgid "os.impostos.line"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_listaprod
+msgid "os.listaprod"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_nfs
+msgid "os.nfs"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_os_total_purchase
+msgid "os.total.purchase"
+msgstr ""

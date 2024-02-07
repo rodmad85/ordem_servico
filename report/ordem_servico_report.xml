@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="report_os_capa" model="ir.actions.report"/>
+            <field name="name">Impressão Capa OS<field/>
+            <field name="model">ordem.servico</field>
+            <field name="repot_type">qweb-pdf</field>
+            <field name="report_name">ordem_servico_capa</field>
+            <field name="report_file">ordem_servico.capa"</field>
+            <field name="binding_model_id" ref="model_ordem_servico"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_ModelName_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

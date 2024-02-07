@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  -->
+
+<odoo>
+    <data>
+        <record id="os_impostos_position" model="ir.ui.view">
+        <field name="name">os.impostos.position</field>
+        <field name="model">l10n_br_fiscal.operation</field>
+        <field name="inherit_id" ref="l10n_br_fiscal.operation_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="Taxas" string="Taxas">
+                    <field name="meses" string="Meses" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+                        <tree string="Taxas" editable="bottom">
+                            <field name="mes"/>
+                            <field name="percentual"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+        </record>
+
+          <record id="os_fiscal_document" model="ir.ui.view">
+            <field name="name">os.fiscal.document</field>
+            <field name="model">l10n_br_fiscal.document</field>
+            <field name="inherit_id" ref="l10n_br_fiscal.document_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+                    </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

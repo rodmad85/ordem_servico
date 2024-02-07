@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  -->
+
+<odoo>
+    <data>
+        <record id="sale_order_orcamento" model="ir.ui.view">
+            <field name="name">sale.order.orcamento</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[1]" position="after">
+                    <page string="Orçamento" attrs="{'invisible':[('grupo','=', False)]}">
+                        <group>
+                            <field name="horas_mo" string="Total Horas" attrs="{'required': [('state', '=', 'sale')]}"/>
+                            <field name="valor_horas" string="Valor Total Horas"
+                                   attrs="{'required': [('state', '=', 'sale')]}"/>
+                            <field name="terceiros"/>
+                            <field name="materia_prima" string="Valor Matéria Prima"/>
+                            <field name="resultado" invisible="0"/>
+                        </group>
+                    </page>
+                </xpath>
+<!--                <xpath expr="//field[@name='partner_id']" position="after">-->
+<!--                    <field name="pedido" widget="many2many_binary" attrs="{'required': [('state', '=', 'sale')]}"/>-->
+<!--                </xpath>-->
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']"
+                       position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
+                    <field name="valordesc"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="ordem_servico" widget="many2many_tags"
+                           options="{'no_create': True, 'no_create_edit': True}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="grupo" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
+                    <attribute name="required">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="required">True</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <xpath expr="//field[@name='fiscal_position_id']" position="move"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='analytic_account_id']" position="after">
+                    <xpath expr="//field[@name='pricelist_id']" position="move"/>
+                </xpath>
+
+                <xpath expr="//field[@name='fiscal_position_id']" position="after">
+                    <xpath expr="//field[@name='tag_ids']" position="move"/>
+                </xpath>
+
+                <xpath expr="//field[@name='ordem_servico']" position="before">
+                    <xpath expr="//field[@name='client_order_ref']" position="move"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                    <field name="mo_line" optional="show"/>
+                    <field name="mp_line" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="sale_order_os" model="ir.ui.view">
+            <field name="name">sale.order.os</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
+                </xpath>
+
+                <xpath expr="//field[@name='amount_total']" position="before">
+                    <field name="mediadesc" string="Desconto(%)" optional="show" avg="Media de Desconto"/>
+                    <!--            <field name="discount_total" string="Total Desconto" optional="show" sum="Total Desconto"/>-->
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

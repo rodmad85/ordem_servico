@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file:////wsl$/Ubuntu/home/odoo/odoo14/core/.idea/core.iml" filepath="//wsl$/Ubuntu/home/odoo/odoo14/core/.idea/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ordem_servico.iml" filepath="$PROJECT_DIR$/.idea/ordem_servico.iml" />
+    </modules>
+  </component>
+</project>

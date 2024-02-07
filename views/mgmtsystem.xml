@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  -->
+
+<odoo>
+    <data>
+          <record id="os_mgmt_form" model="ir.ui.view">
+            <field name="name">os.mgmt.form</field>
+            <field name="model">mgmtsystem.nonconformity</field>
+            <field name="inherit_id" ref="mgmtsystem_nonconformity.view_mgmtsystem_nonconformity_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+                    </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

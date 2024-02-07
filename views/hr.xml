@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  -->
+
+<odoo>
+    <data>
+        <record id="extra_fields_attendence_search" model="ir.ui.view">
+       <field name="name">Filtro OS</field>
+       <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter" />
+       <field name="model">hr.attendance</field>
+       <field name="arch" type="xml">
+           <xpath expr="//search/group" position="inside">
+               <filter string="Ordem de Serviço" name="os_tree" domain="[]" context="{'group_by':'os_tree', 'default_order':'os_tree'}" />
+           </xpath>
+           <xpath expr="//search/field[@name='employee_id']" position="before">
+               <field name="os_tree"/>
+               <filter string="Ordem de Serviço" name="os_tree"/>
+           </xpath>
+       </field>
+    </record>
+
+    <record id="extra_fields_attendence" model="ir.ui.view">
+       <field name="name">Adiciona valor hora e valor total</field>
+       <field name="inherit_id" ref="hr_attendance.view_attendance_tree" />
+       <field name="model">hr.attendance</field>
+       <field name="arch" type="xml">
+           <xpath expr="//tree" position="inside">
+               <header>
+                   <button name="upaponta" string="Atualiza Valor Total" class="btn-primary" invisible="0" type="object"/>
+
+                   <button name="upvalor" string="Atualiza Valor Hora" class="btn-secondary" invisible="0" type="object"/>
+               </header>
+           </xpath>
+           <xpath expr="//field[@name='employee_id']" position="after">
+               <field name="currency_id" invisible="1"/>
+               <field name="os_tree" string="OS"/>
+               <field name="ordem_servico" string="Ordem de Serviço" widget="many2many_tags" invisible="1"/>
+           </xpath>
+           <xpath expr="//field[@name='employee_id']" position="after">
+               <field name="retrabalho"/>
+           </xpath>
+           <xpath expr="//field[@name='retrabalho']" position="after">
+               <field name="hora_not"/>
+           </xpath>
+           <xpath expr="//field[@name='hora_not']" position="after">
+               <field name="cem_porcento"/>
+           </xpath>
+           <xpath expr="//field[@name='check_out']" position="after">
+               <field name="valor_hora" widget="monetary" options="{'currency': %(base.BRL)d}" groups="ordem_servico.ordem_admin"/>
+
+           </xpath>
+            <xpath expr="//field[@name='worked_hours']" position="before">
+               <field name="normal_total" widget="float_time"/>
+               <field name="extra_total" widget="float_time"/>
+
+           </xpath>
+           <xpath expr="//field[@name='worked_hours']" position="after">
+               <field name="valor_extra_total" widget="monetary" options="{'currency': %(base.BRL)d}" />
+               <field name="valor_total" widget="monetary" options="{'currency': %(base.BRL)d}" groups="ordem_servico.ordem_admin"/>
+
+           </xpath>
+       </field>
+   </record>
+
+    <record id="valor_hora_employee" model="ir.ui.view">
+       <field name="name">Adiciona valor hora</field>
+       <field name="inherit_id" ref="hr.view_employee_form" />
+       <field name="model">hr.employee</field>
+       <field name="arch" type="xml">
+           <xpath expr="//field[@name='coach_id']" position="after">
+               <field name="valor_hora"/>
+               <field name="tipo_contrato"/>
+           </xpath>
+       </field>
+   </record>
+
+    </data>
+</odoo>

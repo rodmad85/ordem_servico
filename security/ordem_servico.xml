@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2022 Madureira
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+<data>
+
+    <record model="ir.module.category" id="category_ordem_servico">
+        <field name="name">Ordem Serviço</field>
+        <field name="description">Nivel de Acesso OS</field>
+        <field name="sequence">20</field>
+    </record>
+
+     <record id="ordem_user" model="res.groups">
+        <field name="name">Usuário</field>
+        <field name="implied_ids" eval="[(4, ref('ordem_user'))]"/>
+        <field name="category_id" ref="category_ordem_servico"/>
+        <field name="users" eval="[(4, ref('base.group_user'))]"/>
+     </record>
+
+        <record id="ordem_admin" model="res.groups">
+            <field name="name">Administrador</field>
+            <field name="category_id" ref="category_ordem_servico"/>
+            <field name="implied_ids" eval="[(4, ref('ordem_servico.ordem_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+</data>
+</odoo>

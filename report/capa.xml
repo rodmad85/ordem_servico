@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_capa_os" model="ir.actions.report">
+        <field name="name">Capa OS</field>
+        <field name="model">ordem.servico</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ordem_servico.report_ordem_capa</field>
+        <field name="report_file">ordem_servico.report_ordem_capa</field>
+        <field name="print_report_name">'OS - %s' % (object.name or '')</field>
+        <field name="binding_model_id" ref="model_ordem_servico"/>
+        <field name="binding_type">report</field>
+    </record>
+
+<template id="report_ordem_capa">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                <div class="oe_structure"/>
+                    <table class="table table-sm o_main_table table-bordered">
+
+                            <td class="text-center border:1pt solid black">
+                                <p align="center"> <h4><span t-field="o.cliente_id"/></h4></p>
+                             </td>
+
+                            <td class="text-right"><p align="center"><h2>OS: </h2></p> </td>
+                            <td class="text-center">
+                                <p align="center"> <h2><strong><span t-field="o.name"/></strong></h2></p>
+                            </td>
+                     
+                         <tr class="border: 1px solid black">
+                            <td class="text-center">
+                              
+                                <h5>PEDIDO DO CLIENTE: <t t-foreach="o.pedido_venda" t-as="ped"> <span t-field="ped.client_order_ref" /> - </t> </h5>
+                                
+                             </td>
+                         
+                             <td class="text-right">
+                                <h5>PRAZO: </h5>
+                             </td>
+                             <td></td>
+<!--                             <td class="text-center"><h5><strong><span t-field="o.data_entrega"/></strong></h5></td>-->
+                         </tr>
+
+                 </table>
+                <table class="table table-bordered table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><strong>Qtd.</strong></th>
+                            <th class="text-center"><strong>Produto</strong></th>
+                            <th class="text-center" width="170px"><strong>Desenho</strong></th>
+                            <th class="text-center" width="150px"><strong>Ent. Produção</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs.produtos" t-as="line">
+                        <tr class="border: 1px solid black">
+
+
+
+                                <td class="text-center">
+                                  <span t-field="line.product_qty" t-options='{"widget": "float", "precision": 0}'/>
+                                </td>
+                                <td id="product">
+                                  <span t-field="line.product_id.name" />
+                                </td>
+                                <td class="text-center">
+                                  <span t-field="line.product_id.default_code"/>
+                                </td>
+                                <td class="text-center">
+<!--                                    <span t-field="line.date_planned_start" t-options='{"widget": "date"}'/>-->
+                                </td>
+
+                        </tr>
+                         </t>
+                    </tbody>
+
+                </table>
+                    <table class="table table-sm o_main_table">
+                        <thead><strong>Observações</strong></thead>
+                    <td width="100%" height="120px"> <span t-field="o.observacoes"/></td>
+
+                    </table>
+                    <div class="page">
+                        <table class="table table-sm o_main_table">
+                            <thead class="text-center" >
+                               <th colspan="2"><strong> <h6>REGISTROS DE INSPEÇÕES</h6></strong></th>
+                            </thead>
+<tbody>
+                            <tr>
+                                <td class="text-center" width="50%">
+                                    <strong><h7>CORTE E DOBRA</h7></strong>
+                                <br/>
+                                   <span> &#9634; Visual  &#160;&#9634; Dimensional  &#160;&#9634; Outras ________________________</span>
+                                <br/>Responsável:________________________ - _______/_______/_______
+
+                                </td>
+                                <td class="text-center">
+                                    <strong><h7>FURAÇÃO</h7></strong>
+                                <br/>
+                                   <span> &#9634; Visual  &#160;&#9634; Dimensional  &#160;&#9634; Outras ________________________</span>
+                                <br/>Responsável:________________________ - _______/_______/_______
+
+                                </td>
+
+                            </tr>
+                            <tr>
+
+
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong><h7>MONTAGEM</h7></strong>
+                                <br/>
+                                   <span> &#9634; Visual  &#160;&#9634; Dimensional  &#160;&#9634; Outras ________________________</span>
+                                <br/>Responsável:________________________ - _______/_______/_______
+
+                                </td>
+                                <td class="text-center">
+                                    <strong><h7>USINAGEM</h7></strong>
+                                <br/>
+                                   <span> &#9634; Visual  &#160; &#9634; Dimensional  &#160; &#9634; Outras ________________________</span>
+                                <br/>Responsável:________________________ - _______/_______/_______
+
+                                </td>
+
+
+                            </tr>
+                            <tr>
+                                <td class="text-center" colspan="2">
+                                    <strong><h7>SOLDAGEM</h7></strong><br/>
+                                    <span>PROCESSO REALIZADO CONFORME EPSC______ REV.______</span>
+                                    <span>&#160; &#160;&#160;&#160;&#160; &#160; &#160; &#9634; Visual &#160; &#9634; Outras ______________________________________</span>
+                                    Responsável:__________________________________ &#160; &#160; &#160; &#160; &#160; &#160;DATA: _______/_______/_______
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <strong><h7>ACABAMENTO</h7></strong>
+                                <br/>
+                                   <span> &#9634; Visual  &#160; &#9634; Dimensional  &#160; &#9634; Outras ________________________</span>
+                                <br/>Responsável:________________________ - _______/_______/_______
+
+                                </td>
+                                <td class="text-center">
+                                    <strong><h7>INSPEÇÃO FINAL</h7></strong>
+                                <br/>
+                                   <span> &#9634; Visual  &#160; &#9634; Dimensional  &#160; &#9634; Outras ________________________</span>
+                                <br/>Responsável:________________________ - _______/_______/_______
+
+                                </td>
+                            </tr>
+
+</tbody>
+                        </table>
+</div>
+                            <div class="footer">
+                              <table class="o_report_layout_boxed">
+
+                           <tr>
+                            <td class="text-left" width="50%">
+                                    <br/><br/><strong><h7>LIBERADO PARA PRODUÇÃO  ________/________/________</h7></strong><br/><br/>
+                                </td>
+                             <td class="text-left" width="50%">
+<!--                                    <br/><br/><strong><h7>LIBERADO PARA FATURAMENTO  ________/________/________</h7></strong><br/><br/>-->
+                                </td>
+                            </tr>
+                           <tr>
+                                <td class="text-left" > ELABORADO POR: <span t-field="o.user_id"/></td>
+
+
+                                    <td class="text-leftt">DATA: <span t-field="o.create_date" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/> </td>
+
+                           </tr>
+                                <tr>
+                                    <td class="text-left">LIBERADO POR: <span t-field="o.liberado"/></td>
+
+
+                                    <td class="text-left">DATA:</td>
+
+
+                                </tr>
+
+
+                                </table>
+                            </div>
+                </div>
+
+            </t>
+        </t>
+    </t>
+
+</template>
+
+</odoo>

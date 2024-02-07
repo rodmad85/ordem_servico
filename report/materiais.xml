@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+      <record id="action_materiais" model="ir.actions.report">
+        <field name="name">Lista de Materiais</field>
+        <field name="model">ordem.servico</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ordem_servico.report_ordem_materiais</field>
+        <field name="report_file">ordem_servico.report_ordem_materiais</field>
+        <field name="print_report_name">'Lista de Materiais OS %s' % (object.name or '')</field>
+        <field name="binding_model_id" ref="model_ordem_servico"/>
+        <field name="binding_type">report</field>
+    </record>
+        <template id="report_ordem_materiais">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+<!--                <div class="page">-->
+                <div class="oe_structure"/>
+                                 <!--  <table class="table table-sm o_main_table table-bordered">
+
+                            <td class="text-center border:1pt solid black"> -->
+                             <div align="center"> <p align="center"><strong><h4>Lista de Materiais - OS: <span t-field="o.name"/> - <span t-field="o.cliente_id"/></h4></strong></p> <!--<td class="text-right"> </td>-->
+								</div>
+                   <!-- </table>-->
+                <table class="table table-bordered table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><strong>Qtd.</strong></th>
+                            <th class="text-center"><strong>Produto</strong></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs.produtos" t-as="line">
+                        <tr class="border: 1px solid black">
+
+
+
+                                <td class="text-center">
+                                  <span t-field="line.product_qty" t-options='{"widget": "float", "precision": 0}'/>
+                                </td>
+                                <td id="product">
+                                  <span t-field="line.product_id.name" />
+                                </td>
+
+
+                        </tr>
+                         </t>
+                    </tbody>
+
+                </table>
+                   <div align="center"> <h5><span t-if="o.lista_produtos.filtered(lambda x: x.produto.categ_id.comercial == false)" class="text-center"><strong>Matéria Prima</strong></span></h5></div>
+<!--                            </div>-->
+
+                            <table class="table table-sm" t-if="o.lista_produtos">
+<!--                                <t t-set="dimensoes" t-value="any(m.dimensoes for m in o.lista_produtos"/>-->
+<!--                                <t t-set="estoque" t-value="any(m.estoque for m in o.lista_produtos)"/>-->
+                                <thead t-if="o.lista_produtos.filtered(lambda x: x.produto.categ_id.comercial == false)">
+                                    <tr>
+                                        <th class="text-center">Qtd.</th>
+                                        <th class="text-center">Produto</th>
+                                        <th class="text-center">Dimensões</th>
+                                        <th class="text-center">Estoque</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-if="o.lista_produtos">
+                                        <tr t-foreach="o.lista_produtos.filtered(lambda x: x.produto.categ_id.comercial == false)" t-as="raw_line">
+                                               <td width="10%">
+                                                <span class="text-center" t-field="raw_line.qtd"/>
+<!--                                                <span t-field="raw_line.product_uom" groups="uom.group_uom"/>-->
+                                            </td>
+                                            <td>
+                                                <span t-field="raw_line.produto"/>
+                                            </td>
+                                             <td class="text-center">
+                                                <span t-field="raw_line.dimensoes" />
+                                            </td>
+
+                                             <td class="text-center">
+                                                <span t-field="raw_line.estoque" />
+                                            </td>
+
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <br/>
+
+                                <div align="center"><h5><span t-if="o.lista_produtos.filtered(lambda x: x.produto.categ_id.comercial)" class="text-center"><strong>Itens Comerciais</strong></span></h5></div>
+
+                                <table class="table table-sm" t-if="o.lista_produtos">
+
+                                <thead t-if="o.lista_produtos.filtered(lambda x: x.produto.categ_id.comercial)">
+                                    <tr>
+                                        <th class="text-center">Qtd.</th>
+                                        <th class="text-center">Produto</th>
+                                        <th class="text-center">Dimensões</th>
+                                        <th class="text-center">Estoque</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-if="o.lista_produtos">
+                                        <tr t-foreach="o.lista_produtos.filtered(lambda x: x.produto.categ_id.comercial)" t-as="com_line">
+                                             <td width="10%">
+                                                <span t-field="com_line.qtd"/>
+<!--                                                <span t-field="com_line.product_uom" groups="uom.group_uom"/>-->
+                                            </td>
+                                            <td>
+                                                <span t-field="com_line.produto"/>
+                                            </td>
+                                             <td class="text-center">
+                                                <span t-field="com_line.dimensoes" />
+                                            </td>
+
+                                             <td class="text-center">
+                                                <span t-field="com_line.estoque" />
+                                            </td>
+
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <div class="footer">
+
+                            </div>
+<!--                </div>-->
+            </t>
+        </t>
+    </t>
+        </template>
+
+</odoo>
