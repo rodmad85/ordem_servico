@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+       <record id="inspecoes_form_view" model="ir.ui.view">
+            <field name="name">os.inspecoes.form</field>
+            <field name="model">os.inspecoes</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="print_insp" type="object" string="Imprimir" class="oe_highlight"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="status"/>
+                                <field name="ordem_servico" widget="many2many_tags" readonly="1"/>
+                                <field name="tipo"/>
+                                <field name="producao" domain="[('ordem_servico','=',ordem_servico)]" />
+                                <field name="produto_desenho"/>
+                                <field name="responsavel"/>
+                            </group>
+                            <group>
+                                <field name="data_criacao"/>
+                                <field name="setor"/>
+                                <field name="processo"/>
+                                <field name="desvio"/>
+
+                            </group>
+                            <group>
+                                <field name="nota"/>
+
+                            </group>
+                            <group>
+                                <field name="conclusao"/>
+
+                            </group>
+                        </group>
+                        <notebook>
+                            <page>
+                                <field name="medidas" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
+                                     <tree editable="bottom">
+                                        <field name="posicao" width="25%"/>
+                                        <field name="medida_sol" width="25%"/>
+                                        <field name="medida_real" width="25%"/>
+                                        <field name="medida_total" width="25%" readonly="1" force_save="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="inspecoes_tree_view" model="ir.ui.view">
+            <field name="name">os.inspecoes.tree</field>
+            <field name="model">os.inspecoes</field>
+            <field name="arch" type="xml">
+                <tree string="Inspeções">
+                    <field name="name"/>
+                    <field name="tipo"/>
+                    <field name="produto_desenho"/>
+                    <field name="producao" widget="many2one"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        <record id="inspecoes_search_view" model="ir.ui.view">-->
+<!--            <field name="name">os.inspecoes.search</field>-->
+<!--            <field name="model">os.inspecoes</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="ModelTitle">-->
+<!--                    <group expand="1" string="Group By">-->
+<!--                        <filter string="Nome" name="name" domain="[]"-->
+<!--                                context="{'group_by':'name'}"/>-->
+<!--                    </group>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+
+
+</odoo>
