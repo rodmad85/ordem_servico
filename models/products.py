@@ -9,7 +9,7 @@ class CalcAttribute (models.Model):
 class ProdDimensions(models.Model):
     _inherit = "product.product"
 
-    peso_esp = fields.Float(string='Peso Específico Kg/m³', store=True)
+    peso_esp = fields.Float(string='Peso Específico Kg/m³', store=True, default=7800)
     peso_calc = fields.Float(string='Peso Calculado', digits='Stock Weight', compute='_calcpeso')
 
     @api.onchange('volume','peso_esp')
@@ -36,7 +36,8 @@ class ProdDimensions(models.Model):
             self.peso_calc = self.volume * self.peso_esp
             self.weight = self.peso_calc
         else:
-            self.peso_esp = 0
+            self.peso_calc = 0
+
 
 
 
