@@ -82,7 +82,11 @@
                 <field name="name" string="Número da OS" readonly="1" decoration-bf="1"/>
                 <field name="cliente_id" string="Cliente" readonly="1" decoration-bf="1"/>
                 <field name="empresa" string="Empresa"/>
-
+                <field name="apontapend"/>
+                <field name="comprapend"/>
+                <field name="certpend"/>
+                <field name="desenhopend"/>
+                <field name="insppend"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_card oe_kanban_global_click">
@@ -106,7 +110,82 @@
                                 <field name="state" widget="label_selection"/>
                                 <field name="status_fat" widget="label_selection"/>
                             </div>
+
+                            <div class="float_right" t-if="record.apontapend.raw_value == 'Faltando'" name="apontfalt">
+                                <span>Apontamento</span>
+                                <span class="fa fa-circle text-warning" role="img" aria-label="Apontamento"
+                                      title="Apontamento"
+                                      name="apontapend"/>
+
+                            </div>
+                            <div class="float_right" t-if="record.apontapend.raw_value == 'Concluido'" name="apontconclu">
+                                <span>Apontamento</span>
+                                <span class="fa fa-circle text-success" role="img" aria-label="Apontamento"
+                                      title="Apontamento"
+                                      name="apontapend"/>
+                            </div>
+
+
+                            <div class="oe_kanban_bottom_right" t-if="record.comprapend.raw_value == 'Faltando'" name="compras">
+                                <span>Compras</span>
+                                <span class="fa fa-circle text-warning" role="img" aria-label="Compras" title="Compras"
+                                      name="comprapend"/>
+
+                            </div>
+                            <div class="oe_kanban_bottom_right" t-if="record.comprapend.raw_value == 'Concluido'" name="compras">
+                                <span>Compras</span>
+                                <span class="fa fa-circle text-success" role="img" aria-label="Compras" title="Compras"
+                                      name="comprapend"/>
+
+                            </div>
+                            <div class="oe_kanban_bottom_right" t-if="record.certpend.raw_value == 'Faltando'" name="certificados">
+                                <span>Certificados</span>
+                                <span class="fa fa-circle text-warning" role="img" aria-label="Certificados"
+                                      title="Certificados" name="certpend">
+
+                                </span>
+                            </div>
+
+                            <div class="oe_kanban_bottom_right" t-if="record.certpend.raw_value == 'Concluido'" name="certificados">
+                                <span>Certificados</span>
+                                <span class="fa fa-circle text-success" role="img" aria-label="Certificados"
+                                      title="Certificados" name="certpend">
+
+                                </span>
+                            </div>
+
+                            <div class="oe_kanban_bottom_right" t-if="record.desenhopend.raw_value == 'Faltando'" name="desenhos">
+                                <span>Desenhos</span>
+                                <span class="fa fa-circle text-warning" role="img" aria-label="Desenhos"
+                                      title="Desenhos" name="desenhospend">
+
+                                </span>
+                            </div>
+                            <div class="oe_kanban_bottom_right" t-if="record.desenhopend.raw_value == 'Concluido'" name="desenhos">
+                                <span>Desenhos</span>
+                                <span class="fa fa-circle text-success" role="img" aria-label="Desenhos"
+                                      title="Desenhos" name="desenhospend">
+
+                                </span>
+                            </div>
+                            <div class="oe_kanban_bottom_right" t-if="record.insppend.raw_value == 'Faltando'" name="inspecoes">
+                                <span>Inspeções</span>
+                                <span class="fa fa-circle text-warning" role="img" aria-label="Inspeções"
+                                      title="Inspeções" name="insppend">
+
+                                </span>
+                            </div>
+                            <div class="oe_kanban_bottom_right" t-if="record.insppend.raw_value == 'Concluido'" name="inspecoes">
+                                <span>Inspeções</span>
+                                <span class="fa fa-circle text-success" role="img" aria-label="Inspeções"
+                                      title="Inspeções" name="insppend">
+
+                                </span>
+                            </div>
+
+
                         </div>
+
                     </t>
 
                 </templates>
@@ -139,34 +218,51 @@
                         <h1>
                             <field name="name" readonly="1"/>
                         </h1>
-                        <field name="tipo_os"/>
                     </div>
-                    <group>
-                        <group>
-                            <field name="cliente_id" readonly="1" force_save="1"/>
-                            <field name="responsavel" string="Responsável Técnico" widget="many2many_tags"/>
-                            <field name="data_base"/>
-                            <field name="data_entrega"/>
-                            <field name="entrega_efetiva"/>
-                            <field name="empresa" string="Empresa" readonly="1" force_save="1"/>
-                        </group>
-                        <group>
-                            <field name="pedido_venda_original" widget="many2many_tags"
-                                   attrs="{'required':[('tipo_os','=','repeticao')], 'invisible':[('tipo_os','!=','repeticao')]}"/>
-                            <field name="pedido_venda" widget="many2many_tags"
-                                   attrs="{'required':[('tipo_os','=','normal')],'required':[('tipo_os','=','repeticao')]}"/>
-                            <field name="vendedor"/>
-                            <field name="status_fat"/>
+                <group>
 
-                            <field name="user_id" string="Elaborado Por"/>
-                            <field name="liberado" string="Liberado Por"/>
-                        </group>
+                    <group>
+                        <field name="tipo_os"/>
+                        <field name="cliente_id" readonly="1" force_save="1"/>
+                        <field name="responsavel" string="Responsável Técnico" widget="many2many_tags"/>
+                        <field name="data_base"/>
+                        <field name="data_entrega"/>
+                        <field name="entrega_efetiva"/>
+                        <field name="empresa" string="Empresa" readonly="1" force_save="1"/>
                     </group>
+                    <group>
+                        <field name="pedido_venda_original" widget="many2many_tags"
+                               attrs="{'required':[('tipo_os','=','repeticao')], 'invisible':[('tipo_os','!=','repeticao')]}"/>
+                        <field name="pedido_venda" widget="many2many_tags"
+                               attrs="{'required':[('tipo_os','=','normal')],'required':[('tipo_os','=','repeticao')]}"/>
+                        <field name="vendedor"/>
+                        <field name="status_fat"/>
+
+                        <field name="user_id" string="Elaborado Por"/>
+                        <field name="liberado" string="Liberado Por"/>
+
+
+                    </group>
+</group>
                     <group>
                         <field name="observacoes"/>
                     </group>
                     <notebook>
+                        <page string="Pendências">
+                            <group>
+                                <group>
+                                    <field name="apontapend"/>
+                                    <field name="comprapend"/>
+                                    <field name="certpend"/>
+                                </group>
+                                <group>
 
+                                    <field name="desenhopend"/>
+                                    <field name="insppend"/>
+                                </group>
+                            </group>
+
+                        </page>
                         <page string="Produtos" name="produtos">
                             <field name="produtos" widget="many2many" mode="tree,kanban" nolabel="1"
                                    domain="[('state','!=','cancel')]">
@@ -226,11 +322,11 @@
 
                         </page>
 
-                        <page string="Pedidos" name="Pedidos">
+                        <page string="Compras" name="Pedidos">
                             <group>
                                 <group name="pedidos_compra" string="Pedidos de Compra">
                                     <field name="pedidos_compra" mode="tree,kanban" widget="many2many" nolabel="1">
-                                        <tree string="Pedidos de Compra">
+                                        <tree>
                                             <field name="order_id" string="Pedido"/>
                                             <field name="partner_id" string="Fornecedor"/>
                                             <field name="product_id"/>
@@ -242,11 +338,7 @@
                                         </tree>
                                     </field>
                                 </group>
-                                <group name="pedidos_cliente" string="Pedidos do Cliente"
-                                       groups="ordem_servico.ordem_admin">
-                                    <field name="pedido" widget="many2many_binary"/>
 
-                                </group>
 
                             </group>
 

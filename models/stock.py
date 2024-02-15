@@ -23,6 +23,12 @@ class OsStock(models.Model):
 
     ordem_servico = fields.Many2many('ordem.servico', 'stock_move_rel_os', 'os_id', 'id',
                                      string='Ordem de Serviço', required=False, index=True, copy=False)
+    secondary_uom_qty = fields.Float('Qtd. Secundária')
+    secondary_uom_id = fields.Many2one("product.secondary.unit",
+        inverse_name="product_movesec_id",
+        string="Secondary Unit of Measure",
+        help="Default Secondary Unit of Measure.",
+    )
 
     dimensoes = fields.Char(string='Dimensões', store=True)
     estoque = fields.Char(string='Estoque', store=True)
@@ -34,6 +40,8 @@ class OsStockLine(models.Model):
     ordem_servico = fields.Many2many('ordem.servico', 'stock_move_line_os', 'os_id', 'id',
                                      string='Ordem de Serviço', required=False, index=True, copy=False,
                                      related='move_id.ordem_servico')
+    secondary_uom_qty = fields.Float('Qtd. Secundária', related='move_id.secondary_uom_qty')
+    # secondary_uom_id = fields.Many2one(related='move_id.secondary_uom_id')
     fornecedor = fields.Many2one(string='Fornecedor', related='picking_id.partner_id')
 
 
@@ -45,3 +53,44 @@ class OsIncoterm(models.Model):
         for rec in self:
             result.append((rec.id, '%s - %s'%(rec.code,rec.name)))
         return result
+
+
+# class OsStockCertWiz(models.TransientModel):
+#     _name = 'os.stockcert.wizard'
+#     _description = 'Certificado Wizard'
+#
+#     msg = fields.Text(string="Deseja receber todos os certificados?", default="Deseja receber todos os certificados?", readonly=True)
+#     linhas = fields.One2many('stock.move', 'product_move_cert', string='Produtos com Certificado')
+#
+#     def action_done(self):
+#         for line in self.linhas.mapped('certificado'):
+#             line.button_done_cert()
+#
+# class OsStockCertwizLine(models.TransientModel):
+#     _name = 'os.stockcert.wizard.line'
+#     _description = 'Linhas Certificados Wizard'
+#
+#     product_id = fields.Many2one('product.product','Produto')
+
+
+
+#         _inherit = "stock.picking"
+
+    # def button_validate(self):
+    #     super(OsStockPicking,self).button_validate(self)
+    #     picks = self.env['stock.picking'].search([('certificado', '=', True)])
+    #     if picks:
+    #         view = self.env.ref('os.stockcert.view')
+    #         return {
+    #             'name': _('Certificados'),
+    #             'type': 'ir.actions.act_window',
+    #             'view_mode': 'form',
+    #             'res_model': 'os.stockcert.wizard',
+    #             'views': [(view.id, 'form')],
+    #             'view_id': view.id,
+    #             'target': 'new',
+    #             'context': dict(self.env.context,
+    #                             default_pick_ids=[(4, picks.id) for picks in self]),
+    #         }
+
+        #Cria a lista de produtos com certificado

@@ -10,6 +10,8 @@ class OsPurchaseLine(models.Model):
     def _prepare_stock_move_vals(self, picking, price_unit, product_uom_qty, product_uom):
         vals = super(OsPurchaseLine, self)._prepare_stock_move_vals(picking, price_unit, product_uom_qty, product_uom)
         vals['ordem_servico'] = self.ordem_servico.ids
+        vals['secondary_uom_qty'] = self.secondary_uom_qty
+        vals['secondary_uom_id'] = self.secondary_uom_id
         return vals
 
 class OsPurchase(models.Model):
@@ -41,3 +43,4 @@ class TotalOs(models.Model):
     os = fields.Many2one('ordem.servico', string='Ordem de Serviço', store=True, copy=True)
     valor = fields.Float(string="Total")
     pedido = fields.Many2many('purchase.order', 'purchase_totalos_rel', 'os_total_purchase_id', 'purchase_order_id', string='Total OS', store=True, copy=True)
+

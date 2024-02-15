@@ -20,8 +20,8 @@ class OsSale(models.Model):
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", )
     grupo = fields.Boolean(string='Grupo', compute='_check_group', default=True)
     mediadesc = fields.Float(string='Media Desc', compute='_mediadesc', store=True)
-    pedido = fields.Many2many('ordem.servico', 'pedicliente_os_rel', 'pedido_id', 'ir_attachment_id',
-                              string="Pedidos Cliente", store=True, copy=True)
+    pedido = fields.Many2many('ir.attachment', 'pedicliente_os_rel', 'ir_attachment_id', 'pedido_id',
+                              string='Pedido', store=True, copy=True)
 
 
     #Cálculo de valor de orçamento

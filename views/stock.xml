@@ -21,11 +21,15 @@
        <field name="model">stock.picking</field>
        <field name="arch" type="xml">
            <xpath expr="//field[@name='move_ids_without_package']/tree" position="inside">
+               <field name="secondary_uom_qty"/>
+               <field name="secondary_uom_id" string="Unid. Secundaria"/>
                <field name="ordem_servico" widget="many2many_tags"/>
                <field name="certificado"/>
            </xpath>
        </field>
    </record>
+
+
 
     </data>
 </odoo>

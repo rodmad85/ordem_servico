@@ -249,9 +249,9 @@
                 <strong>Fiscal Position Remark:</strong>
                 <span t-field="doc.fiscal_position_id.sudo().note"/>
             </p>
-              <p t-if="doc.payment_term_id.note">
-                <span t-field="doc.payment_term_id.note"/>
-            </p>
+<!--              <p t-if="doc.payment_term_id.note">-->
+<!--                <span t-field="doc.payment_term_id.note"/>-->
+<!--            </p>-->
             <br/>
             <div class="last-page">
               <div class="mt32 m164 mr4" name="contato">

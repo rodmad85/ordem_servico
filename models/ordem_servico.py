@@ -43,8 +43,7 @@ class OrdemServico(models.Model):
     nf_saida = fields.Many2many('os.nfs', 'nf_saida_rel', 'os_id', 'os_nfs_id',
                                 string='NF Saida', readonly=False, store=True, copy=True)
     observacoes = fields.Text(string="Observações", store=True, copy=True)
-    pedido = fields.Many2many('ir.attachment', 'pedicliente_os_rel', 'ir_attachment_id', 'pedido_id',
-                              string='Pedido', store=True, copy=True)
+
     pedidos_compra = fields.Many2many('purchase.order.line', 'purchase_order_line_os_rel', 'os_id',
                                       'purchase_order_line_id', string='Pedidos de Compra', store=True, copy=True, domain="[('state','==','purchase')]")
     pedido_venda = fields.Many2many('sale.order', 'ordem_servico_rel_sale', 'os_id', 'sale_order_id',
@@ -120,6 +119,48 @@ class OrdemServico(models.Model):
     outras_fin = fields.Char(string='Outras', store=True, default='')
     resp_fin = fields.Many2one('hr.employee', string='Responsável', index=True)
     dt_fin = fields.Date(string='Dt. Insp. Final', store=True, copy=True)
+
+    apontapend = fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')], string='Apontamentos', compute='_apontapend')
+    comprapend = fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Compras', compute='_comprapend')
+    certpend = fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Certificados', compute='_certpend')
+    desenhopend = fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Desenhos', compute='_desenhopend')
+    insppend =fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Inspeções', compute='_insppend')
+
+    def _apontapend(self):
+        for rec in self:
+            if rec.apontamento:
+                rec.apontapend = 'Concluido'
+            else:
+                rec.apontapend = 'Faltando'
+
+    def _comprapend(self):
+        for rec in self:
+            if rec.pedidos_compra:
+                rec.comprapend = 'Concluido'
+            else:
+                rec.comprapend = 'Faltando'
+
+    def _certpend(self):
+        for rec in self:
+            if rec.certificado:
+                rec.certpend = 'Concluido'
+            else:
+                rec.certpend = 'Faltando'
+
+    def _desenhopend(self):
+        for rec in self:
+            if rec.desenhos:
+                rec.desenhopend = 'Concluido'
+            else:
+                rec.desenhopend = 'Faltando'
+    def _insppend(self):
+        for rec in self:
+            if rec.resp_fin and rec.dt_fin:
+                rec.insppend = 'Concluido'
+            else:
+                rec.insppend = 'Faltando'
+
+
 
     def _lista_produtos(self):
 
@@ -229,6 +270,17 @@ class OrdemServico(models.Model):
             raise ValidationError("Selecione um status de faturamento diferente de Não Faturada.")
         if self.entrega_efetiva == False:
             raise ValidationError("Digite a data da entrega efetiva para encerrar a OS.")
+
+        mporca = self.pedido_venda.materia_prima
+        if mporca > 1:
+            if not self.pedidos_compra:
+               raise  ValidationError("Insira um pedido de compra para encerrar a OS.")
+
+        if not self.respfin:
+            raise ValidationError("Selecione um Responsável pela Inspeção Final.")
+        if not self.dtfin:
+            raise  ValidationError("Insira a data da Inspeção Final")
+
         else:
             self.write({'state': 'concluida'})
             self.message_post(body=_("Ordem de Serviço Concluida"))
@@ -250,6 +302,19 @@ class OrdemServico(models.Model):
         pedidos = self.pedido_venda.ids
         for ped in pedidos:
             self.env['sale.order'].browse(ped).write({'state': 'draft'})
+
+# class OrdemServicoPendencias(models.Model):
+#     _name = "ordem.servico.pendencias"
+#
+#     compras = fields.Many2many()
+#     desenhos = fields.Many2many()
+#     apontamentos = fields.Many2many()
+#     entregas = fields.Many2many()
+#     inspecoes = fields.Char()
+#
+# class OsComprasPend(models.Model):
+#     _name = "os.compras.pend"
+
 
 class OsListaprod(models.Model):
     _name="os.listaprod"
