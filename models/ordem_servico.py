@@ -55,7 +55,7 @@ class OrdemServico(models.Model):
                                 string='Produtos', store=True, copy=True, domain="[('state', '!=', 'cancel')]")
 
     lista_produtos = fields.Many2many('os.listaprod','mrplist_rel_os','mrplist_id', 'os_id', string='Lista de Materiais', store=True, compute='_lista_produtos')
-
+    consumidos = fields.Many2many('os.consumidos', 'consumidos_rel_os','consumido_id', 'os_id', string='Ordem de Serviço', compute='_consumidos')
     nao_conform =fields.Many2many('mgmtsystem.nonconformity', 'os_rel_mgmt', 'os_id','mgmt_id', string='Não Conformidades')
 
     inspecoes = fields.Many2many('os.inspecoes', 'inspecoes_rel_os', 'os_inspecoes_id', 'os_id', string='Inspeções', store=True, copy=True)
@@ -174,6 +174,23 @@ class OrdemServico(models.Model):
                     for y in lista:
                         self.lista_produtos = [(0,0,{'produto': y.product_id.id,'qtd': y.product_qty, 'dimensoes': y.dimensoes, 'estoque': y.estoque})]
 
+    def _consumidos(self):
+        if self.lista_produtos:
+            self.lista_produtos = [(5)]
+        for rec in self.produtos:
+            if rec.state != 'cancel':
+                    lista_id = rec.move_raw_ids
+
+                    if lista_id:
+                        for x in lista_id:
+                            if x.quantity_done > 0:
+                                produto = x.product_id.id
+                                qtd = x.product_uom_qty
+                                qtddone = x.quantity_done
+                                dimensoes = x.dimensoes
+                                estoque = x.estoque
+
+                                self.consumidos = [(0,0,{'produto_con': produto,'qtd_con': qtd, 'qtd_consumido': qtddone,'dim_con': dimensoes, 'est_con': estoque})]
 
 
 
@@ -275,7 +292,8 @@ class OrdemServico(models.Model):
         if mporca > 1:
             if not self.pedidos_compra:
                raise  ValidationError("Insira um pedido de compra para encerrar a OS.")
-
+        if not self.apontamento:
+            raise ValidationError("Insira um apontamento para encerrar a OS.")
         if not self.respfin:
             raise ValidationError("Selecione um Responsável pela Inspeção Final.")
         if not self.dtfin:
@@ -324,6 +342,16 @@ class OsListaprod(models.Model):
     estoque = fields.Boolean(string='Estoque')
     dimensoes = fields.Char(string='Dimensões')
     qtd = fields.Float(string='Quantidade')
+
+class OsConsumidos(models.Model):
+    _name="os.consumidos"
+
+    os = fields.Many2many('ordem.servico', 'consumidos_rel_os','os_id', 'consumido_id', string='Ordem de Serviço')
+    produto_con = fields.Many2one('product.product',string='Produto')
+    est_con = fields.Boolean(string='Estoque')
+    dim_con = fields.Char(string='Dimensões')
+    qtd_con = fields.Float(string='Quantidade')
+    qtd_consumido = fields.Float(string='Qtd. Consumido')
 
 class OsParcialWizard(models.TransientModel):
     _name = 'os.parcial.wizard'

@@ -292,6 +292,18 @@
                                     <field name="estoque"/>
                                 </tree>
                             </field>
+                            <group string="Consumidos">
+                                <field name="consumidos" widget="section_and_note_one2many" mode="tree,kanban"
+                                   nolabel="1">
+                                <tree string="Consumidos" editable="bottom">
+                                    <field name="qtd_con"/>
+                                    <field name="qtd_consumido"/>
+                                    <field name="produto_con"/>
+                                    <field name="dim_con"/>
+                                    <field name="est_con"/>
+                                </tree>
+                            </field>
+                            </group>
                         </page>
                         <page string="Apontamento" name="Apontamento"
                               groups="ordem_servico.ordem_admin,hr_attendance.group_hr_attendance_manager">

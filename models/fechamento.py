@@ -163,22 +163,23 @@ class OsFechamento(models.Model):
     @api.depends('os_ids.state')
     def _amount_imposto_real(self):
         for rec in self:
-            if rec.entrega_efetiva:
-                entrega = datetime.strftime(self.entrega_efetiva, '%m/%Y')
-                pedi = rec.os_ids.pedido_venda
-                if len(pedi) > 1:
-                    posi = pedi[0].fiscal_position_id.id
-                else:
-                    posi = pedi.fiscal_position_id.id
-                posicoes = self.env["os.impostos.line"].search([('fiscal_position', '=', posi)])
-                for i in posicoes:
-                    dt = datetime.strftime(i.mes, '%m/%Y')
-                    if dt == entrega:
-                        self.imposto_real = i.percentual
-                        self.posicao = self.env["l10n_br_fiscal.operation"].browse(posi)
+            if rec.posicao:
+                if rec.entrega_efetiva:
+                    entrega = datetime.strftime(self.entrega_efetiva, '%m/%Y')
+                    pedi = rec.os_ids.pedido_venda
+                    if len(pedi) > 1:
+                        posi = pedi[0].fiscal_position_id.id
+                    else:
+                        posi = pedi.fiscal_position_id.id
+                    posicoes = self.env["os.impostos.line"].search([('fiscal_position', '=', posi)])
+                    for i in posicoes:
+                        dt = datetime.strftime(i.mes, '%m/%Y')
+                        if dt == entrega:
+                            self.imposto_real = i.percentual
+                            self.posicao = self.env["l10n_br_fiscal.operation"].browse(posi)
 
-                rec.write({'imposto_real': self.imposto_real / 100,
-                           'impostos_resultado': rec.valor_pedido * (self.imposto_real / 100)})
+                    rec.write({'imposto_real': self.imposto_real / 100,
+                               'impostos_resultado': rec.valor_pedido * (self.imposto_real / 100)})
 
     @api.depends('os_ids.state')
     def _amount_mp_real(self):
