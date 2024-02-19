@@ -179,7 +179,7 @@ class OrdemServico(models.Model):
     def _consumidos(self):
         if self.produtos:
             for rec in self.produtos:
-                if rec.state != 'cancel' or rec.state!='draft':
+                if rec.state != 'cancel' and rec.state!='draft':
                     lista_id = rec.move_raw_ids
 
                     if lista_id:
@@ -194,6 +194,8 @@ class OrdemServico(models.Model):
                                 produtocli = rec.product_id.id
 
                                 self.consumidos = [(0,0,{'produto_con': produto,'qtd_con': qtd, 'qtd_consumido': qtddone,'dim_con': dimensoes, 'est_con': estoque, 'valor_con': valor,'produto_cli':produtocli})]
+                            else:
+                                self.consumidos = [(6, 0, [])]
         else:
             self.consumidos = [(6, 0, [])]
 
