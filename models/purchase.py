@@ -20,7 +20,8 @@ class OsPurchase(models.Model):
     forma_pagamento = fields.Many2one('payment.acquirer', string='Forma de Pagamento', required=False,
                                       ondelete='restrict', index=True, copy=False)
     oss = fields.Many2many('os.total.purchase', 'purchase_totalos_rel','purchase_order_id', 'os_total_purchase_id', string='Total OS', store=True, copy=True)
-
+    certificados = fields.Many2many('ir.attachment', 'certificados_os_rel', 'ir_attachment_id', 'arquivos_id',
+                                    string='Certificado', store=True, copy=False, required=True)
     def uposs(self):
         ids = self.order_line
         ordens = tuple(set(ids.ordem_servico))

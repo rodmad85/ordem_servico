@@ -65,6 +65,8 @@ class OsFechamento(models.Model):
 
     mo_real = fields.Monetary(string='Valor Total MO', store=True, copy=True, compute='_amount_mo_real', group_operator='sum')
     mp_real = fields.Monetary(string='Compras Real', store=True, copy=True, compute='_amount_mp_real', group_operator='sum')
+    consumidos = fields.Many2many(related='os_ids.consumidos')
+    consumidos_total = fields.Monetary('Consumido', compute='_amount_consumidos')
     comissao_real = fields.Monetary(string='Comissão Real', store=True, copy=True, group_operator='sum')
     imposto_real = fields.Float(string='Imposto Real', store=True, copy=True, group_operator='sum', compute='_amount_imposto_real')
     progress_compra = fields.Float(string='% Compras', store=True, compute='_compute_compra')
@@ -182,10 +184,17 @@ class OsFechamento(models.Model):
                                'impostos_resultado': rec.valor_pedido * (self.imposto_real / 100)})
 
     @api.depends('os_ids.state')
+
+    def _amount_consumidos(self):
+        for rec in self:
+            total = sum(rec.os_ids.consumidos.mapped('valor_con')) if rec.os_ids.consumidos else 0
+            rec.consumidos_total = total
+
     def _amount_mp_real(self):
         for rec in self:
             total = sum(rec.os_ids.pedidos_compra.filtered(lambda l: l.state == 'purchase').mapped('price_total')) if rec.os_ids.pedidos_compra else 0
-            rec.mp_real = total
+            rec.mp_real = total + rec.consumidos_total
+
 
 
     @api.depends('os_ids.state')
@@ -262,7 +271,7 @@ class OsFechamento(models.Model):
             mo = sum(rec.os_ids.apontamento.mapped('valor_total')) if rec.os_ids.apontamento else 0
             valor_pedido = sum(rec.os_ids.pedido_venda.mapped('amount_total')) if rec.os_ids.pedido_venda else 0
 
-            gasto = mp + mo + rec.comissao + rec.impostos_resultado + rec.valor_custofixo
+            gasto = mp + mo + rec.comissao + rec.impostos_resultado + rec.valor_custofixo + rec.consumidos_total
             diferenca = rec.orcado - gasto
             if gasto > 0 and valor_pedido> 0:
                 resul = (valor_pedido - gasto) / valor_pedido

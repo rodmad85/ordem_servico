@@ -200,6 +200,7 @@
         <field name="name">ordem.servico.form</field>
         <field name="model">ordem.servico</field>
         <field name="arch" type="xml">
+
             <form>
                 <header>
                     <button name="abrir_os" type="object" states="draft" string="Abrir OS" class="oe_highlight"/>
@@ -283,6 +284,7 @@
                             </field>
                         </page>
                         <page string="Lista de Materiais" name="lista">
+                            <group string="Lista Geral">
                             <field name="lista_produtos" widget="section_and_note_one2many" mode="tree,kanban"
                                    nolabel="1">
                                 <tree string="Lista de Materiais" editable="bottom">
@@ -292,15 +294,20 @@
                                     <field name="estoque"/>
                                 </tree>
                             </field>
+                            </group>
                             <group string="Consumidos">
                                 <field name="consumidos" widget="section_and_note_one2many" mode="tree,kanban"
                                    nolabel="1">
-                                <tree string="Consumidos" editable="bottom">
+
+                                <tree string="Consumidos" editable="bottom" context="{'group_by':'produto_cli'}">
+                                    <field name="produto_con"/>
                                     <field name="qtd_con"/>
                                     <field name="qtd_consumido"/>
-                                    <field name="produto_con"/>
                                     <field name="dim_con"/>
                                     <field name="est_con"/>
+                                    <field name="produto_cli" string="Produto Produzido"/>
+
+
                                 </tree>
                             </field>
                             </group>
@@ -359,7 +366,6 @@
 
                         <page string="Certificados" name="Certificados">
                             <field name="certificado" widget="many2many_binary"/>
-
                         </page>
 
                         <page string="Inspeções" name="inspecoes">

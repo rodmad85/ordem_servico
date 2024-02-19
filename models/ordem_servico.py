@@ -174,11 +174,12 @@ class OrdemServico(models.Model):
                     for y in lista:
                         self.lista_produtos = [(0,0,{'produto': y.product_id.id,'qtd': y.product_qty, 'dimensoes': y.dimensoes, 'estoque': y.estoque})]
 
+
+
     def _consumidos(self):
-        if self.lista_produtos:
-            self.lista_produtos = [(5)]
-        for rec in self.produtos:
-            if rec.state != 'cancel':
+        if self.produtos:
+            for rec in self.produtos:
+                if rec.state != 'cancel' or rec.state!='draft':
                     lista_id = rec.move_raw_ids
 
                     if lista_id:
@@ -189,8 +190,12 @@ class OrdemServico(models.Model):
                                 qtddone = x.quantity_done
                                 dimensoes = x.dimensoes
                                 estoque = x.estoque
+                                valor = x.product_id.standard_price * x.quantity_done
+                                produtocli = rec.product_id.id
 
-                                self.consumidos = [(0,0,{'produto_con': produto,'qtd_con': qtd, 'qtd_consumido': qtddone,'dim_con': dimensoes, 'est_con': estoque})]
+                                self.consumidos = [(0,0,{'produto_con': produto,'qtd_con': qtd, 'qtd_consumido': qtddone,'dim_con': dimensoes, 'est_con': estoque, 'valor_con': valor,'produto_cli':produtocli})]
+        else:
+            self.consumidos = [(6, 0, [])]
 
 
 
@@ -347,11 +352,13 @@ class OsConsumidos(models.Model):
     _name="os.consumidos"
 
     os = fields.Many2many('ordem.servico', 'consumidos_rel_os','os_id', 'consumido_id', string='Ordem de Serviço')
+    produto_cli = fields.Many2one('product.product',string='Produto')
     produto_con = fields.Many2one('product.product',string='Produto')
     est_con = fields.Boolean(string='Estoque')
     dim_con = fields.Char(string='Dimensões')
     qtd_con = fields.Float(string='Quantidade')
     qtd_consumido = fields.Float(string='Qtd. Consumido')
+    valor_con = fields.Float(string='Total')
 
 class OsParcialWizard(models.TransientModel):
     _name = 'os.parcial.wizard'

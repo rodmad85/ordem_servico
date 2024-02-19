@@ -32,6 +32,9 @@
                         </field>
                     </group>
                 </page>
+                <page string="Certificados">
+                    <field name="certificados" widget="many2many_binary"/>
+                </page>
             </xpath>
         </field>
         </record>
