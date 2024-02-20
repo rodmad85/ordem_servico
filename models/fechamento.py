@@ -179,7 +179,7 @@ class OsFechamento(models.Model):
                         dt = datetime.strftime(i.mes, '%m/%Y')
                         if dt == entrega:
                             self.imposto_real = i.percentual
-                            self.posicao = self.env["l10n_br_fiscal.operation"].browse(posi)
+
 
                     rec.write({'imposto_real': self.imposto_real / 100,
                                'impostos_resultado': rec.valor_pedido * (self.imposto_real / 100)})
