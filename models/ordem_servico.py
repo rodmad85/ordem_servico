@@ -195,7 +195,9 @@ class OrdemServico(models.Model):
 
                                 self.consumidos = [(0,0,{'produto_con': produto,'qtd_con': qtd, 'qtd_consumido': qtddone,'dim_con': dimensoes, 'est_con': estoque, 'valor_con': valor,'produto_cli':produtocli})]
                             else:
-                                self.consumidos = [(6, 0, [])]
+                                self.consumidos = [(1, 0, [])]
+                else:
+                    self.consumidos = [(1, 0, [])]
         else:
             self.consumidos = [(6, 0, [])]
 

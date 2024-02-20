@@ -17,6 +17,7 @@ class OsFechamento(models.Model):
             rec._amount_total_orcado()
             rec._amount_imposto_real()
             rec._amount_mp_real()
+            rec._amount_consumidos()
             rec._amount_mo_real()
             rec._amount_valor_horas()
             rec._amount_valor_extra()
