@@ -272,10 +272,10 @@ class OsFechamento(models.Model):
             mo = sum(rec.os_ids.apontamento.mapped('valor_total')) if rec.os_ids.apontamento else 0
             valor_pedido = sum(rec.os_ids.pedido_venda.mapped('amount_total')) if rec.os_ids.pedido_venda else 0
 
-            gasto = mp + mo + rec.comissao + rec.impostos_resultado + rec.valor_custofixo + rec.consumidos_total + rec.valor_custofixo
+            gasto = mp + mo + rec.comissao + rec.impostos_resultado + rec.valor_custofixo + rec.consumidos_total
             diferenca = rec.orcado - gasto
             if gasto > 0 and valor_pedido> 0:
-                resul = (valor_pedido - gasto) / valor_pedido
+                resul = (valor_pedido - gasto -  rec.valor_custofixo) / valor_pedido
             else:
                 resul = 100
             rec.write({'resultado' : valor_pedido - gasto,'total_gasto':gasto, 'orcado_gasto': diferenca, 'resultado_percen': resul})
