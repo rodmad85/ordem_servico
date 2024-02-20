@@ -183,6 +183,9 @@ class OsFechamento(models.Model):
 
                     rec.write({'imposto_real': self.imposto_real / 100,
                                'impostos_resultado': rec.valor_pedido * (self.imposto_real / 100)})
+                else:
+                    rec.write({'imposto_real': 0,'impostos_resultado':0})
+
 
     @api.depends('os_ids.state')
 
