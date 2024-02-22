@@ -9,6 +9,7 @@ class OsMrp(models.Model):
         string='Andamento', store=True, copy=True, required=True)
     terceiros = fields.Selection([('nenhum','Nenhum'),('laser','Laser'),('dobra','Dobra'),('pintura','Pintura'),('tratamento','Tratamento Químico')],string='Andamento', default='nenhum',store=True, copy=True, required=False)
 
+
     @api.model
     def _get_move_raw_values(self, product_id, product_uom_qty, product_uom, operation_id=False, bom_line=False):
         vals = super(OsMrp, self)._get_move_raw_values(product_id, product_uom_qty, product_uom, operation_id=False, bom_line=False)
@@ -32,3 +33,4 @@ class OsMrpBomLine(models.Model):
 
     dimensoes = fields.Char(string='Dimensões', store=True)
     estoque = fields.Char(string='Em estoque', store=True)
+    valor = fields.Float(related='product_id.standard_price')

@@ -42,6 +42,7 @@
                 <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_uom']"
                        position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
                     <field name="estoque"/>
+
                 </xpath>
 
             </field>
@@ -62,6 +63,7 @@
                 <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_uom_id']"
                        position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
                     <field name="estoque"/>
+                     <field name="valor"/>
                 </xpath>
             </field>
         </record>
