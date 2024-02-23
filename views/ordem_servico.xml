@@ -365,7 +365,9 @@
                         </page>
 
                         <page string="Certificados" name="Certificados">
-                            <field name="certificado" widget="many2many_binary"/>
+                            <group>
+                                <field name="certificado" string="Arquivos" widget="many2many_binary" />
+                            </group>
                         </page>
 
                         <page string="Inspeções" name="inspecoes">

@@ -15,8 +15,8 @@ class OrdemServico(models.Model):
                        translate=True, default=lambda self: _('New'))
     apontamento = fields.Many2many('hr.attendance', 'hr_attendance_os_rel', 'ordem_servico_id', 'hr_attendance_id',
                                    string='Linha Apontamento', store=True, copy=True, index=True)
-    certificado = fields.Many2many('ir.attachment', 'certificado_os_rel', 'arquivos_id', 'ir_attachment_id',
-                                   string='Certificado', store=True, copy=False, required=True)
+    # compra = fields.Many2one(related='pedidos_compra.order_id')
+    certificado = fields.Many2many( related='pedidos_compra.order_id.certificados')
     cliente_id = fields.Many2one('res.partner', string='Cliente', store=True, index=True,
                                  related='pedido_venda.partner_id.parent_id')
     desenhos = fields.Many2many('ir.attachment', 'os_desenho_arquivo', 'os_id', 'desenhos_id',
@@ -125,6 +125,13 @@ class OrdemServico(models.Model):
     certpend = fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Certificados', compute='_certpend')
     desenhopend = fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Desenhos', compute='_desenhopend')
     insppend =fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Inspeções', compute='_insppend')
+
+    # def _certificados(self):
+    #     compras = self.pedidos_compra.order_id.certificados.ids
+    #     if compras:
+    #         self.certificado = [(4,0,compras)]
+    #     else:
+    #         self.certificado = [(5,0,0)]
 
     def _apontapend(self):
         for rec in self:
@@ -497,13 +504,13 @@ class OsInspecoesLinhas(models.Model):
 
                 })
 
-class OsCertificados(models.Model):
-    _name = "os.certificados"
-    _description = "Certificados"
+# class OsCertificados(models.Model):
+#     _name = "os.certificados"
+#     _description = "Certificados"
 
     # data_criacao = fields.Date(string='Data', store=True, copy=True)
-    certificado = fields.Many2many('ir.attachment', 'certificados_os_rel', 'arquivos_id', 'ir_attachment_id',
-                                   string='Certificado', store=True, copy=False, required=True)
+    # certificado = fields.Many2many('ir.attachment', 'certificados_os_rel', 'arquivos_id', 'ir_attachment_id',
+    #                                string='Certificado', store=True, copy=False, required=True)
     # fornecedor = fields.Many2one('res.partner',string='Fornecedor',store=True, copy=True, required=True)
     # nota_fiscal = fields.Char(string='Número NFE', copy=True, store=True, readonly=False)
 
