@@ -304,11 +304,8 @@ class OrdemServico(models.Model):
             raise ValidationError("Selecione um status de faturamento diferente de Não Faturada.")
         if self.entrega_efetiva == False:
             raise ValidationError("Digite a data da entrega efetiva para encerrar a OS.")
-
-        mporca = self.pedido_venda.materia_prima
-        if mporca > 1:
-            if not self.pedidos_compra:
-               raise  ValidationError("Insira um pedido de compra para encerrar a OS.")
+        if not self.pedidos_compra:
+            raise  ValidationError("Insira um pedido de compra para encerrar a OS.")
         if not self.apontamento:
             if not self.terc_total:
                 raise ValidationError("Insira um apontamento para encerrar a OS.")
