@@ -15,6 +15,7 @@ class OsMrp(models.Model):
         vals = super(OsMrp, self)._get_move_raw_values(product_id, product_uom_qty, product_uom, operation_id=False, bom_line=False)
         vals['dimensoes'] =  bom_line.dimensoes
         vals['estoque'] = bom_line.estoque
+        vals['funcionario'] = bom_line.funcionario
         return vals
 
     @api.onchange('andamento')
@@ -33,4 +34,5 @@ class OsMrpBomLine(models.Model):
 
     dimensoes = fields.Char(string='Dimensões', store=True)
     estoque = fields.Char(string='Em estoque', store=True)
+    funcionario = fields.Many2one('hr.employee', store=True)
     valor = fields.Float(related='product_id.standard_price')

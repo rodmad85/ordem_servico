@@ -241,6 +241,7 @@
 
                         <field name="user_id" string="Elaborado Por"/>
                         <field name="liberado" string="Liberado Por"/>
+                        <field name="terc_total"/>
 
 
                     </group>

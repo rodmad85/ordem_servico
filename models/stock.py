@@ -33,6 +33,7 @@ class OsStock(models.Model):
     dimensoes = fields.Char(string='Dimensões', store=True)
     estoque = fields.Char(string='Estoque', store=True)
     certificado = fields.Boolean(related='product_id.certificado')
+    funcionario = fields.Many2one('hr.employee', store=True)
 
 
 class OsStockLine(models.Model):

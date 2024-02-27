@@ -71,6 +71,7 @@ class OrdemServico(models.Model):
     tipo_os = fields.Selection(
         [('normal', 'Normal'), ('repeticao', 'Repetição'), ('manutencao', 'Manutencao'), ('rafael', 'Rafael')], default='normal',
         string='Tipo', store=True, copy=True, required=True)
+    terc_total = fields.Boolean(string='Totalmente Terceirizada')
 
     ultimamsg = fields.Char(string='Mensagens', compute='_last_msg')
     ultiuser = fields.Char(string='Usuario', compute='_last_usr')
@@ -309,10 +310,11 @@ class OrdemServico(models.Model):
             if not self.pedidos_compra:
                raise  ValidationError("Insira um pedido de compra para encerrar a OS.")
         if not self.apontamento:
-            raise ValidationError("Insira um apontamento para encerrar a OS.")
-        if not self.respfin:
+            if not self.terc_total:
+                raise ValidationError("Insira um apontamento para encerrar a OS.")
+        if not self.resp_fin:
             raise ValidationError("Selecione um Responsável pela Inspeção Final.")
-        if not self.dtfin:
+        if not self.dt_fin:
             raise  ValidationError("Insira a data da Inspeção Final")
 
         else:
@@ -388,7 +390,7 @@ class OsParcialWizard(models.TransientModel):
     def semfat(self):
         records = self.env['ordem.servico'].browse(self.env.context.get('active_ids'))
         for rec in records:
-            if self.entrega_efetiva == False:
+            if not self.entrega_efetiva:
                 raise ValidationError("Digite a data da entrega efetiva para entregar parcialmente a OS.")
             else:
                 for rec in records:
