@@ -34,5 +34,5 @@ class OsMrpBomLine(models.Model):
 
     dimensoes = fields.Char(string='Dimensões', store=True)
     estoque = fields.Char(string='Em estoque', store=True)
-    funcionario = fields.Many2one('hr.employee', store=True)
+    funcionarios = fields.Many2one('hr.employee')
     valor = fields.Float(related='product_id.standard_price')
