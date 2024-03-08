@@ -45,7 +45,7 @@ class OrdemServico(models.Model):
     observacoes = fields.Text(string="Observações", store=True, copy=True)
 
     pedidos_compra = fields.Many2many('purchase.order.line', 'purchase_order_line_os_rel', 'os_id',
-                                      'purchase_order_line_id', string='Pedidos de Compra', store=True, copy=True, domain="[('state','==','purchase'),('qty_received','>',0)]")
+                                      'purchase_order_line_id', string='Pedidos de Compra', store=True, copy=True, domain="[('state','==','purchase'),('qty_received','!=',0)]")
     pedido_venda = fields.Many2many('sale.order', 'ordem_servico_rel_sale', 'os_id', 'sale_order_id',
                                     string='Pedidos de Venda', store=True, copy=True)
     posicao = fields.Many2one(related='pedido_venda.fiscal_position_id')
