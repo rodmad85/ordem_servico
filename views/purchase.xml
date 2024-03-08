@@ -10,12 +10,16 @@
         <field name="model">purchase.order</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/tree" position="inside">
+
                 <field name="ordem_servico" string="OS" widget="many2many_tags"/>
             </xpath>
 
             <xpath expr="//field[@name='origin']" position="after">
                <field name="forma_pagamento" string="Forma de Pagamento" />
             </xpath>
+            <xpath expr="//tree" position="attributes">
+                    <attribute name="default_order">qty_received asc</attribute>
+                </xpath>
 
             <xpath expr="//form/sheet/notebook/page[2]" position="after">
                 <page string="Total OS">
