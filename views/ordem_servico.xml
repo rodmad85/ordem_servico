@@ -345,7 +345,7 @@
                         <page string="Compras" name="Pedidos">
 
                                 <group name="pedidos_compra" string="Pedidos de Compra">
-                                    <field name="pedidos_compra" mode="tree,kanban" domain="[('state','==','purchase'), ('qty_received','!=',0)]" widget="many2many" nolabel="1">
+                                    <field name="pedidos_compra" mode="tree,kanban" widget="many2many" nolabel="1">
                                         <tree>
                                             <field name="order_id" string="Pedido"/>
                                             <field name="partner_id" string="Fornecedor"/>
