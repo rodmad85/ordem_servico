@@ -379,8 +379,10 @@
                             </tr>
 
                         </table>
-                        <div class="last-page">
+<!--                        <div class="last-page text-center font-weight-bold o_line_section">-->
 
+
+                        <t t-if="o.consumidos">
                             <table class="table table-bordered table-sm o_main_table">
 
                                 <thead>
@@ -446,6 +448,8 @@
 
                                 </tbody>
                             </table>
+                            </t>
+                            <t t-if="o.comprados">
                              <table class="table table-bordered table-sm o_main_table">
 
                                 <thead>
@@ -511,7 +515,8 @@
 
                                 </tbody>
                             </table>
-                        </div>
+                            </t>
+<!--                        </div>-->
                         </div>
 
                 </t>
