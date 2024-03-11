@@ -67,6 +67,7 @@ class OsFechamento(models.Model):
     mo_real = fields.Monetary(string='Valor Total MO', store=True, copy=True, compute='_amount_mo_real', group_operator='sum')
     mp_real = fields.Monetary(string='Compras Real', store=True, copy=True, compute='_amount_mp_real', group_operator='sum')
     consumidos = fields.Many2many(related='os_ids.consumidos')
+    comprados = fields.Many2many(related='os_ids.pedidos_compra')
     consumidos_total = fields.Monetary('Consumido', compute='_amount_consumidos')
     comissao_real = fields.Monetary(string='Comissão Real', store=True, copy=True, group_operator='sum')
     imposto_real = fields.Float(string='Imposto Real', store=True, copy=True, group_operator='sum', compute='_amount_imposto_real')
@@ -82,7 +83,7 @@ class OsFechamento(models.Model):
 
     horas_resultado = fields.Float(string='Horas', store=True, copy=True, compute='_amount_horas_resultado', help='Horas Reais - Horas Previstas', group_operator='sum')
     mo_resultado = fields.Monetary(string='Valor Horas', store=True, copy=True, compute='_amount_mo_resultado', help='Horas Reais - Horas Previstas', group_operator='sum')
-    mp_resultado = fields.Monetary(string='MP/Terceiros', store=True, copy=True, compute='_amount_mp_resultado', help='(MP Prevista + Terceiros Previsto) - (MP Real + Terceiros Real)', group_operator='sum')
+    mp_resultado = fields.Monetary(string='MP/Terceiros', store=True, copy=True, compute='_amount_mp_resultado', help='(MP Prevista + Terceiros Previsto) - (MP Real + Terceiros Real) - Somente produtos recebidos', group_operator='sum')
     impostos_resultado = fields.Monetary(string='Impostos', store=True, copy=True, compute='_amount_imposto_real')
     impostos_resultado_percen = fields.Float(string='Impostos %', store=True, copy=True)
 
@@ -196,7 +197,7 @@ class OsFechamento(models.Model):
 
     def _amount_mp_real(self):
         for rec in self:
-            total = sum(rec.os_ids.pedidos_compra.filtered(lambda l: l.state == 'purchase').mapped('price_total')) if rec.os_ids.pedidos_compra else 0
+            total = sum(rec.os_ids.pedidos_compra.filtered(lambda l: l.state == 'purchase' and l.qty_received > 0).mapped('price_total')) if rec.os_ids.pedidos_compra else 0
             rec.mp_real = total + rec.consumidos_total
 
 

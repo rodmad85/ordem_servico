@@ -446,6 +446,71 @@
 
                                 </tbody>
                             </table>
+                             <table class="table table-bordered table-sm o_main_table">
+
+                                <thead>
+                                      <tr>
+                                    <td class="text-center bg-200 font-weight-bold o_line_section" colspan="7">
+                                        <p align="center">
+                                            <h5>
+                                                <strong>Comprados</strong>
+                                            </h5>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">
+                                        <strong>Pedido</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Fornecedor</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Produto</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Qtd.</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Qtd. Recebido</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Valor Unit.</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Valor Total</strong>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.comprados" t-as="c">
+                                        <tr>
+                                    <td class="text-center">
+                                        <span t-field="c.order_id"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="c.partner_id"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="c.product_id"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="c.product_qty"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="c.qty_received"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="c.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="c.price_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                    </td>
+                                        </tr>
+                                    </t>
+
+                                </tbody>
+                            </table>
                         </div>
                         </div>
 

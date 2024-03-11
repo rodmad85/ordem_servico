@@ -345,8 +345,8 @@
                         <page string="Compras" name="Pedidos">
 
                                 <group name="pedidos_compra" string="Pedidos de Compra">
-                                    <field name="pedidos_compra" mode="tree,kanban" widget="many2many" nolabel="1">
-                                        <tree>
+                                    <field name="pedidos_compra" mode="tree"  widget="many2many" nolabel="1" >
+                                        <tree default_order="qty_received asc" >
                                             <field name="order_id" string="Pedido"/>
                                             <field name="partner_id" string="Fornecedor"/>
                                             <field name="product_id"/>
@@ -356,6 +356,7 @@
                                             <field name="product_uom_category_id" invisible="True"/>
                                             <field name="price_unit" groups="ordem_servico.ordem_admin"/>
                                             <field name="price_total" sum="Total" groups="ordem_servico.ordem_admin"/>
+                                            <field name="state" />
                                         </tree>
                                     </field>
                                 </group>

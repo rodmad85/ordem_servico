@@ -279,6 +279,24 @@
                                     </tree>
                                 </field>
                             </page>
+                             <page name="Comprados" string="Comprados">
+                                <field name="comprados" widget="section_and_note_one2many" mode="tree,kanban"
+                                       nolabel="1">
+
+                                <tree default_order="qty_received asc" >
+                                            <field name="order_id" string="Pedido"/>
+                                            <field name="partner_id" string="Fornecedor"/>
+                                            <field name="product_id"/>
+                                            <field name="product_qty"/>
+                                            <field name="qty_received"/>
+                                            <field name="product_uom"/>
+                                            <field name="product_uom_category_id" invisible="True"/>
+                                            <field name="price_unit" groups="ordem_servico.ordem_admin"/>
+                                            <field name="price_total" sum="Total" groups="ordem_servico.ordem_admin"/>
+
+                                    </tree>
+                                </field>
+                            </page>
                         </notebook>
                     </sheet>
                 </form>
