@@ -15,7 +15,6 @@
         'base',
         'sale',
         'sale_order_revision',
-        'sale_order_secondary_unit',
         'sale_order_general_discount',
         'sale_discount_display_amount',
         'sale_last_price_info',
@@ -27,7 +26,6 @@
         'purchase_stock',
         'purchase_discount',
         'purchase_last_price_info',
-        'purchase_order_secondary_unit',
         'purchase_product_matrix',
 
 
