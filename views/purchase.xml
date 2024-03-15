@@ -43,16 +43,16 @@
         </field>
         </record>
 
-        <record id="purchase_os_form" model="ir.ui.view">
-           <field name="name">purchase.os.form</field>
-           <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit" />
-           <field name="model">purchase.order</field>
-           <field name="arch" type="xml">
-               <xpath expr="//field[@name='order_line']/form//field[@name='account_analytic_id']" position="before">
-                    <field name="ordem_servico" string="OS" widget="many2many_tags"/>
-                </xpath>
-           </field>
-        </record>
+<!--        <record id="purchase_os_form" model="ir.ui.view">-->
+<!--           <field name="name">purchase.os.form</field>-->
+<!--           <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit" />-->
+<!--           <field name="model">purchase.order</field>-->
+<!--           <field name="arch" type="xml">-->
+<!--               <xpath expr="//field[@name='order_line']/form//field[@name='price_subtotal']" position="before">-->
+<!--                    <field name="ordem_servico" string="OS" widget="many2many_tags"/>-->
+<!--                </xpath>-->
+<!--           </field>-->
+<!--        </record>-->
 
     </data>
 </odoo>
