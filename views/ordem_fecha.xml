@@ -3,36 +3,37 @@
 
     <data>
 
-<!--        <record id="report_os_capa" model="ir.actions.report">-->
-<!--            <field name="name">Impressão Capa OS</field>-->
-<!--            <field name="model">ordem.servico</field>-->
-<!--            <field name="report_type">qweb-pdf</field>-->
-<!--            <field name="report_name">ordem_servico_capa</field>-->
-<!--            <field name="report_file">ordem_servico.capa"</field>-->
-<!--            <field name="binding_model_id" ref="model_ordem_servico"></field>-->
-<!--            <field name="binding_type">report</field>-->
-<!--        </record>-->
 
-<!--        <template id="report_ModelName_view">-->
-<!--            <t t-call="web.html_container">-->
-<!--                <t t-foreach="docs" t-as="doc">-->
-<!--                    <t t-call="web.external_layout">-->
-<!--                        <div class="page">-->
+             <record model="ir.ui.view" id="os_fechamento_graph_view">
+                <field name="name">os.fechamento.graph</field>
+                <field name="model">os.fechamento</field>
+                <field name="arch" type="xml">
+                    <graph>
+                        <field name="os_ids" type="row"/>
+                        <field name="data_base" type="col" interval="month"/>
+                        <field name="data_entrega" type="col" interval="month"/>
+                        <field name="entrega_efetiva" type="col" interval="month"/>
+                        <field name="mp_prevista" widget="monetary" type="measure"/>
+                        <field name="mp_real" widget="monetary" type="measure"/>
+                        <field name="mo_prevista" widget="monetary" type="measure"/>
+                        <field name="mo_real" widget="monetary" type="measure"/>
+                        <field name="horas_prevista" type="measure"/>
+                        <field name="horas_real" type="measure"/>
+                        <field name="comissao" widget="monetary" type="measure"/>
+                        <field name="custo_fixo" type="measure"/>
+                        <field name="valor_custofixo" type="measure"/>
+                        <field name="imposto_real" type="measure"/>
+                        <field name="horas_resultado" type="measure"/>
+                        <field name="mp_resultado" widget="monetary" type="measure"/>
+                        <field name="mo_resultado" widget="monetary" type="measure"/>
+                        <field name="resultado" widget="monetary"  type="measure" decoration-bf="1"/>
+                        <field name="resultado_percen" type="measure" decoration-bf="1"/>
+                    </graph>
+                </field>
+             </record>
 
-<!--                        </div>-->
-<!--                    </t>-->
-<!--                </t>-->
-<!--            </t>-->
-<!--        </template>-->
 
-         <template id="assets_backend" inherit_id="web.assets_backend" name="Progress bar">
-          <xpath expr="." position="inside">
-               <link rel="stylesheet" type="text/scss"
-                href="/ordem_servico/static/src/css/progress_bar_color.css"/>
-               <script type="text/javascript"
-                src="/ordem_servico/static/src/js/progress_bar_color.js"/>
-          </xpath>
-        </template>
+
         <record model="ir.ui.view" id="os_fechamento_pivot_view">
         <field name="name">os.fechamento.pivot</field>
         <field name="model">os.fechamento</field>
@@ -40,6 +41,9 @@
             <pivot string="Ordens de Serviço" display_quantity="true" sample="1" default_order="name desc">
                 <field name="currency_id" invisible="1"/>
                 <field name="os_ids" type="row"/>
+                <field name="data_base" type="col" interval="month"/>
+                <field name="data_entrega" type="col" interval="month"/>
+                <field name="entrega_efetiva" type="col" interval="month"/>
                 <field name="mp_prevista" widget="monetary" type="measure"/>
                 <field name="mp_real" widget="monetary" type="measure"/>
                 <field name="mo_prevista" widget="monetary" type="measure"/>
@@ -48,7 +52,7 @@
                 <field name="horas_real" type="measure"/>
                 <field name="comissao" widget="monetary" type="measure"/>
                 <field name="custo_fixo" type="measure"/>
-<!--                <field name="impostos" type="measure"/>-->
+                <field name="imposto_real" type="measure"/>
                 <field name="horas_resultado" type="measure"/>
                 <field name="mp_resultado" widget="monetary" type="measure"/>
                 <field name="mo_resultado" widget="monetary" type="measure"/>
@@ -112,7 +116,6 @@
                         domain="[]"
                         context="{'group_by':'entrega_efetiva'}"
 
-
                     />
                 </group>
 
@@ -125,7 +128,7 @@
         <field name="model">os.fechamento</field>
         <field name="arch" type="xml">
 
-            <tree decoration-danger="resultado &lt;= -1" decoration-success="resultado &gt;= 1" default_order="os_ids desc" edit="false" create="false">
+               <tree decoration-danger="resultado &lt;= -1" decoration-success="resultado &gt;= 1" default_order="os_ids desc" edit="false" create="false">
                         <header>
                             <button name="updt" string="Atualizar" class="btn-primary" invisible="0" type="object"/>
                         </header>
@@ -141,12 +144,12 @@
                         <field name="mo_prevista" sum="MO Prevista" widget="monetary" optional="show"/>
                         <field name="valor_horas_retrabalho" widget="monetary" optional="hide"/>
                         <field name="mo_real" sum="Total MO" widget="monetary" optional="show"/>
-                        <field name="horas_prevista" sum="Horas Prevista" optional="show"/>
-                        <field name="horas_real" sum="Horas Reais" optional="show"/>
+                        <field name="horas_prevista" sum="Horas Prevista" widget="float_time" optional="show"/>
+                        <field name="horas_real" sum="Horas Reais" widget="float_time" optional="show"/>
                         <field name="comissao" sum="Comissão" widget="monetary" optional="hide"/>
+                        <field name="valor_custofixo" widget="monetary" optional="hide"/>
                         <field name="custo_fixo" optional="hide"/>
-<!--                        <field name="impostos" sum="Impostos" optional="show"/>-->
-                        <field name="horas_resultado" sum="Horas Resultado" optional="show"/>
+                        <field name="horas_resultado" widget="float_time" sum="Horas Resultado" optional="show"/>
                         <field name="mp_resultado" sum="MP Resultado" widget="monetary" optional="show"/>
                         <field name="mo_resultado" sum="MO Resultado" widget="monetary" optional="show"/>
                         <field name="resultado" sum="Resultado" widget="monetary" optional="show"/>
@@ -174,53 +177,57 @@
                         <field name="posicao" readonly="1"/>
                     </div>
                     <group>
-                        <field name="currency_id" invisible="1"/>
-                       <group string="Mão de Obra">
+                        <group string="Mão de Obra">
                            <group>
-                            <field name="horas_prevista" />
-                            <field name="mo_prevista" widget="monetary"/>
+                               <field name="currency_id" invisible="1"/>
+                               <field name="horas_prevista" />
+                               <field name="mo_prevista" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                            </group>
                            <group>
-                               <field name="horas_real" string="Horas Normais" />
-                               <field name="horas_retrabalho"/>
-                               <field name="horas_total" string="Horas Normal + Retrabalho"/>
-                               <field name="valor_horas_retrabalho" widget="monetary"/>
-                               <field name="mo_real" string="Total MO" widget="monetary"/>
+                               <field name="horas_real" string="Horas Normais" widget="float_time"/>
+                               <field name="extra_real" string="Horas Extras" widget="float_time"/>
+                               <field name="horas_retrabalho" string="Horas Retrabalho" widget="float_time"/>
+                               <field name="horas_total" string="Horas Totais" widget="float_time"/>
+                           </group>
+                           <group>
+                               <field name="valor_extra" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                               <field name="valor_horas_retrabalho" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                               <field name="mo_real" string="Total MO" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                            </group>
                        </group>
                         <group string="Materia Prima/Terceiros">
                            <group>
-                                <field name="mp_prevista" widget="monetary" />
-                                <field name="tc_prevista" widget="monetary"/>
-                            </group>
-                            <group>
-                                    <field name="mp_real" string="Total MP/Terceiros Real" widget="monetary"/>
-                            </group>
-                            <group>
-                                <field name="comissao" widget="monetary"/>
-                            </group>
-                            <group string="Impostos">
-
-                            <field name="imposto_real" widget="percentage"/>
-                            <field name="impostos_resultado" widget="monetary"/>
-                        </group>
+                                <field name="mp_prevista" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                <field name="tc_prevista" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                           </group>
+                           <group>
+                               <field name="mp_real" string="Total MP/Terceiros Real" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                           </group>
+                           <group>
+                               <field name="comissao" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                           </group>
+                           <group string="Impostos">
+                               <field name="imposto_real" widget="percentage"/>
+                               <field name="impostos_resultado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                           </group>
                         </group>
                          <group string="Diferenças">
-                                <field name="horas_resultado" />
-                                <field name="mo_resultado" widget="monetary"/>
-                                <field name="mp_resultado" widget="monetary"/>
+                                <field name="horas_resultado" widget="float_time"/>
+                                <field name="mo_resultado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                <field name="mp_resultado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                                 <field name="progress_compra" widget="progressbar"/>
 
                             </group>
                         <group string="Resultados">
                               <group>
-                                <field name="valor_pedido" widget="monetary"/>
-                                <field name="orcado" widget="monetary"/>
-                                <field name="total_gasto" widget="monetary"/>
-                                <field name="orcado_gasto" widget="monetary"/>
+                                <field name="valor_pedido" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                <field name="orcado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                <field name="valor_custofixo" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                <field name="total_gasto" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                <field name="orcado_gasto" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                             </group>
                                 <group>
-                                    <field name="resultado" widget="monetary"/>
+                                    <field name="resultado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                                     <field name="resultado_percen" widget="percentage"/>
                                 </group>
 

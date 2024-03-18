@@ -4,28 +4,26 @@
 
 <odoo>
 
+<data>
 
-
-    <record model="ir.module.category" id="ordem_servico">
+    <record model="ir.module.category" id="category_ordem_servico">
         <field name="name">Ordem Serviço</field>
         <field name="description">Nivel de Acesso OS</field>
         <field name="sequence">20</field>
     </record>
 
-    <record id="ordem_user" model="res.groups">
-            <field name="name">Usuário</field>
-            <field name="category_id" ref="ordem_servico"/>
-        </record>
      <record id="ordem_user" model="res.groups">
-            <field name="name">Criador</field>
-            <field name="implied_ids" eval="[(4, ref('ordem_user'))]"/>
-            <field name="category_id" ref="ordem_servico"/>
-        </record>
+        <field name="name">Usuário</field>
+<!--        <field name="implied_ids" eval="[(4, ref('ordem_user'))]"/>-->
+        <field name="category_id" ref="category_ordem_servico"/>
+        <field name="users" eval="[(4, ref('base.group_user'))]"/>
+     </record>
+
         <record id="ordem_admin" model="res.groups">
             <field name="name">Administrador</field>
-            <field name="category_id" ref="ordem_servico"/>
-            <field name="implied_ids" eval="[(4, ref('ordem_user'))]"/>
+            <field name="category_id" ref="category_ordem_servico"/>
+            <field name="implied_ids" eval="[(4, ref('ordem_servico.ordem_user'))]"/>
             <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
-
+</data>
 </odoo>

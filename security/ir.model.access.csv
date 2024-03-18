@@ -3,10 +3,8 @@ access_os_user,ordem.servico.user,model_ordem_servico,ordem_user,1,1,1,0
 access_os_admin,ordem.servico.admin,model_ordem_servico,ordem_admin,1,1,1,1
 access_os_desenhos_user,ordem.servico.user.desenhos,model_os_desenhos,ordem_user,1,1,1,0
 access_os_desenhos_admin,ordem.servico.admin.desenhos,model_os_desenhos,ordem_admin,1,1,1,1
-access_os_pedcli_user,ordem.servico.user.pedcli,model_os_pedcli,ordem_user,1,1,1,0
+access_os_pedcli_user,ordem.servico.user.pedcli,model_os_pedcli,ordem_user,1,1,1,1
 access_os_pedcli_admin,ordem.servico.admin.pedcli,model_os_pedcli,ordem_admin,1,1,1,1
-access_os_certificados_user,ordem.servico.user.certificados,model_os_certificados,ordem_user,1,1,1,0
-access_os_certificados_admin,ordem.servico.admin.certificados,model_os_certificados,ordem_admin,1,1,1,1
 access_os_nfs_user,ordem.servico.user.nfs,model_os_nfs,ordem_user,1,1,1,0
 access_os_nfs_admin,ordem.servico.admin.nfs,model_os_nfs,ordem_admin,1,1,1,1
 access_os_hr_attendance_user,ordem.servico.user.hr.attendance,model_hr_attendance,ordem_user,1,1,1,1
@@ -21,4 +19,8 @@ access_os_parcial_user,ordem.servico.user.parcial.wizard,model_os_parcial_wizard
 access_os_parcial_admin,ordem.servico.admin.parcial.wizard,model_os_parcial_wizard,ordem_admin,1,1,1,1
 access_os_total_purchase_user,ordem.servico.user.total.purchase,model_os_total_purchase,ordem_user,1,1,1,0
 access_os_total_purchase_admin,ordem.servico.admin.total.purchase,model_os_total_purchase,ordem_admin,1,1,1,1
-,,,,,,,
+access_os_listaprod,ordem.servico.listaprod,model_os_listaprod,ordem_user,1,1,1,1
+acces_os_pesomateriais_admin,ordem.servico.pesomateriais,model_os_pesomateriais,ordem_admin,1,1,1,1
+acces_os_pesomateriais_user,ordem.servico.user.pesomateriais,model_os_pesomateriais,ordem_user,1,1,1,0
+access_os_consumidos_user,ordem.servico.consumidos.user,model_os_consumidos,ordem_user,1,1,1,0
+access_os_consumidos_admin,ordem.servico.consumidos.admin,model_os_consumidos,ordem_admin,1,1,1,1

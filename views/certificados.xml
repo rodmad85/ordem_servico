@@ -3,6 +3,28 @@
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 
 <odoo>
+    <record id="stockcert_wizard_view" model="ir.ui.view">
+            <field name="name">os.stockcert.view</field>
+            <field name="model">os.stockcert.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Warning">
+                    <group>
+                        <field name="msg" nolabel="1"/><br/>
+                        <button name="simcert" string="Receber Todos" type="object" class="oe_highlight"/>
+                        <button name="parcicert" string="Selecionar Itens" type="object" class="oe_highlight"/>
+                    </group>
+
+                    <footer>
+
+                        <button name="semfat" string="Somente Entregar" type="object" class="oe_highlight"/>
+                        <button string="Cancelar" class="btn_secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
     <record model="ir.ui.view" id="ordem_servico_certificados_search_view">
         <field name="name">ordem_servico_certificados_search</field>
         <field name="model">os.relatorios</field>
