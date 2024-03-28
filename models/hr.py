@@ -40,15 +40,16 @@ class HrFields(models.Model):
                                   default=lambda self: self.env.user.company_id.currency_id.id, required=True)
 
 
-
-    def _valorhora(self):
-        self.valor_hora = self.employee_id.valor_hora
-
     def _os_tree(self):
         for line in self:
             if line.ordem_servico:
                 os = line.ordem_servico[0]
                 line.update({'os_tree': os})
+
+    @api.onchange('employee_id')
+    def _valorhora(self):
+        self.valor_hora = self.employee_id.valor_hora
+
 
     @api.onchange('check_out')
     def _tree_to_os(self):
