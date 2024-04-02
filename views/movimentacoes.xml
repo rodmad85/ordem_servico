@@ -43,17 +43,6 @@
             </field>
         </record>
 
-<!--        <record id="movimentacoes_search_view" model="ir.ui.view">-->
-<!--            <field name="name">os.movimentacoes.search</field>-->
-<!--            <field name="model">stock.move.line</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <xpath expr="//filter[@name='aberto']" position="replace">-->
-<!--                </xpath>-->
-<!--                <search string="Ordem Serviço">-->
-<!--                    <filter string="Em aberto" domain="[('state', '!=', 'Concluido')]" name="aberto"/>-->
-<!--                </search>-->
-<!--            </field>-->
-<!--        </record>-->
 
 
 
