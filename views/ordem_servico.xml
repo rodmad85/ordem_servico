@@ -307,6 +307,7 @@
                                     <field name="dim_con"/>
                                     <field name="est_con"/>
                                     <field name="produto_cli" string="Produto Produzido"/>
+                                    <field name="funcionarios" widget="many2many_tags"/>
 
 
                                 </tree>

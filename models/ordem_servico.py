@@ -333,18 +333,6 @@ class OrdemServico(models.Model):
         for ped in pedidos:
             self.env['sale.order'].browse(ped).write({'state': 'draft'})
 
-# class OrdemServicoPendencias(models.Model):
-#     _name = "ordem.servico.pendencias"
-#
-#     compras = fields.Many2many()
-#     desenhos = fields.Many2many()
-#     apontamentos = fields.Many2many()
-#     entregas = fields.Many2many()
-#     inspecoes = fields.Char()
-#
-# class OsComprasPend(models.Model):
-#     _name = "os.compras.pend"
-
 
 class OsListaprod(models.Model):
     _name="os.listaprod"
@@ -366,6 +354,7 @@ class OsConsumidos(models.Model):
     qtd_con = fields.Float(string='Quantidade')
     qtd_consumido = fields.Float(string='Qtd. Consumido')
     valor_con = fields.Float(string='Total')
+    funcionarios = fields.Many2many('hr.employee')
 
 class OsParcialWizard(models.TransientModel):
     _name = 'os.parcial.wizard'
