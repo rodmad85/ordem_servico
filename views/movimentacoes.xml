@@ -32,6 +32,7 @@
                     <field name="ordem_servico" widget="many2many_tags"/>
                     <field name="origin" string="Pedido"/>
                     <field name="fornecedor"/>
+                    <field name="funcionario"/>
                     <field name="product_id"/>
                     <field name="location_id"/>
                     <field name="location_dest_id"/>
