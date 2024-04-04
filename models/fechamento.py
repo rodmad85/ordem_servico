@@ -35,84 +35,84 @@ class OsFechamento(models.Model):
             rec._getcusto()
 
     os_ids = fields.Many2one('ordem.servico', string='Ordem de Serviço', required=True)
-    cliente = fields.Many2one('res.partner', 'Company', store=True,
+    cliente = fields.Many2one('res.partner', 'Company',
                               related='os_ids.pedido_venda.partner_id.parent_id')
     empresa = fields.Many2one('res.company', string='Empresa', related='os_ids.empresa')
-    data_base = fields.Date(string='Data Base', store=True, copy=True, related='os_ids.data_base')
-    data_entrega = fields.Date(string='Data Entrega', store=True, copy=True, related='os_ids.data_entrega')
-    entrega_efetiva = fields.Date(string='Entrega Efetiva', store=True, copy=True, related='os_ids.entrega_efetiva')
+    data_base = fields.Date(string='Data Base', copy=True, related='os_ids.data_base')
+    data_entrega = fields.Date(string='Data Entrega', copy=True, related='os_ids.data_entrega')
+    entrega_efetiva = fields.Date(string='Entrega Efetiva', copy=True, related='os_ids.entrega_efetiva')
     posicao = fields.Many2one(related='os_ids.posicao')
     condicao = fields.Many2one(related='os_ids.pedido_venda.payment_term_id')
-    valor_pedido = fields.Monetary(string='Valor da Venda', store=True, compute='_amount_valor_pedido')
+    valor_pedido = fields.Monetary(string='Valor da Venda', compute='_amount_valor_pedido')
     state = fields.Selection(
         [('draft', 'Provisória'), ('aberta', 'Aberta'), ('parcial', 'Parcialmente Entregue'),
          ('concluida', 'Concluida'), ('cancel', 'Cancelada')],
-        string='Status', store=True, copy=True, related='os_ids.state')
+        string='Status', copy=True, related='os_ids.state')
     status_fat = fields.Selection(
         [('nao', 'Não Faturada'), ('parcial', 'Faturada Parcialmente'), ('faturada', 'Faturada'),
-         ('paga', 'Paga')], string='Faturamento', store=True, copy=True, related='os_ids.status_fat')
+         ('paga', 'Paga')], string='Faturamento', copy=True, related='os_ids.status_fat')
 
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id, readonly=True)
-    name = fields.Char(string='Nome', store=True, related='os_ids.name')
-    horas_prevista = fields.Float(string='Horas Previstas', store=True, copy=True, compute='_amount_horas_prevista',
+    name = fields.Char(string='Nome', related='os_ids.name')
+    horas_prevista = fields.Float(string='Horas Previstas', copy=True, compute='_amount_horas_prevista',
                                   group_operator='sum')
-    tc_prevista = fields.Monetary(string='Terceiros Previsto', store=True, compute='_amount_tc_prevista',
+    tc_prevista = fields.Monetary(string='Terceiros Previsto', compute='_amount_tc_prevista',
                                   group_operator='sum')
-    mo_prevista = fields.Monetary(string='MO Prevista', store=True, compute='_amount_mo_prevista', group_operator='sum')
-    mp_prevista = fields.Monetary(string='MP Prevista', store=True, compute='_amount_mp_prevista', group_operator='sum')
-    comissao = fields.Monetary(string='Comissão', store=True, group_operator='sum')
+    mo_prevista = fields.Monetary(string='MO Prevista', compute='_amount_mo_prevista', group_operator='sum')
+    mp_prevista = fields.Monetary(string='MP Prevista', compute='_amount_mp_prevista', group_operator='sum')
+    comissao = fields.Monetary(string='Comissão', group_operator='sum')
 
-    custo_fixo = fields.Float(string='Custo Fixo %', store=True, copy=True)
-    valor_custofixo = fields.Monetary(string='Custo Fixo', store=True, copy=True)
-    margem = fields.Float(string='Margem', store=True, copy=True)
+    custo_fixo = fields.Float(string='Custo Fixo %', copy=True)
+    valor_custofixo = fields.Monetary(string='Custo Fixo', copy=True)
+    margem = fields.Float(string='Margem', copy=True)
 
-    mo_real = fields.Monetary(string='Valor Total MO', store=True, copy=True, compute='_amount_mo_real',
+    mo_real = fields.Monetary(string='Valor Total MO', copy=True, compute='_amount_mo_real',
                               group_operator='sum')
-    mp_real = fields.Monetary(string='Compras Real', store=True, copy=True, compute='_amount_mp_real',
+    mp_real = fields.Monetary(string='Compras Real', copy=True, compute='_amount_mp_real',
                               group_operator='sum')
     consumidos = fields.Many2many(related='os_ids.consumidos')
     comprados = fields.Many2many(related='os_ids.pedidos_compra')
     consumidos_total = fields.Monetary('Consumido', compute='_amount_consumidos')
-    comissao_real = fields.Monetary(string='Comissão Real', store=True, copy=True, group_operator='sum')
-    imposto_real = fields.Float(string='Imposto Real', store=True, copy=True, group_operator='sum',
+    comissao_real = fields.Monetary(string='Comissão Real', copy=True, group_operator='sum')
+    imposto_real = fields.Float(string='Imposto Real', copy=True, group_operator='sum',
                                 compute='_amount_imposto_real')
-    progress_compra = fields.Float(string='% Compras', store=True, compute='_compute_compra')
-    extra_real = fields.Float(string='Horas Extras', store=True, compute='_amount_extra_real', group_operator='sum')
-    horas_real = fields.Float(string='Horas Reais', store=True, copy=True, compute='_amount_horas_real',
+    progress_compra = fields.Float(string='% Compras', compute='_compute_compra')
+    extra_real = fields.Float(string='Horas Extras', compute='_amount_extra_real', group_operator='sum')
+    horas_real = fields.Float(string='Horas Reais', copy=True, compute='_amount_horas_real',
                               group_operator='sum')
-    horas_retrabalho = fields.Float(string='Horas Retrabalho', store=True, copy=True,
+    horas_retrabalho = fields.Float(string='Horas Retrabalho', copy=True,
                                     compute='_amount_horas_retrabalho', group_operator='sum')
-    horas_total = fields.Float(string='Horas Reais', store=True, copy=True, compute='_amount_horas_total',
+    horas_total = fields.Float(string='Horas Reais', copy=True, compute='_amount_horas_total',
                                group_operator='sum')
-    valor_horas = fields.Float(string='Valor Horas', store=True, copy=True, compute='_amount_valor_horas',
+    valor_horas = fields.Float(string='Valor Horas', copy=True, compute='_amount_valor_horas',
                                group_operator='sum')
-    valor_horas_retrabalho = fields.Monetary(string='Valor Horas Retrabalho', store=True, copy=True,
+    valor_horas_retrabalho = fields.Monetary(string='Valor Horas Retrabalho', copy=True,
                                              compute='_amount_valor_horas_retrabalho', group_operator='sum')
-    valor_extra = fields.Float(string='Valor Extra', store=True, copy=True, compute='_amount_valor_extra',
+    valor_extra = fields.Float(string='Valor Extra', copy=True, compute='_amount_valor_extra',
                                group_operator='sum')
 
-    horas_resultado = fields.Float(string='Horas', store=True, copy=True, compute='_amount_horas_resultado',
+    horas_resultado = fields.Float(string='Horas', copy=True, compute='_amount_horas_resultado',
                                    help='Horas Reais - Horas Previstas', group_operator='sum')
-    mo_resultado = fields.Monetary(string='Valor Horas', store=True, copy=True, compute='_amount_mo_resultado',
+    mo_resultado = fields.Monetary(string='Valor Horas', copy=True, compute='_amount_mo_resultado',
                                    help='Horas Reais - Horas Previstas', group_operator='sum')
-    mp_resultado = fields.Monetary(string='MP/Terceiros', store=True, copy=True, compute='_amount_mp_resultado',
+    mp_resultado = fields.Monetary(string='MP/Terceiros', copy=True, compute='_amount_mp_resultado',
                                    help='(MP Prevista + Terceiros Previsto) - (MP Real + Terceiros Real) - Somente produtos recebidos',
                                    group_operator='sum')
-    impostos_resultado = fields.Monetary(string='Impostos', store=True, copy=True, compute='_amount_imposto_real')
-    impostos_resultado_percen = fields.Float(string='Impostos %', store=True, copy=True)
+    impostos_resultado = fields.Monetary(string='Impostos', copy=True, compute='_amount_imposto_real')
+    impostos_resultado_percen = fields.Float(string='Impostos %', copy=True)
 
     atraso = fields.Integer('Atraso', compute='_compute_atraso')
 
-    orcado = fields.Monetary(string='Orçado', store=True, copy=True, compute='_amount_total_orcado',
+    orcado = fields.Monetary(string='Orçado', copy=True, compute='_amount_total_orcado',
                              group_operator='sum', help='MP Prevista + Valor Horas Prevista + Terceiros Previsto')
-    total_gasto = fields.Monetary(string='Total de Gastos', store=True, copy=True, compute='_amount_total_gasto',
+    total_gasto = fields.Monetary(string='Total de Gastos', copy=True, compute='_amount_total_gasto',
                                   help='Total de MP Real + Total de MO Real + Comissao + Custo Fixo + Impostos',
                                   group_operator='sum')
-    orcado_gasto = fields.Monetary(string='Orçado X Gastos', store=True, copy=True, help='Orçado - Gastos')
-    resultado = fields.Monetary(string='Resultado', store=True, copy=True, readonly=True,
+    orcado_gasto = fields.Monetary(string='Orçado X Gastos', copy=True, help='Orçado - Gastos')
+    resultado = fields.Monetary(string='Resultado', copy=True, readonly=True,
                                 help='Valor de Venda - Total de Gastos', compute='_amount_total_gasto',
                                 group_operator='sum')
-    resultado_percen = fields.Float(string='Resultado %', store=True, copy=True, readonly=True,
+    resultado_percen = fields.Float(string='Resultado %', copy=True, readonly=True,
                                     compute='_amount_total_gasto', group_operator='avg')
 
     def _compute_atraso(self):
