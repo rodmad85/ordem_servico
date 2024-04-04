@@ -213,8 +213,8 @@ class OsFechamento(models.Model):
         for rec in self:
             total = sum(
                 rec.os_ids.pedidos_compra.filtered(lambda l: l.state == 'purchase' and l.qty_received > 0).mapped(
-                    'price_total')) if rec.os_ids.pedidos_compra else 0
-            rec.mp_real = total + rec.consumidos_total
+                    'valor_os')) if rec.os_ids.pedidos_compra else 0
+            rec.mp_real = total
 
     @api.depends('os_ids.state')
     def _amount_mo_real(self):

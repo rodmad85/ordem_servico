@@ -5,6 +5,13 @@ class OsPurchaseLine(models.Model):
 
     ordem_servico = fields.Many2many('ordem.servico', 'purchase_order_line_os_rel', 'purchase_order_line_id', 'os_id',
                                      string='Pedidos de Compra', store=True, copy=True)
+    valor_os = fields.Float(string='Valor proporcional',compute='_total_linha_os')
+
+    def _total_linha_os(self):
+        for rec in self:
+            preco = rec.price_subtotal
+            len_os= len(rec.ordem_servico)
+            rec.valor_os = preco / len_os
 
     @api.model
     def _prepare_stock_move_vals(self, picking, price_unit, product_uom_qty, product_uom):
