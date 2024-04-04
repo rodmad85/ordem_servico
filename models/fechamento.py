@@ -106,7 +106,7 @@ class OsFechamento(models.Model):
     orcado = fields.Monetary(string='Orçado', store=True, copy=True, compute='_amount_total_orcado',
                              group_operator='sum', help='MP Prevista + Valor Horas Prevista + Terceiros Previsto')
     total_gasto = fields.Monetary(string='Total de Gastos', store=True, copy=True, compute='_amount_total_gasto',
-                                  help='Total de MP Real + Total de MO Real + Comissao + Impostos',
+                                  help='Total de MP Real + Total de MO Real + Comissao + Custo Fixo + Impostos',
                                   group_operator='sum')
     orcado_gasto = fields.Monetary(string='Orçado X Gastos', store=True, copy=True, help='Orçado - Gastos')
     resultado = fields.Monetary(string='Resultado', store=True, copy=True, readonly=True,
