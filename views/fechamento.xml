@@ -249,6 +249,7 @@
                                     <field name="orcado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                                     <field name="valor_custofixo" widget="monetary"
                                            options="{'currency': %(base.BRL)d}"/>
+                                    <field name="custo_fixo" widget="percentage"/>
                                     <field name="total_gasto" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                                     <field name="orcado_gasto" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                                 </group>

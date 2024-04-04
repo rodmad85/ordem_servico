@@ -20,20 +20,7 @@
         <field name="view_mode">tree,form</field>
 
     </record>
-<!--    <record model="ir.actions.act_window" id="ordem_movimentacoes_act_window">-->
-<!--        <field name="name">Pendências</field>-->
-<!--        <field name="res_model">ordem.servico.pendencias</field>-->
-<!--        <field name="view_mode">tree,form</field>-->
 
-<!--    </record>-->
-
-<!--    <record model="ir.actions.act_window" id="ordem_inspecoes_act_window">-->
-<!--        <field name="name">Inspeções</field>-->
-<!--        <field name="res_model">os.inspecoes</field>-->
-<!--        <field name="view_mode">tree,form</field>-->
-<!--        <field name="context">{'default_ordem_servico': active_id}</field>-->
-
-<!--    </record>-->
 
      <record model="ir.actions.act_window" id="ordem_inspecoes_wizard_act_window">
         <field name="name">Inspeções</field>
@@ -46,16 +33,6 @@
 
     </record>
 
-<!--    <record model="ir.actions.act_window" id="ordem_stockcert_wizard_act_window">-->
-<!--        <field name="name">Certificados</field>-->
-<!--        <field name="res_model">os.stockcert</field>-->
-<!--        <field name="view_mode">form</field>-->
-<!--        <field name="view_id" ref="stockcert_wizard_view"/>-->
-<!--        <field name="context">{'default_linhas': active_id}</field>-->
-
-
-
-<!--    </record>-->
 
      <record model="ir.actions.act_window" id="ordem_fecha_act_window">
         <field name="name">Fechamento</field>
