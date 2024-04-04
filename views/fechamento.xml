@@ -293,7 +293,7 @@
                                             <field name="product_uom"/>
                                             <field name="product_uom_category_id" invisible="True"/>
                                             <field name="price_unit" groups="ordem_servico.ordem_admin"/>
-                                            <field name="price_total" sum="Total" groups="ordem_servico.ordem_admin"/>
+                                            <field name="valor_os" sum="Total" groups="ordem_servico.ordem_admin"/>
 
                                     </tree>
                                 </field>
