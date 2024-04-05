@@ -9,6 +9,7 @@ class OsFechamento(models.Model):
 
     def updt(self):
         for rec in self:
+            rec._getcusto()
             rec._amount_tc_prevista()
             rec._amount_mp_prevista()
             rec._amount_mo_prevista()
@@ -30,9 +31,8 @@ class OsFechamento(models.Model):
             rec._amount_horas_resultado()
             rec._amount_mo_resultado()
             rec._amount_mp_resultado()
-            rec._amount_total_gasto()
             rec._amount_valor_pedido()
-            rec._getcusto()
+
 
     os_ids = fields.Many2one('ordem.servico', string='Ordem de Serviço', required=True)
     cliente = fields.Many2one('res.partner', 'Company', 
@@ -62,7 +62,7 @@ class OsFechamento(models.Model):
     mp_prevista = fields.Monetary(string='MP Prevista', compute='_amount_mp_prevista', group_operator='sum')
     comissao = fields.Monetary(string='Comissão',  group_operator='sum')
 
-    custo_fixo = fields.Float(string='Custo Fixo %',  copy=True)
+    custo_fixo = fields.Float(string='Custo Fixo %',  copy=True, compute='_getcusto')
     valor_custofixo = fields.Monetary(string='Custo Fixo',  copy=True)
     margem = fields.Float(string='Margem',  copy=True)
 
@@ -75,7 +75,7 @@ class OsFechamento(models.Model):
     consumidos_total = fields.Monetary('Consumido', compute='_amount_consumidos')
     comissao_real = fields.Monetary(string='Comissão Real',  copy=True, group_operator='sum')
     imposto_real = fields.Float(string='Imposto Real', copy=True, group_operator='sum',
-                                compute='_amount_imposto_real')
+                                )
     progress_compra = fields.Float(string='% Compras', compute='_compute_compra')
     extra_real = fields.Float(string='Horas Extras', compute='_amount_extra_real', group_operator='sum')
     horas_real = fields.Float(string='Horas Reais',  copy=True, compute='_amount_horas_real',
@@ -98,7 +98,7 @@ class OsFechamento(models.Model):
     mp_resultado = fields.Monetary(string='MP/Terceiros',  copy=True, compute='_amount_mp_resultado',
                                    help='(MP Prevista + Terceiros Previsto) - (MP Real + Terceiros Real) - Somente produtos recebidos',
                                    group_operator='sum')
-    impostos_resultado = fields.Monetary(string='Impostos',  copy=True, compute='_amount_imposto_real')
+    impostos_resultado = fields.Monetary(string='Impostos',  copy=True)
     impostos_resultado_percen = fields.Float(string='Impostos %',  copy=True)
 
     atraso = fields.Integer('Atraso', compute='_compute_atraso')
@@ -129,51 +129,52 @@ class OsFechamento(models.Model):
     def _getcusto(self):
         config = self.env['ir.config_parameter'].sudo()
         custo = config.get_param('orcamento.custo_fixo')
+        for rec in self:
+            rec.custo_fixo = float(custo) / 100
+            rec.valor_custofixo = rec.valor_pedido * rec.custo_fixo
 
-        self.custo_fixo = float(custo) / 100
-        self.valor_custofixo = self.valor_pedido * self.custo_fixo
-
-    @api.depends('os_ids.state')
+    
     def _amount_tc_prevista(self):
         for rec in self:
             total = sum(rec.os_ids.pedido_venda.mapped('terceiros')) if rec.os_ids.pedido_venda else 0
             rec.tc_prevista = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_mp_prevista(self):
         for rec in self:
             total = sum(rec.os_ids.pedido_venda.mapped('materia_prima')) if rec.os_ids.pedido_venda else 0
             rec.mp_prevista = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_mo_prevista(self):
         for rec in self:
             total = sum(rec.os_ids.pedido_venda.mapped('valor_horas')) if rec.os_ids.pedido_venda else 0
             rec.mo_prevista = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_horas_prevista(self):
         for rec in self:
             total = sum(rec.os_ids.pedido_venda.mapped('horas_mo')) if rec.os_ids.pedido_venda else 0
             rec.horas_prevista = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_valor_pedido(self):
         for rec in self:
             total = sum(rec.os_ids.pedido_venda.mapped('amount_total')) if rec.os_ids.pedido_venda else 0
             rec.valor_pedido = total
 
-    @api.depends('os_ids.state')
+    
     def _compute_compra(self):
         for rec in self:
             mpprev = sum(rec.os_ids.pedido_venda.mapped('materia_prima')) if rec.os_ids.pedido_venda else 0
-            mpreal = sum(rec.os_ids.pedidos_compra.mapped('price_total')) if rec.os_ids.pedidos_compra else 0
+            mpreal = sum(rec.os_ids.pedidos_compra.mapped('valor_os')) if rec.os_ids.pedidos_compra else 0
             if mpprev and mpreal:
                 if mpreal:
                     total = mpreal / mpprev
                     rec.progress_compra = total * 100
+            rec.progress_compra = 0
 
-    @api.depends('os_ids.state')
+    
     def _amount_total_orcado(self):
         for rec in self:
             mpprev = sum(rec.os_ids.pedido_venda.mapped('materia_prima')) if rec.os_ids.pedido_venda else 0
@@ -181,29 +182,29 @@ class OsFechamento(models.Model):
             tcprev = sum(rec.os_ids.pedido_venda.mapped('terceiros')) if rec.os_ids.pedido_venda else 0
             rec.orcado = mpprev + moprev + tcprev
 
-    @api.depends('os_ids.state')
+    
     def _amount_imposto_real(self):
-        for rec in self:
-            if rec.posicao:
-                if rec.entrega_efetiva:
-                    entrega = datetime.strftime(self.entrega_efetiva, '%m/%Y')
-                    pedi = rec.os_ids.pedido_venda
-                    if len(pedi) > 1:
-                        posi = pedi[0].fiscal_position_id.id
-                    else:
-                        posi = pedi.fiscal_position_id.id
-                    posicoes = self.env["os.impostos.line"].search([('fiscal_position', '=', posi)])
-                    for i in posicoes:
-                        dt = datetime.strftime(i.mes, '%m/%Y')
-                        if dt == entrega:
-                            self.imposto_real = i.percentual
-
-                    rec.write({'imposto_real': self.imposto_real / 100,
-                               'impostos_resultado': rec.valor_pedido * (self.imposto_real / 100)})
+        if self.posicao:
+            if self.entrega_efetiva:
+                entrega = datetime.strftime(self.entrega_efetiva, '%m/%Y')
+                pedi = self.os_ids.pedido_venda
+                if len(pedi) > 1:
+                    posi = pedi[0].fiscal_position_id.id
                 else:
-                    rec.write({'imposto_real': 0, 'impostos_resultado': 0})
+                    posi = pedi.fiscal_position_id.id
+                posicoes = self.env["os.impostos.line"].search([('fiscal_position', '=', posi)])
+                for i in posicoes:
+                    dt = datetime.strftime(i.mes, '%m/%Y')
+                    if dt == entrega:
+                        self.imposto_real = i.percentual
+                self.imposto_real = self.imposto_real / 100
+                self.impostos_resultado = self.valor_pedido * (self.imposto_real / 100)
 
-    @api.depends('os_ids.state')
+            else:
+                self.imposto_real = 0.0
+
+
+
     def _amount_consumidos(self):
         for rec in self:
             total = sum(rec.os_ids.consumidos.mapped('valor_con')) if rec.os_ids.consumidos else 0
@@ -211,98 +212,95 @@ class OsFechamento(models.Model):
 
     def _amount_mp_real(self):
         for rec in self:
-            total = sum(
-                rec.os_ids.pedidos_compra.filtered(lambda l: l.state == 'purchase' and l.qty_received > 0).mapped(
-                    'valor_os')) if rec.os_ids.pedidos_compra else 0
-            rec.mp_real = total
+            os = rec.os_ids
+            total = sum(os.pedidos_compra.mapped('valor_os')) if os.pedidos_compra else 0.0 #filtered(lambda l: l.state == 'purchase' and l.qty_received > 0)
+            self.mp_real = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_mo_real(self):
         for rec in self:
             total = sum(rec.os_ids.apontamento.mapped('valor_total')) if rec.os_ids.apontamento else 0
             rec.mo_real = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_valor_horas(self):
         for rec in self:
             total = sum(rec.os_ids.apontamento.filtered(lambda l: l.retrabalho == False).mapped(
                 'soma_total')) if rec.os_ids.apontamento else 0
             rec.horas_real = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_horas_real(self):
         for rec in self:
             total = sum(rec.os_ids.apontamento.filtered(lambda l: l.retrabalho == False).mapped(
                 'normal_total')) if rec.os_ids.apontamento else 0
             rec.horas_real = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_extra_real(self):
         for rec in self:
             total = sum(rec.os_ids.apontamento.filtered(lambda l: l.retrabalho == False).mapped(
                 'extra_total')) if rec.os_ids.apontamento else 0
             rec.extra_real = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_horas_retrabalho(self):
         for rec in self:
             total = sum(rec.os_ids.apontamento.filtered(lambda l: l.retrabalho).mapped(
                 'soma_total')) if rec.os_ids.apontamento else 0
             rec.horas_retrabalho = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_horas_total(self):
         for rec in self:
             total = sum(rec.os_ids.apontamento.mapped('soma_total')) if rec.os_ids.apontamento else 0
             rec.horas_total = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_valor_horas_retrabalho(self):
         for rec in self:
             total = sum(rec.os_ids.apontamento.filtered(lambda l: l.retrabalho).mapped(
                 'valor_total')) if rec.os_ids.apontamento else 0
             rec.valor_horas_retrabalho = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_valor_extra(self):
         for rec in self:
             total = sum(rec.os_ids.apontamento.filtered(lambda l: l.retrabalho == False).mapped(
                 'valor_extra_total')) if rec.os_ids.apontamento else 0
             rec.valor_extra = total
 
-    @api.depends('os_ids.state')
+    
     def _amount_horas_resultado(self):
         for rec in self:
             real = sum(rec.os_ids.apontamento.mapped('soma_total')) if rec.os_ids.apontamento else 0
             previ = sum(rec.os_ids.pedido_venda.mapped('horas_mo')) if rec.os_ids.pedido_venda else 0
             rec.horas_resultado = previ - real
 
-    @api.depends('os_ids.state')
+    
     def _amount_mo_resultado(self):
         for rec in self:
             real = rec.mo_real
             prev = sum(rec.os_ids.pedido_venda.mapped('valor_horas')) if rec.os_ids.pedido_venda else 0
             rec.mo_resultado = prev - real
 
-    @api.depends('os_ids.state')
+    
     def _amount_mp_resultado(self):
         for rec in self:
             rec.mp_resultado = rec.mp_prevista - rec.mp_real
 
-    @api.depends('os_ids.state')
+    
     def _amount_total_gasto(self):
+        self.updt()
         for rec in self:
-            mp = sum(rec.os_ids.pedidos_compra.mapped('price_total')) if rec.os_ids.pedidos_compra else 0
-            mo = sum(rec.os_ids.apontamento.mapped('valor_total')) if rec.os_ids.apontamento else 0
-            valor_pedido = sum(rec.os_ids.pedido_venda.mapped('amount_total')) if rec.os_ids.pedido_venda else 0
 
-            gasto = mp + mo + rec.comissao + rec.impostos_resultado + rec.valor_custofixo + rec.consumidos_total
+            gasto = rec.mp_real + rec.mo_real + rec.comissao + rec.impostos_resultado + rec.valor_custofixo + rec.consumidos_total
             diferenca = rec.orcado - gasto
-            if gasto > 0 and valor_pedido > 0:
-                resul = (valor_pedido - gasto - rec.valor_custofixo) / valor_pedido
+            if gasto > 0 and rec.valor_pedido > 0:
+                resul = (rec.valor_pedido - gasto - rec.valor_custofixo) / rec.valor_pedido
             else:
                 resul = 100
-            rec.write({'resultado': valor_pedido - gasto, 'total_gasto': gasto, 'orcado_gasto': diferenca,
+            rec.write({'resultado': rec.valor_pedido - gasto, 'total_gasto': gasto, 'orcado_gasto': diferenca,
                        'resultado_percen': resul})
 
     @api.model
