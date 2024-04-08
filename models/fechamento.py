@@ -207,8 +207,8 @@ class OsFechamento(models.Model):
 
     def _amount_consumidos(self):
         for rec in self:
-            total = sum(rec.os_ids.consumidos.mapped('valor_con')) if rec.os_ids.consumidos else 0
-            rec.consumidos_total = total
+            total = sum(rec.os_ids.consumidos.mapped('valor_con')) if rec.os_ids.consumidos else 0.0
+            self.consumidos_total = total
 
     def _amount_mp_real(self):
         for rec in self:

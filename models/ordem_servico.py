@@ -219,8 +219,11 @@ class OrdemServico(models.Model):
                                                      'produto_cli': produtocli})]
                             else:
                                 self.consumidos = [(1, 0, [])]
+                    else:
+                        self.consumidos = [(1, 0, [])]
                 else:
                     self.consumidos = [(1, 0, [])]
+
         else:
             self.consumidos = [(6, 0, [])]
 
