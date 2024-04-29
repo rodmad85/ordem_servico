@@ -13,8 +13,8 @@
                 <xpath expr="//form/sheet/notebook/page[1]" position="after">
                     <page string="Orçamento" attrs="{'invisible':[('grupo','=', False)]}">
                         <group>
-                            <field name="horas_mo" string="Total Horas" attrs="{'required': [('state', '=', 'sale')]}"/>
-                            <field name="valor_horas" string="Valor Total Horas"
+                            <field name="horas_mo" attrs="{'required': [('state', '=', 'sale')]}"/>
+                            <field name="valor_horas"
                                    attrs="{'required': [('state', '=', 'sale')]}"/>
                             <field name="valor_total_horas"/>
                             <field name="valor_total_hmanual"/>
