@@ -148,8 +148,12 @@ class OsFechamento(models.Model):
     
     def _amount_mo_prevista(self):
         for rec in self:
-            total = sum(rec.os_ids.pedido_venda.mapped('valor_horas')) if rec.os_ids.pedido_venda else 0
-            rec.mo_prevista = total
+            total = sum(rec.os_ids.pedido_venda.mapped('valor_total_horas')) if rec.os_ids.pedido_venda else 0
+            totalm = sum(rec.os_ids.pedido_venda.mapped('valor_total_hmanual')) if rec.os_ids.pedido_venda else 0
+            if totalm:
+                rec.mo_prevista = totalm
+            else
+                rec.mo_prevista = total
 
     
     def _amount_horas_prevista(self):
