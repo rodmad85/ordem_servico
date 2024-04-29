@@ -30,7 +30,7 @@ class OsSale(models.Model):
 
         for rec in self:
             rec.update({'resultado': rec.valor_horas + rec.materia_prima + rec.terceiros})
-            rec.update({'valort_total_horas': rec.valor_horas * rec.horas_mo})
+            rec.update({'valor_total_horas': rec.valor_horas * rec.horas_mo})
 
     def _mediadesc(self):
         for order in self:
