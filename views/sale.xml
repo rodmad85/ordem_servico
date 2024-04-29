@@ -93,6 +93,10 @@
 
                 <xpath expr="//field[@name='amount_total']" position="before">
                     <field name="mediadesc" string="Desconto(%)" optional="show" avg="Media de Desconto"/>
+                    <field name="valor_total_horas" optional="hide" />
+                    <field name="valor_total_hmanual" optional="hide" />
+                    <field name="horas_mo" optional="hide" />
+
                     <!--            <field name="discount_total" string="Total Desconto" optional="show" sum="Total Desconto"/>-->
                 </xpath>
 
