@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+        <record id="os_res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">os.res.config.settings.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="25"/>
+            <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='work_organization_setting_container']" position="before">
+                    <h2>Parâmetros de horas</h2>
+                    <div class="row mt16 o_settings_container" name="param_horas">
+
+                            <div class="o_setting_right_pane">
+                                <label for="horasmensais"/>
+
+                                <div class="row">
+                                    <div class="text-muted col-lg-8">
+                                        Insira o total de horas mensais líquidas.
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="horasmensais" required="1"
+                                            class="o_light_label"/>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="o_setting_right_pane">
+                                <label for="funcionarios"/>
+
+                                <div class="row">
+                                    <div class="text-muted col-lg-8">
+                                        Insira os funcionários disponíveis para produção.
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="funcionarios" required="1"
+                                            class="o_light_label" widget="many2many_tags"
+                                            />
+                                    </div>
+                                </div>
+
+                        </div>
+
+                              <div class="o_setting_right_pane">
+                                <label for="totalhoras"/>
+
+                                <div class="row">
+                                    <div class="text-muted col-lg-8">
+                                        Total de horas.
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="totalhoras" readonly="1"
+                                            class="o_light_label"
+                                            />
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
+</odoo>

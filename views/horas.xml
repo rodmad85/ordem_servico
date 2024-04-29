@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  -->
+
+<odoo>
+<!--    <record model="ir.ui.view" id="os_horas_graph">-->
+<!--        <field name="name">os.horas.graph</field>-->
+<!--        <field name="model">os.horas</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <graph string="Análise de Horas" sample="1">-->
+<!--                <field name="totalhoras" type="measure"/>-->
+<!--                <field name="previstas" type="measure"/>-->
+<!--                <field name="utilizadas" type="measure"/>-->
+<!--                <field name="disponiveis" type="measure"/>-->
+<!--            </graph>-->
+<!--        </field>-->
+<!--    </record>-->
+    <record model="ir.ui.view" id="os_horas_pivot_view">
+    <field name="name">os.horas.pivot</field>
+    <field name="model">os.horas</field>
+    <field name="arch" type="xml">
+
+        <pivot string="Relatorio de Horas" disable_linking="True">
+
+            <field name="normal" type="row" widget="float_time"/>
+            <field name="extra" type="row" widget="float_time"/>
+            <field name="retrabalho" type="row" widget="float_time"/>
+            <field name="utilizadas" type="row" widget="float_time"/>
+            <field name="vnormal"/>
+            <field name="vextra"/>
+            <field name="vretrabalho"/>
+            <field name="vutilizadas" type="measure"/>
+            <field name="disponiveis" type="measure" widget="float_time"/>
+
+        </pivot>
+    </field>
+    </record>
+</odoo>
