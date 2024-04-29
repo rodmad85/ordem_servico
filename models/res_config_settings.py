@@ -4,7 +4,7 @@ class OsHorasconfig(models.TransientModel):
     _inherit = 'res.config.settings'
 
     horasmensais =fields.Float(string='Horas Mensais', default=176)
-    funcionarios = fields.Many2many('hr.employee','os_horasfunc_rel','id','func_id', domain="[('department_id','=','Produção')]", help='Mostra somente os funcionarios cadastrados no departamento de Produção')
+    funcionarios = fields.Many2many('hr.employee',domain="[('department_id','=','Produção')]", help='Mostra somente os funcionarios cadastrados no departamento de Produção')
     totalhoras = fields.Float(string='Total Horas', compute='_totalhoras')
 
     @api.onchange('funcionarios')
