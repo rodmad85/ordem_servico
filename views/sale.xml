@@ -17,7 +17,7 @@
                             <field name="valor_horas" string="Valor Total Horas"
                                    attrs="{'required': [('state', '=', 'sale')]}"/>
                             <field name="valor_total_horas"/>
-                            <field name="valor_total_manual"/>
+                            <field name="valor_total_hmanual"/>
                             <field name="terceiros"/>
                             <field name="materia_prima" string="Valor Matéria Prima"/>
                             <field name="resultado" invisible="0"/>
