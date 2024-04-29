@@ -9,7 +9,7 @@ class OsSale(models.Model):
                                      copy=True, store=True, readonly=False)
     horas_mo = fields.Integer(string='Total Horas', required=True, store=True)
     valor_horas = fields.Monetary(string='Valor Horas', required=True, store=True, default="50")
-    valor_total_horas = fields.Monetary(string='Total Horas', required=True, store=True, readonly=True, compute="_amount_resultado")
+    valor_total_horas = fields.Monetary(string='Valor Total Horas', required=True, store=True, readonly=True, compute="_amount_resultado")
     valor_total_hmanual = fields.Monetary(string='Valor Horas Manual', store=True)
     imposto = fields.Many2one('os.impostos.line', string='Imposto %', store=True)
     materia_prima = fields.Monetary(string='Matéria Prima', required=True, store=True)
@@ -30,8 +30,12 @@ class OsSale(models.Model):
     def _amount_resultado(self):
 
         for rec in self:
-            rec.update({'resultado': rec.valor_horas + rec.materia_prima + rec.terceiros})
             rec.update({'valor_total_horas': rec.valor_horas * rec.horas_mo})
+            if rec.valor_total_hmanual:
+                rec.update({'resultado': rec.valor_total_hmanual + rec.materia_prima + rec.terceiros})
+            else:
+                rec.update({'resultado': rec.valor_total_horas + rec.materia_prima + rec.terceiros})
+
 
     def _mediadesc(self):
         for order in self:
