@@ -152,7 +152,7 @@ class OsFechamento(models.Model):
             totalm = sum(rec.os_ids.pedido_venda.mapped('valor_total_hmanual')) if rec.os_ids.pedido_venda else 0
             if totalm:
                 rec.mo_prevista = totalm
-            else
+            else:
                 rec.mo_prevista = total
 
     
