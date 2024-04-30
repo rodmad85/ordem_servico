@@ -287,8 +287,9 @@ class OrdemServico(models.Model):
 
         self.write({'state': 'aberta'})
         self.write({'status_fat': 'nao'})
+        fecha = self.env['os.fechamento'].search([('os_ids', '=', self.id)])
+        self.env['os.fechamento'].browse(fecha.id).write({'state': 'aberta'})
         self.message_post(body=_("Ordem de Serviço Aberta"))
-        confirm = True
         self._lista_produtos()
         pedidos = self.pedido_venda.ids
         for ped in pedidos:
@@ -325,12 +326,18 @@ class OrdemServico(models.Model):
 
         else:
             self.write({'state': 'concluida'})
+            fecha = self.env['os.fechamento'].search([('os_ids','=',self.id)])
+            self.env['os.fechamento'].browse(fecha.id).write({'state': 'concluida'})
+            # fechamento.write({'state': 'concluida'})
             self.message_post(body=_("Ordem de Serviço Concluida"))
         return {}
 
     def provisoria_os(self):
         self.write({'state': 'draft'})
         self.write({'status_fat': 'nao'})
+        fecha = self.env['os.fechamento'].search([('os_ids', '=', self.id)])
+        self.env['os.fechamento'].browse(fecha.id).write({'state': 'draft'})
+
         self.message_post(body=_("Mudado para Provisória"))
         return {}
 
@@ -340,6 +347,8 @@ class OrdemServico(models.Model):
 
         self.write({'state': 'cancel'})
         self.write({'status_fat': ''})
+        fecha = self.env['os.fechamento'].search([('os_ids', '=', self.id)])
+        self.env['os.fechamento'].browse(fecha.id).write({'state': 'cancel'})
         self.message_post(body=_("Cancelada"))
         pedidos = self.pedido_venda.ids
         for ped in pedidos:
