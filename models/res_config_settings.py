@@ -1,23 +1,25 @@
 from ast import literal_eval
 from odoo import fields, models, api
-class OsHorasconfig(models.TransientModel):
+
+class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    horasmensais =fields.Float(string='Horas Mensais', default=176)
+    horasmensais =fields.Float(string='Horas Mensais', config_parameter='ordem_servico.horasmensais',default=176)
     funcionarios = fields.Many2many('hr.employee')
-    totalhoras = fields.Float(string='Total Horas', compute='_totalhoras')
+    totalhoras = fields.Float(string='Total Horas', config_parameter='ordem_servico.totalhoras', default='')
 
     @api.onchange('funcionarios')
     def _totalhoras(self):
         tfunc = len(self.funcionarios)
         self.totalhoras = tfunc * self.horasmensais
+        self.write({'totalhoras': tfunc * self.horasmensais})
 
 
     def set_values(self):
         """employee setting field values"""
-        res = super(OsHorasconfig, self).set_values()
+        res = super(ResConfigSettings, self).set_values()
         self.env['ir.config_parameter'].sudo().set_param('oshorasconfig.totalhoras', self.totalhoras)
-        self.env['ir.config_parameter'].sudo().set_param('oshorasconfig.funcionarios', self.funcionarios.ids)
+        self.env['ir.config_parameter'].sudo().set_param('ordem_servico.funcionarios', self.funcionarios.ids)
         self.env['ir.config_parameter'].sudo().set_param('oshorasconfig.horasmensais', self.horasmensais)
 
         return res
@@ -25,10 +27,10 @@ class OsHorasconfig(models.TransientModel):
     @api.model
     def get_values(self):
         """employee setting field values"""
-        res = super(OsHorasconfig, self).get_values()
+        res = super(ResConfigSettings, self).get_values()
 
         total = self.env['ir.config_parameter'].sudo().get_param('oshorasconfig.totalhoras')
-        funcio = self.env['ir.config_parameter'].sudo().get_param('oshorasconfig.funcionarios')
+        funcio = self.env['ir.config_parameter'].sudo().get_param('ordem_servico.funcionarios')
         mensal = self.env['ir.config_parameter'].sudo().get_param('oshorasconfig.horasmensais')
         linhas = False
         if funcio:

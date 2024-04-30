@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="totalhoras" readonly="1"
+                                        <field name="totalhoras"
                                             class="o_light_label"
                                             />
                                     </div>
