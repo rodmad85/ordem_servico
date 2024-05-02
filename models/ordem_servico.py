@@ -261,6 +261,11 @@ class OrdemServico(models.Model):
             self.env['os.fechamento'].create(val)
             return result
 
+    def unlink(self):
+        fecha = self.env['os.fechamento'].search([('os_ids', '=', self.id)])
+        fecha.unlink()
+        return super(OrdemServico, self).unlink()
+
     def name_get(self):
         res = []
         for record in self:
