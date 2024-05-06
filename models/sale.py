@@ -9,7 +9,7 @@ class OsSale(models.Model):
                                      copy=True, store=True, readonly=False)
     horas_mo = fields.Integer(string='Total Horas', required=True, store=True)
     valor_horas = fields.Monetary(string='Valor Horas', required=True, store=True, default="50")
-    valor_total_horas = fields.Monetary(string='Valor Total Horas', required=True, store=True, copy=True, compute="_amount_resultado")
+    valor_total_horas = fields.Monetary(string='Valor Total Horas', store=True, copy=True, compute="_amount_resultado")
     valor_total_hmanual = fields.Monetary(string='Valor Horas Manual', store=True)
     imposto = fields.Many2one('os.impostos.line', string='Imposto %', store=True)
     materia_prima = fields.Monetary(string='Matéria Prima', required=True, store=True)
