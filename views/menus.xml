@@ -41,13 +41,12 @@
         <field name="view_id" ref="ordem_servico.os_fechamento_tree_view"/>
     </record>
 
-<!--    <record model="ir.actions.act_window" id="ordem_horas_act_window">-->
-<!--        <field name="name">Horas</field>-->
-<!--        <field name="res_model">os.horas</field>-->
-<!--        <field name="view_mode">pivot</field>-->
-<!--        <field name="view_id" ref="ordem_servico.os_horas_pivot_view"/>-->
-<!--    </record>-->
+    <record model="ir.actions.act_window" id="ordem_horas_act_window">
+        <field name="name">Horas</field>
+        <field name="res_model">os.horas</field>
+        <field name="view_mode">tree</field>
 
+    </record>
 
 
     <menuitem id="ordem_root"
@@ -78,12 +77,12 @@
               parent="ordem_rel"
               sequence="14"/>
 
-<!--    <menuitem id="ordem_relatorio_horas"-->
-<!--              groups="ordem_admin"-->
-<!--              name="Horas"-->
-<!--              action="ordem_horas_act_window"-->
-<!--              parent="ordem_rel"-->
-<!--              sequence="16"/>-->
+    <menuitem id="ordem_relatorio_horas"
+              groups="ordem_admin"
+              name="Horas"
+              action="ordem_horas_act_window"
+              parent="ordem_rel"
+              sequence="16"/>
 
 
 

@@ -20,17 +20,38 @@
     <field name="model">os.horas</field>
     <field name="arch" type="xml">
 
-        <pivot string="Relatorio de Horas" disable_linking="True">
+        <pivot string="Relatorio de Horas">
 
-            <field name="normal" type="row" widget="float_time"/>
-            <field name="extra" type="row" widget="float_time"/>
-            <field name="retrabalho" type="row" widget="float_time"/>
-            <field name="utilizadas" type="row" widget="float_time"/>
-            <field name="vnormal"/>
-            <field name="vextra"/>
-            <field name="vretrabalho"/>
-            <field name="vutilizadas" type="measure"/>
-            <field name="disponiveis" type="measure" widget="float_time"/>
+            <field name="normal" type="measure" widget="float_time"/>
+            <field name="extra" type="measure" widget="float_time"/>
+            <field name="retrabalho" type="measure" widget="float_time"/>
+            <field name="utilizadas" type="measure" widget="float_time"/>
+            <field name="vnormal" type="measure"/>
+<!--            <field name="vextra"/>-->
+<!--            <field name="vretrabalho"/>-->
+            <field name="previstas" type="measure"/>
+            <field name="vprevistas" type="measure" widget="float_time"/>
+
+        </pivot>
+    </field>
+    </record>
+
+     <record model="ir.ui.view" id="os_horas_tree_view">
+    <field name="name">os.horas.tree</field>
+    <field name="model">os.horas</field>
+    <field name="arch" type="xml">
+
+        <pivot string="Relatorio de Horas">
+
+            <field name="normal" type="measure" widget="float_time"/>
+            <field name="extra" type="measure" widget="float_time"/>
+            <field name="retrabalho" type="measure" widget="float_time"/>
+            <field name="utilizadas" type="measure" widget="float_time"/>
+            <field name="vnormal" type="measure"/>
+<!--            <field name="vextra"/>-->
+<!--            <field name="vretrabalho"/>-->
+            <field name="previstas" type="measure"/>
+            <field name="vprevistas" type="measure" widget="float_time"/>
 
         </pivot>
     </field>
