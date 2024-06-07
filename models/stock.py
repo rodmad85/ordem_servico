@@ -67,7 +67,10 @@ class OsIncoterm(models.Model):
         for rec in self:
             result.append((rec.id, '%s - %s'%(rec.code,rec.name)))
         return result
+class OSPicking(models.Model):
+    _inherit = 'stock.picking'
 
+    partner_id_carrier = fields.Many2one('res.partner', string='Partner', required=True,ondelete='restrict')
 
 # class OsStockCertWiz(models.TransientModel):
 #     _name = 'os.stockcert.wizard'
