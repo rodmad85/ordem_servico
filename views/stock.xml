@@ -53,7 +53,7 @@
             <attribute name="required">1</attribute>
            </field>
            <field name="carrier_id" position="after">
-               <field name="partner_id_carrier"/>
+               <field name="partner_id_carrier" string="Motorista"/>
            </field>
        </field>
    </record>
