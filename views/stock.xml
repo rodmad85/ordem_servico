@@ -40,7 +40,6 @@
                <field name="funcionarios" options="{'no_create_edit': True,'no_create': True}"/>
                <field name="ordem_servico" widget="many2many_tags"/>
                <field name="certificado"/>
-
            </xpath>
        </field>
    </record>
@@ -50,7 +49,7 @@
        <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form" />
        <field name="model">stock.picking</field>
        <field name="arch" type="xml">
-           <field name="carrier_id" position="attributes"/>
+           <field name="carrier_id" position="attributes">
             <attribute name="required">1</attribute>
            </field>
            <field name="carrier_id" position="after">
