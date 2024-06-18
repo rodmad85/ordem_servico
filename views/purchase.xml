@@ -25,7 +25,7 @@
                 <page string="Total OS">
 
                     <group>
-                        <button name="uposs" string="Atualizar" type="object"/>
+                        <button name="uposs" string="Atualizar" type="object" class="oe_link oe_edit_only fa fa-refresh"/>
                         <field name="oss" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
 
                             <tree string="Total OS" editable="bottom">

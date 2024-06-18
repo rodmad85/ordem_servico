@@ -3,27 +3,12 @@
   -->
 
 <odoo>
-    <data>
-        <record id="sale_order_orcamento" model="ir.ui.view">
-            <field name="name">sale.order.orcamento</field>
+
+         <record id="sale_order_os" model="ir.ui.view">
+            <field name="name">sale.order.os</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
-
-                <xpath expr="//form/sheet/notebook/page[1]" position="after">
-                    <page string="Orçamento" attrs="{'invisible':[('grupo','=', False)]}">
-                        <group>
-                            <field name="horas_mo" attrs="{'required': [('state', '=', 'sale')]}"/>
-                            <field name="valor_horas"
-                                   attrs="{'required': [('state', '=', 'sale')]}"/>
-                            <field name="valor_total_horas" readonly="1"/>
-                            <field name="valor_total_hmanual"/>
-                            <field name="terceiros"/>
-                            <field name="materia_prima" string="Valor Matéria Prima"/>
-                            <field name="resultado" invisible="0"/>
-                        </group>
-                    </page>
-                </xpath>
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='discount']"
                        position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
@@ -103,5 +88,5 @@
             </field>
         </record>
 
-    </data>
+
 </odoo>

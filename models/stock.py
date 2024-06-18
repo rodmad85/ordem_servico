@@ -55,6 +55,8 @@ class OsStockLine(models.Model):
     # secondary_uom_id = fields.Many2one(related='move_id.secondary_uom_id')
     fornecedor = fields.Many2one(string='Fornecedor', related='picking_id.partner_id')
     funcionario = fields.Many2one('hr.employee',store=True)
+    placa = fields.Char(string='Placa', size=7)
+
 
 class OsIncoterm(models.Model):
     _inherit = 'account.incoterms'
