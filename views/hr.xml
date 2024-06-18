@@ -28,7 +28,7 @@
                <header>
                    <button name="upaponta" string="Atualiza Valor Total" class="btn-primary" invisible="0" type="object"/>
 
-                   <button name="upvalor" string="Atualiza Valor Hora" class="btn-secondary" invisible="0" type="object"/>
+<!--                   <button name="upvalor" string="Atualiza Valor Hora" class="btn-secondary" invisible="0" type="object"/>-->
                </header>
            </xpath>
            <xpath expr="//field[@name='employee_id']" position="after">

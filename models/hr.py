@@ -1,6 +1,7 @@
 
 from odoo import fields, models, api
 from datetime import datetime,timedelta
+import pytz
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
@@ -51,14 +52,14 @@ class HrFields(models.Model):
         self.valor_hora = self.employee_id.valor_hora
 
 
-    @api.onchange('check_out')
+    @api.onchange('check_out','check_in')
     def _tree_to_os(self):
         for line in self:
             if line.os_tree:
                 line.update({'ordem_servico': self.os_tree})
 
     def _total(self):
-
+        tz = pytz.timezone('America/Sao_Paulo')
         dtent = self.check_in.date()
         if self.valor_hora == 0:
             self.valor_hora = self.employee_id.valor_hora
@@ -83,8 +84,10 @@ class HrFields(models.Model):
             for line in self:
 
                 if self.check_in and self.check_out:
-                    entrada = self.check_in - timedelta(hours=3)
-                    saida = self.check_out - timedelta(hours=3)
+                    entrada = self.check_in.astimezone(tz)
+                    entrada = entrada.replace(tzinfo=None)
+                    saida = self.check_out.astimezone(tz)
+                    saida = saida.replace(tzinfo=None)
                 else:
                     return
 
