@@ -37,9 +37,7 @@ class OsPurchase(models.Model):
         for order in self:
             for line in order.order_line:
                 ids = order.order_line
-                ordens = tuple(set(ids.ordem_servico))
-                ordens = id.ordens
-
+                ordens = tuple(set(ids.ordem_servico.ids))
 
             invoice_vals['ordem_servico'] = ordens
         return invoice_vals
