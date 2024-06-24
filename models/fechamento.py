@@ -307,7 +307,7 @@ class OsFechamento(models.Model):
             gasto = rec.mp_real + rec.mo_real + rec.comissao + rec.impostos_resultado + rec.valor_custofixo + rec.consumidos_total
             diferenca = rec.orcado - gasto
             if gasto > 0 and rec.valor_pedido > 0:
-                resul = (rec.valor_pedido - gasto - rec.valor_custofixo) / rec.valor_pedido
+                resul = (rec.valor_pedido - gasto) / rec.valor_pedido
             else:
                 resul = 100
             rec.write({'resultado': rec.valor_pedido - gasto, 'total_gasto': gasto, 'orcado_gasto': diferenca,
