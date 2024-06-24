@@ -230,16 +230,16 @@
                                     <field name="comissao" widget="monetary" options="{'currency': %(base.BRL)d}"/>
                                 </group>
                                 <group string="Impostos">
-                                    <field name="imposto_real" widget="percentage"/>
-                                    <field name="impostos_resultado" widget="monetary"
+                                    <field name="imposto_real" decoration-danger="imposto_real &lt;= 0" widget="percentage"/>
+                                    <field name="impostos_resultado" decoration-danger="imposto_real &lt;= 0" widget="monetary"
                                            options="{'currency': %(base.BRL)d}"/>
                                 </group>
                             </group>
                             <group string="Diferenças">
                                 <field name="atraso" string="Atraso(dias)"/>
-                                <field name="horas_resultado" widget="float_time"/>
-                                <field name="mo_resultado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
-                                <field name="mp_resultado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                <field name="horas_resultado" widget="float_time" decoration-info="horas_resultado &gt;= 0" decoration-danger="horas_resultado &lt;= 0"/>
+                                <field name="mo_resultado" widget="monetary" decoration-info="mo_resultado &lt;= 0" decoration-danger="mo_resultado &gt;= 0" options="{'currency': %(base.BRL)d}"/>
+                                <field name="mp_resultado" widget="monetary" decoration-info="mp_resultado &gt; 0" decoration-danger="mo_resultado &lt; 0" options="{'currency': %(base.BRL)d}"/>
                                 <field name="progress_compra" widget="progressbar"/>
 
                             </group>
@@ -251,10 +251,10 @@
                                            options="{'currency': %(base.BRL)d}"/>
                                     <field name="custo_fixo" widget="percentage"/>
                                     <field name="total_gasto" widget="monetary" options="{'currency': %(base.BRL)d}"/>
-                                    <field name="orcado_gasto" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                    <field name="orcado_gasto" widget="monetary" decoration-info="orcado_gasto &lt;= 0" decoration-danger="orcado_gasto &gt;= 0" options="{'currency': %(base.BRL)d}"/>
                                 </group>
                                 <group>
-                                    <field name="resultado" widget="monetary" options="{'currency': %(base.BRL)d}"/>
+                                    <field name="resultado" widget="monetary" decoration-info="resultado &gt; 0" decoration-danger="resultado &lt; 0" options="{'currency': %(base.BRL)d}"/>
                                     <field name="resultado_percen" widget="percentage"/>
                                 </group>
 
