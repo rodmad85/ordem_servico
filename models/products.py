@@ -72,7 +72,7 @@ class OsPesomateriais(models.Model):
 class OsProductinfo(models.Model):
     _inherit = "product.template"
 
-    certificado = fields.Boolean(string='Exige Certificado', store=True, related='categ_id.certificado')
+    certificado = fields.Boolean(string='Exige Certificado', copy=True, store=True, related='categ_id.certificado')
     product_length = fields.Float("length", copy=True)
     product_height = fields.Float("height", copy=True)
     product_width = fields.Float("width", copy=True)
