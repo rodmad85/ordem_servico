@@ -236,7 +236,7 @@
                                 </group>
                             </group>
                             <group string="Diferenças">
-                                <field name="atraso" string="Atraso(dias)"/>
+                                <field name="atraso" string="Atraso(dias)" decoration-danger="atraso &gt; 0"/>
                                 <field name="horas_resultado" widget="float_time" decoration-info="horas_resultado &gt;= 0" decoration-danger="horas_resultado &lt;= 0"/>
                                 <field name="mo_resultado" widget="monetary" decoration-info="mo_resultado &lt;= 0" decoration-danger="mo_resultado &gt;= 0" options="{'currency': %(base.BRL)d}"/>
                                 <field name="mp_resultado" widget="monetary" decoration-info="mp_resultado &gt; 0" decoration-danger="mo_resultado &lt; 0" options="{'currency': %(base.BRL)d}"/>
