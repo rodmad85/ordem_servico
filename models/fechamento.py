@@ -290,9 +290,7 @@ class OsFechamento(models.Model):
     
     def _amount_mo_resultado(self):
         for rec in self:
-            real = rec.mo_real
-            prev = sum(rec.os_ids.pedido_venda.mapped('valor_horas')) if rec.os_ids.pedido_venda else 0
-            rec.mo_resultado = prev - real
+            rec.mo_resultado = rec.mo_prevista - rec.mo_real
 
     
     def _amount_mp_resultado(self):
