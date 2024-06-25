@@ -218,13 +218,13 @@ class OsFechamento(models.Model):
     def _amount_consumidos(self):
         for rec in self:
             total = sum(rec.os_ids.consumidos.mapped('valor_con')) if rec.os_ids.consumidos else 0.0
-            self.consumidos_total = total
+            rec.consumidos_total = total
 
     def _amount_mp_real(self):
         for rec in self:
             os = rec.os_ids
             total = sum(os.pedidos_compra.mapped('valor_os')) if os.pedidos_compra else 0.0 #filtered(lambda l: l.state == 'purchase' and l.qty_received > 0)
-            self.mp_real = total
+            rec.mp_real = total
 
     
     def _amount_mo_real(self):
