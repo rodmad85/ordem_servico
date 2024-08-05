@@ -15,35 +15,42 @@
     <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
             <t t-call="web.external_layout">
+              <style>
+            .table-bordered,
+            .table-bordered th,
+            .table-bordered td {
+                border-color: black !important;
+            }
+        </style>
                 <div class="page">
                 <div class="oe_structure"/>
-                    <table class="table table-sm o_main_table table-bordered">
+                    <table class="table table-sm o_main_table table-bordered" style="border-color: black;"> <!--table-bordered-->
 
                             <td class="text-center border:1pt solid black">
                                 <p align="center"> <h4><span t-field="o.cliente_id"/></h4></p>
                              </td>
 
-                            <td class="text-right"><p align="center"><h2>OS: </h2></p> </td>
-                            <td class="text-center">
+                            <td class="text-right border:1pt solid black"><p align="center"><h2>OS: </h2></p> </td>
+                            <td class="text-center border:1pt solid black">
                                 <p align="center"> <h2><strong><span t-field="o.name"/></strong></h2></p>
                             </td>
-                     
+
                          <tr class="border: 1px solid black">
                             <td class="text-center">
-                              
-                                <h5>PEDIDO DO CLIENTE: <t t-foreach="o.pedido_venda" t-as="ped"> <span t-field="ped.client_order_ref" /> - </t> </h5>
-                                
+
+                                <h5>PEDIDO DO CLIENTE: <t t-foreach="o.pedido_venda" t-as="ped"> <span t-field="ped.client_order_ref"/> - </t> </h5>
+
                              </td>
-                         
-                             <td class="text-right">
+
+                             <td class="text-right border:1pt solid black">
                                 <h5>PRAZO: </h5>
                              </td>
-                             <td></td>
+                             <td/>
 <!--                             <td class="text-center"><h5><strong><span t-field="o.data_entrega"/></strong></h5></td>-->
                          </tr>
 
                  </table>
-                <table class="table table-bordered table-sm o_main_table">
+                <table class="table table-sm o_main_table table-bordered " style="border-color: black;">
                     <thead>
                         <tr>
                             <th class="text-center"><strong>Qtd.</strong></th>
@@ -59,10 +66,10 @@
 
 
                                 <td class="text-center">
-                                  <span t-field="line.product_qty" t-options='{"widget": "float", "precision": 0}'/>
+                                  <span t-field="line.product_qty" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}"/>
                                 </td>
                                 <td id="product">
-                                  <span t-field="line.product_id.name" />
+                                  <span t-field="line.product_id.name"/>
                                 </td>
                                 <td class="text-center">
                                   <span t-field="line.product_id.default_code"/>
@@ -83,7 +90,7 @@
                     </table>
                     <div class="page">
                         <table class="table table-sm o_main_table">
-                            <thead class="text-center" >
+                            <thead class="text-center">
                                <th colspan="2"><strong> <h6>REGISTROS DE INSPEÇÕES</h6></strong></th>
                             </thead>
 <tbody>
@@ -91,14 +98,14 @@
                                 <td class="text-center" width="50%">
                                     <strong><h7>CORTE E DOBRA</h7></strong>
                                 <br/>
-                                   <span> &#9634; Visual  &#160;&#9634; Dimensional  &#160;&#9634; Outras ________________________</span>
+                                   <span> ▢ Visual   ▢ Dimensional   ▢ Outras ________________________</span>
                                 <br/>Responsável:________________________ - _______/_______/_______
 
                                 </td>
                                 <td class="text-center">
                                     <strong><h7>FURAÇÃO</h7></strong>
                                 <br/>
-                                   <span> &#9634; Visual  &#160;&#9634; Dimensional  &#160;&#9634; Outras ________________________</span>
+                                   <span> ▢ Visual   ▢ Dimensional   ▢ Outras ________________________</span>
                                 <br/>Responsável:________________________ - _______/_______/_______
 
                                 </td>
@@ -112,14 +119,14 @@
                                 <td class="text-center">
                                     <strong><h7>MONTAGEM</h7></strong>
                                 <br/>
-                                   <span> &#9634; Visual  &#160;&#9634; Dimensional  &#160;&#9634; Outras ________________________</span>
+                                   <span> ▢ Visual   ▢ Dimensional   ▢ Outras ________________________</span>
                                 <br/>Responsável:________________________ - _______/_______/_______
 
                                 </td>
                                 <td class="text-center">
                                     <strong><h7>USINAGEM</h7></strong>
                                 <br/>
-                                   <span> &#9634; Visual  &#160; &#9634; Dimensional  &#160; &#9634; Outras ________________________</span>
+                                   <span> ▢ Visual    ▢ Dimensional    ▢ Outras ________________________</span>
                                 <br/>Responsável:________________________ - _______/_______/_______
 
                                 </td>
@@ -130,22 +137,22 @@
                                 <td class="text-center" colspan="2">
                                     <strong><h7>SOLDAGEM</h7></strong><br/>
                                     <span>PROCESSO REALIZADO CONFORME EPSC______ REV.______</span>
-                                    <span>&#160; &#160;&#160;&#160;&#160; &#160; &#160; &#9634; Visual &#160; &#9634; Outras ______________________________________</span>
-                                    Responsável:__________________________________ &#160; &#160; &#160; &#160; &#160; &#160;DATA: _______/_______/_______
+                                    <span>           ▢ Visual   ▢ Outras ______________________________________</span>
+                                    Responsável:__________________________________            DATA: _______/_______/_______
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-center">
                                     <strong><h7>ACABAMENTO</h7></strong>
                                 <br/>
-                                   <span> &#9634; Visual  &#160; &#9634; Dimensional  &#160; &#9634; Outras ________________________</span>
+                                   <span> ▢ Visual    ▢ Dimensional    ▢ Outras ________________________</span>
                                 <br/>Responsável:________________________ - _______/_______/_______
 
                                 </td>
                                 <td class="text-center">
                                     <strong><h7>INSPEÇÃO FINAL</h7></strong>
                                 <br/>
-                                   <span> &#9634; Visual  &#160; &#9634; Dimensional  &#160; &#9634; Outras ________________________</span>
+                                   <span> ▢ Visual    ▢ Dimensional    ▢ Outras ________________________</span>
                                 <br/>Responsável:________________________ - _______/_______/_______
 
                                 </td>
@@ -166,10 +173,10 @@
                                 </td>
                             </tr>
                            <tr>
-                                <td class="text-left" > ELABORADO POR: <span t-field="o.user_id"/></td>
+                                <td class="text-left"> ELABORADO POR: <span t-field="o.user_id"/></td>
 
 
-                                    <td class="text-leftt">DATA: <span t-field="o.create_date" t-options='{"widget": "date","format": "dd/MM/yyyy"}'/> </td>
+                                    <td class="text-leftt">DATA: <span t-field="o.create_date" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/> </td>
 
                            </tr>
                                 <tr>
