@@ -253,7 +253,7 @@
                                            options="{'currency': %(base.BRL)d}"/>
                                     <field name="custo_fixo" widget="percentage"/>
                                     <field name="total_gasto" widget="monetary" options="{'currency': %(base.BRL)d}"/>
-                                    <field name="orcado_gasto" widget="monetary" decoration-danger="orcado_gasto &lt;= 0" decoration-info="orcado_gasto &gt;= 0" options="{'currency': %(base.BRL)d}"/>
+                                    <field name="orcado_gasto" widget="monetary" decoration-danger="orcado_gasto &lt; 0" decoration-info="orcado_gasto &gt;= 0" options="{'currency': %(base.BRL)d}"/>
                                 </group>
                                 <group>
                                     <field name="resultado" widget="monetary" decoration-info="resultado &gt; 0" decoration-danger="resultado &lt; 0" options="{'currency': %(base.BRL)d}"/>
