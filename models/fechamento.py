@@ -108,7 +108,7 @@ class OsFechamento(models.Model):
     total_gasto = fields.Monetary(string='Total de Gastos', copy=True, store=False, compute='_amount_total_gasto',
                                   help='Total de MP Real + Total de MO Real + Comissao + Custo Fixo + Impostos',
                                   group_operator='sum')
-    orcado_gasto = fields.Monetary(string='Orçado X Gastos',  copy=True, help='Orçado - Gastos')
+    orcado_gasto = fields.Monetary(string='Orçado X Gastos',  copy=True, help='Orçado - Gastos (sem custo fixo)')
     resultado = fields.Monetary(string='Resultado', copy=True, readonly=True,
                                 help='Valor de Venda - Total de Gastos', store=False, compute='_amount_total_gasto',
                                 group_operator='sum')
@@ -331,6 +331,7 @@ class OsFechamento(models.Model):
             else:
                 resul = 100
             rec.total_gasto = gasto
+            rec.orcado_gasto = rec.mo_prevista + rec.mp_prevista + rec.tc_prevista + rec.comissao - gasto - rec.valor_custofixo
             rec.resultado = rec.valor_pedido - gasto
             rec.resultado_percen = resul
 
