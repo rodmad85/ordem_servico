@@ -37,7 +37,7 @@
      <record model="ir.actions.act_window" id="ordem_fecha_act_window">
         <field name="name">Fechamento</field>
         <field name="res_model">os.fechamento</field>
-        <field name="view_mode">tree,pivot,graph,form</field>
+        <field name="view_mode">tree,form,pivot</field>
         <field name="view_id" ref="ordem_servico.os_fechamento_tree_view"/>
     </record>
 

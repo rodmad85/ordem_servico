@@ -1,5 +1,5 @@
-
 from odoo import fields, models, api
+
 
 class OsAccountMove(models.Model):
     _inherit = "l10n_br_fiscal.document"
@@ -7,11 +7,13 @@ class OsAccountMove(models.Model):
                                      string='Ordem de Serviço', required=False, index=True,
                                      copy=True, store=True, readonly=False)
 
+
 class OsImpostos(models.Model):
     _inherit = ["l10n_br_fiscal.operation"]
 
     meses = fields.One2many('os.impostos.line', 'fiscal_position',
-                             string="Taxas", required=False, ondelete='cascade', auto_join=True)
+                            string="Taxas", required=False, ondelete='cascade', auto_join=True)
+
 
 class OsImpostosLine(models.Model):
     _name = "os.impostos.line"

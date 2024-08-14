@@ -58,63 +58,63 @@ class OsFechamento(models.Model):
                                   group_operator='sum')
     tc_prevista = fields.Monetary(string='Terceiros Previsto', compute='_amount_tc_prevista',
                                   group_operator='sum')
-    mo_prevista = fields.Monetary(string='MO Prevista', compute='_amount_mo_prevista', group_operator='sum')
-    mp_prevista = fields.Monetary(string='MP Prevista', compute='_amount_mp_prevista', group_operator='sum')
+    mo_prevista = fields.Monetary(string='MO Prevista', store=False, compute='_amount_mo_prevista', group_operator='sum')
+    mp_prevista = fields.Monetary(string='MP Prevista', store=False, compute='_amount_mp_prevista', group_operator='sum')
     comissao = fields.Monetary(string='Comissão',  group_operator='sum')
 
     custo_fixo = fields.Float(string='Custo Fixo %',  copy=True, compute='_getcusto')
     valor_custofixo = fields.Monetary(string='Custo Fixo',  copy=True)
     margem = fields.Float(string='Margem',  copy=True)
 
-    mo_real = fields.Monetary(string='Valor Total MO', copy=True, compute='_amount_mo_real',
+    mo_real = fields.Monetary(string='Valor Total MO', copy=True, store=False, compute='_amount_mo_real',
                               group_operator='sum')
-    mp_real = fields.Monetary(string='Compras Real', copy=True, compute='_amount_mp_real',
+    mp_real = fields.Monetary(string='Compras Real', copy=True, store=False, compute='_amount_mp_real',
                               group_operator='sum')
     consumidos = fields.Many2many(related='os_ids.consumidos')
     comprados = fields.Many2many(related='os_ids.pedidos_compra')
-    consumidos_total = fields.Monetary('Consumido', compute='_amount_consumidos')
+    consumidos_total = fields.Monetary('Consumido', store=False, compute='_amount_consumidos')
     comissao_real = fields.Monetary(string='Comissão Real',  copy=True, group_operator='sum')
     imposto_real = fields.Float(string='Imposto Real', copy=True, group_operator='sum',
                                 )
-    progress_compra = fields.Float(string='% Compras', compute='_compute_compra')
-    extra_real = fields.Float(string='Horas Extras', compute='_amount_extra_real', group_operator='sum')
-    horas_real = fields.Float(string='Horas Reais',  copy=True, compute='_amount_horas_real',
+    progress_compra = fields.Float(string='% Compras', store=False, compute='_compute_compra')
+    extra_real = fields.Float(string='Horas Extras', store=False, compute='_amount_extra_real', group_operator='sum')
+    horas_real = fields.Float(string='Horas Reais',  copy=True, store=False, compute='_amount_horas_real',
                               group_operator='sum')
-    horas_retrabalho = fields.Float(string='Horas Retrabalho',  copy=True,
+    horas_retrabalho = fields.Float(string='Horas Retrabalho',  copy=True, store=False,
                                     compute='_amount_horas_retrabalho', group_operator='sum')
-    horas_total = fields.Float(string='Horas Reais',  copy=True, compute='_amount_horas_total',
+    horas_total = fields.Float(string='Horas Reais',  copy=True, store=False, compute='_amount_horas_total',
                                group_operator='sum')
-    valor_horas = fields.Float(string='Valor Horas',  copy=True, compute='_amount_valor_horas',
+    valor_horas = fields.Float(string='Valor Horas',  copy=True, store=False, compute='_amount_valor_horas',
                                group_operator='sum')
     valor_horas_retrabalho = fields.Monetary(string='Valor Horas Retrabalho',  copy=True,
-                                             compute='_amount_valor_horas_retrabalho', group_operator='sum')
-    valor_extra = fields.Float(string='Valor Extra',  copy=True, compute='_amount_valor_extra',
+                                             store=False, compute='_amount_valor_horas_retrabalho', group_operator='sum')
+    valor_extra = fields.Float(string='Valor Extra',  copy=True, store=False, compute='_amount_valor_extra',
                                group_operator='sum')
 
-    horas_resultado = fields.Float(string='Horas',  copy=True, compute='_amount_horas_resultado',
+    horas_resultado = fields.Float(string='Horas',  copy=True, store=False, compute='_amount_horas_resultado',
                                    help='Horas Reais - Horas Previstas', group_operator='sum')
-    mo_resultado = fields.Monetary(string='Valor Horas',  copy=True, compute='_amount_mo_resultado',
+    mo_resultado = fields.Monetary(string='Valor Horas',  copy=True, store=False, compute='_amount_mo_resultado',
                                    help='Horas Reais - Horas Previstas', group_operator='sum')
-    mp_resultado = fields.Monetary(string='MP/Terceiros',  copy=True, compute='_amount_mp_resultado',
+    mp_resultado = fields.Monetary(string='MP/Terceiros',  copy=True, store=False, compute='_amount_mp_resultado',
                                    help='(MP Prevista + Terceiros Previsto) - (MP Real + Terceiros Real) - Somente produtos recebidos',
                                    group_operator='sum')
     impostos_resultado = fields.Monetary(string='Impostos',  copy=True)
     impostos_resultado_percen = fields.Float(string='Impostos %',  copy=True)
 
-    atraso = fields.Integer('Atraso', compute='_compute_atraso')
+    atraso = fields.Integer('Atraso', store=False, compute='_compute_atraso')
 
-    orcado = fields.Monetary(string='Orçado',  copy=True, compute='_amount_total_orcado',
+    orcado = fields.Monetary(string='Orçado',  copy=True, store=False, compute='_amount_total_orcado',
                              group_operator='sum', help='MP Prevista + Valor Horas Prevista + Terceiros Previsto')
-    total_gasto = fields.Monetary(string='Total de Gastos', copy=True, compute='_amount_total_gasto',
+    total_gasto = fields.Monetary(string='Total de Gastos', copy=True, store=False, compute='_amount_total_gasto',
                                   help='Total de MP Real + Total de MO Real + Comissao + Custo Fixo + Impostos',
                                   group_operator='sum')
     orcado_gasto = fields.Monetary(string='Orçado X Gastos',  copy=True, help='Orçado - Gastos')
     resultado = fields.Monetary(string='Resultado', copy=True, readonly=True,
-                                help='Valor de Venda - Total de Gastos', compute='_amount_total_gasto',
+                                help='Valor de Venda - Total de Gastos', store=False, compute='_amount_total_gasto',
                                 group_operator='sum')
     resultado_percen = fields.Float(string='Resultado %', copy=True, readonly=True,
-                                    compute='_amount_total_gasto', group_operator='avg')
-
+                                    store=False, compute='_amount_total_gasto', group_operator='avg')
+    @api.depends('data_entrega','entrega_efetiva')
     def _compute_atraso(self):
         for rec in self:
             if rec.data_entrega and rec.entrega_efetiva:
@@ -194,24 +194,46 @@ class OsFechamento(models.Model):
 
     
     def _amount_imposto_real(self):
-        if self.posicao:
-            if self.entrega_efetiva:
-                entrega = datetime.strftime(self.entrega_efetiva, '%m/%Y')
-                pedi = self.os_ids.pedido_venda
-                if len(pedi) > 1:
-                    posi = pedi[0].fiscal_position_id.id
-                else:
-                    posi = pedi.fiscal_position_id.id
-                posicoes = self.env["os.impostos.line"].search([('fiscal_position', '=', posi)])
-                for i in posicoes:
-                    dt = datetime.strftime(i.mes, '%m/%Y')
-                    if dt == entrega:
-                        self.imposto_real = i.percentual
-                self.imposto_real = self.imposto_real / 100
-                self.impostos_resultado = self.valor_pedido * (self.imposto_real / 100)
+        for rec in self:
+            if rec.posicao:
 
-            else:
-                self.imposto_real = 0.0
+                if rec.entrega_efetiva:
+                    mes = rec.entrega_efetiva.month
+                    ano = rec.entrega_efetiva.year
+                    dt_str = str(ano) + '-' + str(mes).zfill(2) + '-' + '01'
+                    pedi = rec.os_ids.pedido_venda
+
+                    #Verifica o tipo de serviço e pesquisa sua aliquota.
+                    if pedi[0].fiscal_position_id.name == 'Serviço' or pedi[0].fiscal_position_id.name == 'Serviço c retenção':
+                        city_comp = self.env.company.city_id
+                        city_part = rec.cliente.city_id
+                        if city_part == city_comp:
+                            ret = True
+                        else:
+                            ret = False
+                        if ret:
+                            percen = self.env['os.impostos.line'].search(
+                                [('fiscal_position.name', '=', 'Serviço c retenção'), ('mes', '=', dt_str)]).percentual
+                        else:
+                            percen = self.env['os.impostos.line'].search(
+                            [('fiscal_position.name', '=', 'Serviço'), ('mes', '=', dt_str)]).percentual
+
+
+                    #Calcula o imposto caso não seja do tipo Serviço
+                    else:
+                        if pedi.fiscal_position_id.name == 'Industrialização':
+                            percen = self.env['os.impostos.line'].search(
+                                [('fiscal_position.name', '=', 'Industrialização'), ('mes', '=', dt_str)]).percentual
+
+                        if pedi.fiscal_position_id.name == 'Venda':
+                            percen = self.env['os.impostos.line'].search(
+                                [('fiscal_position.name', '=', 'Venda'), ('mes', '=', dt_str)]).percentual
+
+                    rec.imposto_real = percen / 100
+                    rec.impostos_resultado = rec.valor_pedido * (rec.imposto_real / 100)
+
+                else:
+                    rec.imposto_real = 0.0
 
 
 
@@ -297,7 +319,7 @@ class OsFechamento(models.Model):
         for rec in self:
             rec.mp_resultado = rec.mp_prevista - rec.mp_real
 
-    
+    @api.depends('mp_real','mo_real','impostos_resultado','valor_custofixo','consumidos_total')
     def _amount_total_gasto(self):
         self.updt()
         for rec in self:
@@ -308,8 +330,13 @@ class OsFechamento(models.Model):
                 resul = (rec.valor_pedido - gasto) / rec.valor_pedido
             else:
                 resul = 100
-            rec.write({'resultado': rec.valor_pedido - gasto, 'total_gasto': gasto, 'orcado_gasto': diferenca,
-                       'resultado_percen': resul})
+            rec.total_gasto = gasto
+            rec.resultado = rec.valor_pedido - gasto
+            rec.resultado_percen = resul
+
+
+            # rec.write({'resultado': rec.valor_pedido - gasto, 'total_gasto': gasto, 'orcado_gasto': diferenca,
+            #            'resultado_percen': resul})
 
     @api.model
     def _mensagens(self):

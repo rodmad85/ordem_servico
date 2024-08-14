@@ -52,7 +52,7 @@
                     <field name="data_base" type="col" interval="month"/>
                     <field name="data_entrega" type="col" interval="month"/>
                     <field name="entrega_efetiva" type="col" interval="month"/>
-                    <field name="mp_prevista" widget="monetary" type="measure"/>
+<!--                    <field name="mp_prevista" widget="monetary" type="measure"/>-->
                     <field name="mp_real" widget="monetary" type="measure"/>
                     <field name="mo_prevista" widget="monetary" type="measure"/>
                     <field name="mo_real" widget="monetary" type="measure"/>
@@ -156,6 +156,8 @@
                     <field name="horas_prevista" sum="Horas Prevista" widget="float_time" optional="show"/>
                     <field name="horas_real" sum="Horas Reais" widget="float_time" optional="show"/>
                     <field name="comissao" sum="Comissão" widget="monetary" optional="hide"/>
+                    <field name="impostos_resultado" optional="hide"/>
+                    <field name="consumidos_total" optional="hide"/>
                     <field name="valor_custofixo" widget="monetary" optional="hide"/>
                     <field name="custo_fixo" optional="hide"/>
                     <field name="horas_resultado" widget="float_time" sum="Horas Resultado" optional="show"/>
