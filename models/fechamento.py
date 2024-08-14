@@ -219,7 +219,7 @@ class OsFechamento(models.Model):
                             [('fiscal_position.name', '=', 'Serviço'), ('mes', '=', dt_str)]).percentual
 
 
-                    #Calcula o imposto caso não seja do tipo Serviço.
+                    #Calcula o imposto caso não seja do tipo Serviço
                     else:
                         if pedi.fiscal_position_id.name == 'Industrialização':
                             percen = self.env['os.impostos.line'].search(
