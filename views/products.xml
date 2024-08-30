@@ -3,6 +3,19 @@
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 
 <odoo>
+
+<!--     <record model="ir.ui.view" id="product_weight_attribute_form">-->
+<!--        <field name="name">product_weight_attribute_form</field>-->
+<!--        <field name="inherit_id" ref="product.product_template_attribute_value_view_form"/>-->
+<!--        <field name="model">product.attribute</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='price_extra']" position="after">-->
+<!--                <field name="weight"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+
+<!--    </record>-->
+
     <record model="ir.ui.view" id="product_cat_os_form">
         <field name="name">product_os_form</field>
         <field name="inherit_id" ref="product.product_category_form_view"/>
@@ -56,42 +69,58 @@
 <!--        </field>-->
 <!--    </record>-->
 
-    <record model="ir.ui.view" id="product_normal_form_view_os">
-        <field name="name">product_normal_form_view_os</field>
-        <field name="model">product.product</field>
-        <field name="inherit_id" ref="product.product_normal_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//group[@name='inventory']//field[@name='product_width']" position="after">
-                <field name="peso_esp"/>
-                <field name="peso_calc" invisible="1"/>
-            </xpath>
-        </field>
-    </record>
+<!--    <record model="ir.ui.view" id="product_os_easy_edit_view">-->
+<!--        <field name="name">product_os_easy_edit_view</field>-->
+<!--        <field name="model">product.product</field>-->
+<!--        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//group[@name='packaging']" position="before">-->
+<!--               <group>-->
+<!--                <field name="material"/>-->
+<!--                <field name="peso_esp"/>-->
+<!--                <field name="peso_calc" invisible="1"/>-->
+<!--                </group>-->
+<!--                &lt;!&ndash;invisible="1"&ndash;&gt;-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
 
-    <record model="ir.ui.view" id="product_only_form_view_os">
-        <field name="name">product_only_form_view_os</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_only_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//group[@name='inventory']//field[@name='product_width']" position="after">
-                <field name="material"/>
-                <field name="peso_esp" readonly="1"/>
-                <field name="peso_calc" invisible="1"/>
-            </xpath>
-        </field>
-    </record>
+<!--     <record model="ir.ui.view" id="product_normal_form_view_os">-->
+<!--        <field name="name">product_normal_form_view_os</field>-->
+<!--        <field name="model">product.product</field>-->
+<!--        <field name="inherit_id" ref="product.product_normal_form_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//group[@name='inventory']//field[@name='product_width']" position="after">-->
+<!--                <field name="peso_esp"/>-->
+<!--                <field name="peso_calc" invisible="1"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
 
-    <record model="ir.ui.view" id="os_pesomateriais">
-        <field name="name">os_pesomateriais_form</field>
-        <field name="model">os.pesomateriais</field>
-        <field name="arch" type="xml">
-            <form>
-                <group>
-                    <field name="name"/>
-                    <field name="peso"/>
-                </group>
-            </form>
-        </field>
-    </record>
+<!--    <record model="ir.ui.view" id="product_only_form_view_os">-->
+<!--        <field name="name">product_only_form_view_os</field>-->
+<!--        <field name="model">product.template</field>-->
+<!--        <field name="inherit_id" ref="product.product_template_only_form_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//group[@name='inventory']//field[@name='product_width']" position="after">-->
+<!--                <field name="material"/>-->
+<!--                <field name="peso_esp"/>-->
+<!--                <field name="peso_calc" invisible="1"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record model="ir.ui.view" id="product_only_form_view_os">-->
+<!--        <field name="name">product_only_form_view_os</field>-->
+<!--        <field name="model">product.template</field>-->
+<!--        <field name="inherit_id" ref="product.product_template_only_form_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//group[@name='inventory']//field[@name='product_width']" position="after">-->
+<!--                <field name="material"/>-->
+<!--                <field name="peso_esp"/>-->
+<!--                <field name="peso_calc" invisible="1"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
 
 </odoo>
