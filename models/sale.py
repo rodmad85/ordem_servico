@@ -18,6 +18,17 @@ class OsSale(models.Model):
 
 
 
+    @api.onchange('user_id')
+    def _onchange_user_id(self):
+        if self._origin.user_id:
+            self.user_id = self._origin.user_id
+            return {
+                'warning': {
+                    'title': "Alteração de Vendedor",
+                    'message': "Você não pode alterar o vendedor de uma proposta de venda.",
+                }
+            }
+
     def _prepare_invoice(self):
         invoice_vals = {
             'ordem_servico':self.ordem_servico.ids,
