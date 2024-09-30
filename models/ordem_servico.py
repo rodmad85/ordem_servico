@@ -16,7 +16,8 @@ class OrdemServico(models.Model):
     apontamento = fields.Many2many('hr.attendance', 'hr_attendance_os_rel', 'ordem_servico_id', 'hr_attendance_id',
                                    string='Linha Apontamento', store=True, copy=True, index=True)
     # compra = fields.Many2one(related='pedidos_compra.order_id')
-    certificado = fields.Many2many(related='pedidos_compra.order_id.certificados')
+    certificado = fields.Many2many('ir.attachment', 'certificados_os_rel', 'arquivos_id', 'ir_attachment_id',
+                               string='Certificado', store=True, copy=False, required=True)
     cliente_id = fields.Many2one('res.partner', string='Cliente', store=True, index=True,
                                  related='pedido_venda.partner_id.parent_id')
     desenhos = fields.Many2many('ir.attachment', 'os_desenho_arquivo', 'os_id', 'desenhos_id',
@@ -526,7 +527,7 @@ class OsInspecoesLinhas(models.Model):
 # class OsCertificados(models.Model):
 #     _name = "os.certificados"
 #     _description = "Certificados"
-
+#
 # data_criacao = fields.Date(string='Data', store=True, copy=True)
 # certificado = fields.Many2many('ir.attachment', 'certificados_os_rel', 'arquivos_id', 'ir_attachment_id',
 #                                string='Certificado', store=True, copy=False, required=True)
