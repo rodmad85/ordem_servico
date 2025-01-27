@@ -5,7 +5,7 @@
     'name': 'Ordem de Servico',
     'description': """
         Ordem de Serviço""",
-    'version': '14.0.1.0.3',
+    'version': '16.0.1.0.1',
     'license': 'AGPL-3',
     'author': 'Madureira Ind. e Com.',
     'website': 'www.madureira.ind.br',
@@ -15,7 +15,6 @@
         'base',
         'sale',
         'sale_order_revision',
-        'sale_order_secondary_unit',
         'sale_order_general_discount',
         'sale_discount_display_amount',
         'sale_last_price_info',
@@ -23,11 +22,11 @@
         'stock',
         'mrp',
         'mgmtsystem',
+        'product_dimension',
         'purchase',
         'purchase_stock',
         'purchase_discount',
         'purchase_last_price_info',
-        'purchase_order_secondary_unit',
         'purchase_product_matrix',
 
 
@@ -61,6 +60,12 @@
         'report/sale.xml',
         'report/purchase.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'static/src/css/progress_bar_color.css',
+            'static/src/js/progress_bar_color.js',
+            ],
+    },
     'demo': [
     ],
     "installable": True,
