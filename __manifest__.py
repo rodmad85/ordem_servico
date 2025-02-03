@@ -62,8 +62,8 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'static/src/css/progress_bar_color.css',
-            'static/src/js/progress_bar_color.js',
+            'ordem_servico/static/src/css/progress_bar_color.css',
+            'ordem_servico/static/src/js/progress_bar_color.js',
             ],
     },
     'demo': [
