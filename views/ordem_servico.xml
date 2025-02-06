@@ -236,7 +236,6 @@
                                attrs="{'required':[('tipo_os','=','repeticao')], 'invisible':[('tipo_os','!=','repeticao')]}"/>
                         <field name="pedido_venda" widget="many2many_tags"
                                attrs="{'required':[('tipo_os','=','normal')],'required':[('tipo_os','=','repeticao')]}"/>
-                        <field name="vendedor"/>
                         <field name="status_fat"/>
 
                         <field name="user_id" string="Elaborado Por"/>
@@ -307,7 +306,6 @@
                                     <field name="dim_con"/>
                                     <field name="est_con"/>
                                     <field name="produto_cli" string="Produto Produzido"/>
-                                    <field name="funcionarios" widget="many2many_tags"/>
 
 
                                 </tree>
@@ -356,7 +354,7 @@
                                             <field name="product_uom"/>
                                             <field name="product_uom_category_id" invisible="True"/>
                                             <field name="price_unit" groups="ordem_servico.ordem_admin"/>
-                                            <field name="valor_os" sum="Total" groups="ordem_servico.ordem_admin"/>
+                                            <field name="price_total" sum="Total" groups="ordem_servico.ordem_admin"/>
                                             <field name="state" />
                                         </tree>
                                     </field>
@@ -367,11 +365,11 @@
 
                         </page>
 
-                        <page string="Certificados" name="Certificados">
-
+                        <!--<page string="Certificados" name="Certificados">
+                            <group>
                                 <field name="certificado" string="Arquivos" widget="many2many_binary" />
-
-                        </page>
+                            </group>
+                        </page>-->
 
                         <page string="Inspeções" name="inspecoes">
                             <group string="Registros de Inspeções">
