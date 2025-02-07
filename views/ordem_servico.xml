@@ -84,7 +84,7 @@
                 <field name="empresa" string="Empresa"/>
                 <field name="apontapend"/>
                 <field name="comprapend"/>
-                <field name="certpend"/>
+                <!--<field name="certpend"/>-->
                 <field name="desenhopend"/>
                 <field name="insppend"/>
                 <templates>
@@ -138,7 +138,7 @@
                                       name="comprapend"/>
 
                             </div>
-                            <div class="oe_kanban_bottom_right" t-if="record.certpend.raw_value == 'Faltando'" name="certificados">
+                      <!--       <div class="oe_kanban_bottom_right" t-if="record.certpend.raw_value == 'Faltando'" name="certificados">
                                 <span>Certificados</span>
                                 <span class="fa fa-circle text-warning" role="img" aria-label="Certificados"
                                       title="Certificados" name="certpend">
@@ -152,7 +152,7 @@
                                       title="Certificados" name="certpend">
 
                                 </span>
-                            </div>
+                            </div> -->
 
                             <div class="oe_kanban_bottom_right" t-if="record.desenhopend.raw_value == 'Faltando'" name="desenhos">
                                 <span>Desenhos</span>

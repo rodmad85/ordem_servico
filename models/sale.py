@@ -26,7 +26,7 @@ class OsSale(models.Model):
 
     def _mediadesc(self):
         for order in self:
-            if self.discount_total and self.price_total_no_discount:
+            if order.discount_total and order.price_total_no_discount:
                 order.update({'mediadesc': order.discount_total / order.price_total_no_discount})
             else:
                 order.update({'mediadesc': 0})

@@ -218,9 +218,9 @@ class OrdemServico(models.Model):
 
         if self.tipo_os == 'rafael':
             self.empresa = 1
-            self.cliente_id = 2625
+            self.cliente_id = 2764
             self.write({'empresa': 1})
-            self.write({'cliente_id': 2625})
+            self.write({'cliente_id': 2764})
 
 
     @api.model
