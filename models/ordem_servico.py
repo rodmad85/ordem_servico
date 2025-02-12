@@ -70,8 +70,8 @@ class OrdemServico(models.Model):
         string='Tipo', store=True, copy=True, required=True)
     terc_total = fields.Boolean(string='Totalmente Terceirizada')
 
-    ultimamsg = fields.Char(string='Mensagens', compute='_last_msg')
-    ultiuser = fields.Char(string='Usuario', compute='_last_usr')
+    ultimamsg = fields.Char(string='Mensagens', compute='_compute_last_msg')
+    ultiuser = fields.Char(string='Usuario', compute='_compute_last_usr')
 
     visual_corte = fields.Boolean(string="Visual", store=True)
     dimen_corte = fields.Boolean(string="Dimensional", store=True)
@@ -130,6 +130,70 @@ class OrdemServico(models.Model):
     #         self.certificado = [(4,0,compras)]
     #     else:
     #         self.certificado = [(5,0,0)]
+    def abrir_os(self):
+
+
+        self.write({'state': 'aberta'})
+        self.write({'status_fat': 'nao'})
+        self.message_post(body=_("Ordem de Serviço Aberta"))
+        confirm=True
+        self._lista_produtos()
+        pedidos = self.pedido_venda.ids
+        for ped in pedidos:
+            self.env['sale.order'].browse(ped).write({'state': 'sale'})
+
+        return {}
+
+
+    def parcial_os(self):
+
+        # self.env['os.fechamento'].browse(self.id).write({'state': 'parcial'})
+        return {
+            'name': "Entrega Parcial",
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'os.parcial.wizard',
+            'view_id': self.env.ref('ordem_servico.parcial_wizard_view').id,
+            'target': 'new',
+        }
+
+    def concluida_os(self):
+
+        if self.status_fat == 'nao':
+            raise ValidationError("Selecione um status de faturamento diferente de Não Faturada.")
+        if self.entrega_efetiva == False:
+            raise ValidationError("Digite a data da entrega efetiva para encerrar a OS.")
+        if not self.apontamento:
+            if not self.terc_total:
+                raise ValidationError("Insira um apontamento para encerrar a OS.")
+        if not self.resp_fin:
+            raise ValidationError("Selecione um Responsável pela Inspeção Final.")
+        if not self.dt_fin:
+            raise  ValidationError("Insira a data da Inspeção Final")
+
+        else:
+            self.write({'state': 'concluida'})
+            self.message_post(body=_("Ordem de Serviço Concluida"))
+        return {}
+
+    def provisoria_os(self):
+        self.write({'state': 'draft'})
+        self.write({'status_fat': 'nao'})
+        self.message_post(body=_("Mudado para Provisória"))
+        return {}
+
+    def cancelar_os(self):
+        if self.state in ('cancel','draft'):
+            raise ValidationError("Não é possível cancelar uma fatura provisória ou cancelada.")
+
+        self.write({'state': 'cancel'})
+        self.write({'status_fat': ''})
+        self.message_post(body=_("Cancelada"))
+        pedidos = self.pedido_venda.ids
+        for ped in pedidos:
+            self.env['sale.order'].browse(ped).write({'state': 'draft'})
+
 
     def _apontapend(self):
         for rec in self:
@@ -138,12 +202,14 @@ class OrdemServico(models.Model):
             else:
                 rec.apontapend = 'Faltando'
 
+
     def _comprapend(self):
         for rec in self:
             if rec.pedidos_compra:
                 rec.comprapend = 'Concluido'
             else:
                 rec.comprapend = 'Faltando'
+
 
     def _certpend(self):
         for rec in self:
@@ -152,19 +218,21 @@ class OrdemServico(models.Model):
             else:
                 rec.certpend = 'Faltando'
 
+
     def _desenhopend(self):
         for rec in self:
             if rec.desenhos:
                 rec.desenhopend = 'Concluido'
             else:
                 rec.desenhopend = 'Faltando'
+
+
     def _insppend(self):
         for rec in self:
             if rec.resp_fin and rec.dt_fin:
                 rec.insppend = 'Concluido'
             else:
                 rec.insppend = 'Faltando'
-
 
 
     def _lista_produtos(self):
@@ -178,7 +246,6 @@ class OrdemServico(models.Model):
                     lista = self.env['mrp.bom.line'].search([('bom_id','=',lista_id)])
                     for y in lista:
                         self.lista_produtos = [(0,0,{'produto': y.product_id.id,'qtd': y.product_qty, 'dimensoes': y.dimensoes, 'estoque': y.estoque})]
-
 
 
     def _consumidos(self):
@@ -251,13 +318,17 @@ class OrdemServico(models.Model):
             res.append((record.id, record.name))
         return res
 
-    def _last_msg(self):
+    @api.depends("message_ids")
+    def _compute_last_msg(self):
         for rec in self:
             ids = rec.message_ids.ids
             if ids:
                 rec.ultimamsg = rec.message_ids[0].body
+            else:
+                rec.ultimamsg = False
 
-    def _last_usr(self):
+    @api.depends("message_ids")
+    def _compute_last_usr(self):
         for rec in self:
             msg_ids = rec.message_ids
 
@@ -266,72 +337,12 @@ class OrdemServico(models.Model):
                 ult = self.env['res.partner'].browse(ult).name
                 if ult:
                     rec.ultiuser = ult
+                else:
+                    rec.ultiuser = False
 
-    def abrir_os(self):
-
-
-        self.write({'state': 'aberta'})
-        self.write({'status_fat': 'nao'})
-        self.message_post(body=_("Ordem de Serviço Aberta"))
-        confirm=True
-        self._lista_produtos()
-        pedidos = self.pedido_venda.ids
-        for ped in pedidos:
-            self.env['sale.order'].browse(ped).write({'state': 'sale'})
-
-        return {}
-
-
-    def parcial_os(self):
-
-        # self.env['os.fechamento'].browse(self.id).write({'state': 'parcial'})
-        return {
-            'name': "Entrega Parcial",
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'os.parcial.wizard',
-            'view_id': self.env.ref('ordem_servico.parcial_wizard_view').id,
-            'target': 'new',
-        }
-
-    def concluida_os(self):
-
-        if self.status_fat == 'nao':
-            raise ValidationError("Selecione um status de faturamento diferente de Não Faturada.")
-        if self.entrega_efetiva == False:
-            raise ValidationError("Digite a data da entrega efetiva para encerrar a OS.")
-        if not self.apontamento:
-            if not self.terc_total:
-                raise ValidationError("Insira um apontamento para encerrar a OS.")
-        if not self.resp_fin:
-            raise ValidationError("Selecione um Responsável pela Inspeção Final.")
-        if not self.dt_fin:
-            raise  ValidationError("Insira a data da Inspeção Final")
-
-        else:
-            self.write({'state': 'concluida'})
-            self.message_post(body=_("Ordem de Serviço Concluida"))
-        return {}
-
-    def provisoria_os(self):
-        self.write({'state': 'draft'})
-        self.write({'status_fat': 'nao'})
-        self.message_post(body=_("Mudado para Provisória"))
-        return {}
-
-    def cancelar_os(self):
-        if self.state in ('cancel','draft'):
-            raise ValidationError("Não é possível cancelar uma fatura provisória ou cancelada.")
-
-        self.write({'state': 'cancel'})
-        self.write({'status_fat': ''})
-        self.message_post(body=_("Cancelada"))
-        pedidos = self.pedido_venda.ids
-        for ped in pedidos:
-            self.env['sale.order'].browse(ped).write({'state': 'draft'})
     
-    @api.depends('pedido_venda')
+    
+    @api.onchange('pedido_venda')
     def _compute_cliente_id(self):
         for record in self:
             if record.pedido_venda:
@@ -339,13 +350,13 @@ class OrdemServico(models.Model):
             else:
                 record.cliente_id = False
 
-    @api.depends('pedido_venda')
+    @api.onchange('pedido_venda')
     def _compute_empresa(self):
         for record in self:
             empresas = record.pedido_venda.mapped('company_id')
             record.empresa = empresas[0] if empresas else False
 
-    @api.depends('pedido_venda')
+    @api.onchange('pedido_venda')
     def _compute_posicao(self):
         for record in self:
             posicoes = record.pedido_venda.mapped('fiscal_position_id')
