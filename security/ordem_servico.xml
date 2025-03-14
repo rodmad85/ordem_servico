@@ -14,7 +14,6 @@
 
      <record id="ordem_user" model="res.groups">
         <field name="name">Usuário</field>
-<!--        <field name="implied_ids" eval="[(4, ref('ordem_user'))]"/>-->
         <field name="category_id" ref="category_ordem_servico"/>
 
      </record>

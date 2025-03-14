@@ -63,11 +63,9 @@
     'assets': {
         'web.assets_backend': [
             'ordem_servico/static/src/css/progress_bar_color.css',
-<<<<<<< HEAD
             'ordem_servico/static/src/js/progress_bar_color.js',
-=======
             'static/src/js/progress_bar_color.js',
->>>>>>> cf401cd (teste commit vscode)
+
             ],
     },
     'demo': [

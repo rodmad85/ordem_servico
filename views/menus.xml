@@ -49,33 +49,35 @@
 <!--    </record>-->
 
 
-    <menuitem id="ordem_root"
-              groups="ordem_user,ordem_admin"
+    <menuitem id="ordem_servico_menu"
               name="Ordem de Serviço"
               action="ordem_servico_act_window"
               web_icon="ordem_servico,static/img/icon.png"
-              sequence="3"/>
+              sequence="3">
+        
+        <menuitem id="ordem_movi"
+            name="Movimentações"
+            groups="ordem_user,ordem_admin"
+            sequence="12">
 
+            <menuitem id="ordem_movimentacoes"
+                      action="ordem_movimentacoes_act_window"
+                      sequence="13"/>
+        </menuitem>
 
-    <menuitem id="ordem_movimentacoes"
-              groups="ordem_user,ordem_admin"
-              name="Movimentações"
-              action="ordem_movimentacoes_act_window"
-              parent="ordem_root"
-              sequence="12"/>
+        <menuitem id="ordem_rel"
+                  groups="ordem_admin"
+                  name="Relatorios"
+                  sequence="14">
 
-    <menuitem id="ordem_rel"
-              groups="ordem_admin"
-              name="Relatorios"
-              parent="ordem_root"
-              sequence="13"/>
+            <menuitem id="ordem_relatorio_fecha"
+                      groups="ordem_admin"
+                      name="Fechamento"
+                      action="ordem_fecha_act_window"
+                      sequence="15"/>
+        </menuitem>
 
-    <menuitem id="ordem_relatorio_fecha"
-              groups="ordem_admin"
-              name="Fechamento"
-              action="ordem_fecha_act_window"
-              parent="ordem_rel"
-              sequence="14"/>
+    </menuitem>
 
 <!--    <menuitem id="ordem_relatorio_horas"-->
 <!--              groups="ordem_admin"-->
