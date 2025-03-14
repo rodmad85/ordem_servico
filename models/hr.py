@@ -65,18 +65,12 @@ class HrFields(models.Model):
             self.valor_hora = self.employee_id.valor_hora
         if self.check_out:
             dtsai = self.check_out.date()
-            entnormal = datetime.strptime("07:12:00", '%H:%M:%S').time()
-            entnormal = datetime.combine(dtent,entnormal)
-            sainormal = datetime.strptime("17:00:00", '%H:%M:%S').time()
-            sainormal = datetime.combine(dtent,sainormal)
-            entalm = datetime.strptime("12:00:00", '%H:%M:%S').time()
-            entalm =datetime.combine(dtent, entalm)
-            saialm = datetime.strptime("13:00:00", '%H:%M:%S').time()
-            saialm=datetime.combine(dtent, saialm)
-            ininot = datetime.strptime("22:00:00", '%H:%M:%S').time()
-            ininot = datetime.combine(dtent, ininot)
-            fimnot = datetime.strptime("05:00:00", '%H:%M:%S').time()
-            fimnot = datetime.combine(dtsai, fimnot)
+            entnormal = tz.localize(datetime.combine(dtent, datetime.strptime("07:12:00", '%H:%M:%S').time()))
+            sainormal = tz.localize(datetime.combine(dtent, datetime.strptime("17:00:00", '%H:%M:%S').time()))
+            entalm = tz.localize(datetime.combine(dtent,datetime.strptime("12:00:00", '%H:%M:%S').time()))
+            saialm = tz.localize(datetime.combine(dtent, datetime.strptime("13:00:00", '%H:%M:%S').time()))
+            ininot = tz.localize(datetime.combine(dtent, datetime.strptime("22:00:00", '%H:%M:%S').time()))
+            fimnot = tz.localize(datetime.combine(dtsai, datetime.strptime("05:00:00", '%H:%M:%S').time()))
             noturna = 0
             extra = 0
             almoco = 0
@@ -84,9 +78,9 @@ class HrFields(models.Model):
             for line in self:
 
                 if self.check_in and self.check_out:
-                    entrada = self.check_in #.astimezone(tz)
+                    entrada = self.check_in.astimezone(tz)
                     #entrada = entrada.replace(tzinfo=None)
-                    saida = self.check_out #.astimezone(tz)
+                    saida = self.check_out .astimezone(tz)
                     #saida = saida.replace(tzinfo=None)
                 else:
                     return
