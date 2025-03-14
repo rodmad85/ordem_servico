@@ -84,10 +84,10 @@ class HrFields(models.Model):
             for line in self:
 
                 if self.check_in and self.check_out:
-                    entrada = self.check_in.astimezone(tz)
-                    entrada = entrada.replace(tzinfo=None)
-                    saida = self.check_out.astimezone(tz)
-                    saida = saida.replace(tzinfo=None)
+                    entrada = self.check_in #.astimezone(tz)
+                    #entrada = entrada.replace(tzinfo=None)
+                    saida = self.check_out #.astimezone(tz)
+                    #saida = saida.replace(tzinfo=None)
                 else:
                     return
 

@@ -27,7 +27,7 @@
         'purchase_stock',
         'purchase_discount',
         'purchase_last_price_info',
-        'purchase_product_matrix',
+       
 
 
     ],
