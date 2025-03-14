@@ -51,7 +51,7 @@ class OsStockLine(models.Model):
     ordem_servico = fields.Many2many('ordem.servico', 'stock_move_line_os', 'os_id', 'id',
                                      string='Ordem de Serviço', required=False, index=True, copy=False,
                                      related='move_id.ordem_servico')
-    secondary_uom_qty = fields.Float('Qtd. Secundária', related='move_id.secondary_uom_qty')
+    # secondary_uom_qty = fields.Float('Qtd. Secundária', related='move_id.secondary_uom_qty')
     # secondary_uom_id = fields.Many2one(related='move_id.secondary_uom_id')
     fornecedor = fields.Many2one(string='Fornecedor', related='picking_id.partner_id')
     funcionario = fields.Many2one('hr.employee',store=True)
