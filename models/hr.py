@@ -27,11 +27,12 @@ class HrFields(models.Model):
                                                    string='Linha Apontamento', store=True, copy=True)
     os_tree = fields.Many2one('ordem.servico',string="OS", store=True)
     check_in = fields.Datetime(string="Check In", default=datetime.now().replace(hour=10, minute=12, second=00), required=True)
+    check_out = fields.Datetime(string="Check Out", default=datetime.now().replace(hour=10, minute=12, second=00), required=True)
     valor_hora = fields.Float(string='Valor Hora', store=True)
     retrabalho = fields.Boolean(string='Retrabalho', store=True)
     cem_porcento = fields.Boolean(string='100%', store=True)
     hora_not = fields.Boolean(string='Noturno', store=True)
-    normal_total = fields.Float(string='Horas Normais', store=True,)
+    normal_total = fields.Float(string='Horas Normais', store=True, compute='_total')
     extra_total = fields.Float(string='Horas Extras', store=True,)
     soma_total = fields.Float(string="Total de Horas", store=True)
     valor_extra_total = fields.Float(string="Valor Extras", store=True)
@@ -52,7 +53,7 @@ class HrFields(models.Model):
         self.valor_hora = self.employee_id.valor_hora
 
 
-    @api.onchange('check_out','check_in')
+    @api.depends('check_out','check_in')
     def _tree_to_os(self):
         for line in self:
             if line.os_tree:
@@ -88,9 +89,9 @@ class HrFields(models.Model):
 #Calcula horas normais.-----------------------------------------------------------
                 if entrada >= entnormal and saida <= sainormal:
                     if entrada >= saialm and saida <= sainormal:
-                        line.update({'normal_total' : line.worked_hours})
+                        line.normal_total=line.worked_hours
                     if entrada < entalm and saida <= entalm:
-                        line.update({'normal_total': line.worked_hours})
+                        line.normal_total=line.worked_hours
 
 
 #calcula hora extra-----------------------------------------------------
@@ -123,7 +124,7 @@ class HrFields(models.Model):
                 if entrada >= entnormal and saida <= sainormal:
                     if almoco < 0:
                         if self.cem_porcento:
-                            line.update({
+                            line.write({
                                 'valor_total': 2*(line.valor_hora * (line.worked_hours + almoco)),
                                 'extra_total':line.worked_hours + almoco,
                                 'valor_extra_total': line.valor_hora * (line.worked_hours + almoco),
@@ -131,14 +132,14 @@ class HrFields(models.Model):
                                 'soma_total': self.extra_total + self.normal_total
                             })
                         else:
-                            line.update({
+                            line.write({
                                 'valor_total': line.valor_hora * (line.worked_hours + almoco),
                                 'normal_total': line.worked_hours + almoco - extra,
                                 'soma_total': self.extra_total + self.normal_total
                             })
                     else:
                         if self.cem_porcento:
-                            line.update({
+                            line.write({
                                 'valor_total': 2*(line.valor_hora * line.worked_hours),
                                 'normal_total': 0,
                                 'valor_extra_total': line.valor_hora * (line.worked_hours + almoco),
@@ -146,7 +147,7 @@ class HrFields(models.Model):
                                 'soma_total': self.extra_total + self.normal_total
                             })
                         else:
-                            line.update({
+                            line.write({
                                 'valor_total': line.valor_hora * line.worked_hours,
                                 'normal_total': line.worked_hours + almoco - extra,
                                 'valor_extra_total': extra * line.valor_hora,
