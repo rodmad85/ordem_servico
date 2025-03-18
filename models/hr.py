@@ -1,6 +1,6 @@
 
 from odoo import fields, models, api
-from datetime import datetime,timedelta
+from datetime import datetime,time
 import pytz
 
 class HrEmployee(models.Model):
@@ -21,21 +21,22 @@ class HrFields(models.Model):
         for rec in self:
             rec._valorhora()
             rec._total()
-    tz = pytz.timezone('America/Sao_Paulo')
+
+    data_atual = datetime.now()
     ordem_servico = fields.Many2many('ordem.servico', 'hr_attendance_os_rel', 'hr_attendance_id',
                                                    'ordem_servico_id',
                                                    string='Linha Apontamento', store=True, copy=True)
     os_tree = fields.Many2one('ordem.servico',string="OS", store=True)
-    check_in = fields.Datetime(string="Check In", default=tz.datetime.now().replace(hour=7, minute=12, second=00), required=True)
-    check_out = fields.Datetime(string="Check Out", default=tz.datetime.now().replace(hour=17, minute=00, second=00), required=True)
-    valor_hora = fields.Float(string='Valor Hora', store=True)
+    check_in = fields.Datetime(string="Check In", default=data_atual.replace(hour=10, minute=12, second=00,  microsecond=00, tzinfo=None), required=True)
+    check_out = fields.Datetime(string="Check Out", default=data_atual.replace(hour=20, minute=00, second=00, microsecond=00, tzinfo=None), required=True)
+    valor_hora = fields.Float(string='Valor Hora', store=True, readonly=True)
     retrabalho = fields.Boolean(string='Retrabalho', store=True)
     cem_porcento = fields.Boolean(string='100%', store=True)
     hora_not = fields.Boolean(string='Noturno', store=True)
-    normal_total = fields.Float(string='Horas Normais', store=True, compute='_total')
-    extra_total = fields.Float(string='Horas Extras', store=True,)
+    normal_total = fields.Float(string='Horas Normais', store=True, readonly=True, compute='_total')
+    extra_total = fields.Float(string='Horas Extras', store=True, readonly=True)
     soma_total = fields.Float(string="Total de Horas", store=True)
-    valor_extra_total = fields.Float(string="Valor Extras", store=True)
+    valor_extra_total = fields.Float(string="Valor Extras", store=True, readonly=True)
     valor_total = fields.Float(string='Valor Total', readonly=True, store=True)
     tipo_contrato = fields.Selection(string="Tipo de Contrato", related='employee_id.tipo_contrato')
     currency_id = fields.Many2one('res.currency', 'Currency',
@@ -59,6 +60,7 @@ class HrFields(models.Model):
             if line.os_tree:
                 line.update({'ordem_servico': self.os_tree})
 
+    @api.depends('check_out', 'check_in')
     def _total(self):
         tz = pytz.timezone('America/Sao_Paulo')
         dtent = self.check_in.date()
@@ -93,10 +95,9 @@ class HrFields(models.Model):
                     if entrada < entalm and saida <= entalm:
                         line.normal_total=line.worked_hours
 
-
 #calcula hora extra-----------------------------------------------------
 
-                if saida > sainormal and entrada >= entnormal:
+                if saida >= sainormal and entrada >= entnormal:
                     extra = saida - sainormal
                     extra = extra.total_seconds() / 3600
 
