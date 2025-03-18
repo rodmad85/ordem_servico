@@ -247,31 +247,55 @@ class OrdemServico(models.Model):
                     for y in lista:
                         self.lista_produtos = [(0,0,{'produto': y.product_id.id,'qtd': y.product_qty, 'dimensoes': y.dimensoes, 'estoque': y.estoque})]
 
-
     def _consumidos(self):
+        consumidos_list = []
         if self.produtos:
             for rec in self.produtos:
-                if rec.state != 'cancel' and rec.state!='draft':
-                    lista_id = rec.move_raw_ids
+                if rec.state not in ['cancel', 'draft']:
+                    for x in rec.move_raw_ids:
+                        if x.quantity_done > 0:
+                            produto = x.product_id.id
+                            qtd = x.product_uom_qty
+                            qtddone = x.quantity_done
+                            dimensoes = x.dimensoes
+                            estoque = x.estoque
+                            valor = x.product_id.standard_price * x.quantity_done
+                            produtocli = rec.product_id.id
 
-                    if lista_id:
-                        for x in lista_id:
-                            if x.quantity_done > 0:
-                                produto = x.product_id.id
-                                qtd = x.product_uom_qty
-                                qtddone = x.quantity_done
-                                dimensoes = x.dimensoes
-                                estoque = x.estoque
-                                valor = x.product_id.standard_price * x.quantity_done
-                                produtocli = rec.product_id.id
-
-                                self.consumidos = [(0,0,{'produto_con': produto,'qtd_con': qtd, 'qtd_consumido': qtddone,'dim_con': dimensoes, 'est_con': estoque, 'valor_con': valor,'produto_cli':produtocli})]
-                            else:
-                                self.consumidos = [(1, 0, [])]
-                else:
-                    self.consumidos = [(1, 0, [])]
-        else:
-            self.consumidos = [(6, 0, [])]
+                            consumidos_list.append((0, 0, {
+                                'produto_con': produto,
+                                'qtd_con': qtd,
+                                'qtd_consumido': qtddone,
+                                'dim_con': dimensoes,
+                                'est_con': estoque,
+                                'valor_con': valor,
+                                'produto_cli': produtocli
+                            }))
+        self.consumidos = consumidos_list
+    # def _consumidos(self):
+    #     if self.produtos:
+    #         for rec in self.produtos:
+    #             if rec.state != 'cancel' and rec.state!='draft':
+    #                 lista_id = rec.move_raw_ids
+    #
+    #                 if lista_id:
+    #                     for x in lista_id:
+    #                         if x.quantity_done > 0:
+    #                             produto = x.product_id.id
+    #                             qtd = x.product_uom_qty
+    #                             qtddone = x.quantity_done
+    #                             dimensoes = x.dimensoes
+    #                             estoque = x.estoque
+    #                             valor = x.product_id.standard_price * x.quantity_done
+    #                             produtocli = rec.product_id.id
+    #
+    #                             self.consumidos = [(0,0,{'produto_con': produto,'qtd_con': qtd, 'qtd_consumido': qtddone,'dim_con': dimensoes, 'est_con': estoque, 'valor_con': valor,'produto_cli':produtocli})]
+    #                         else:
+    #                             self.consumidos = [(1, 0, [])]
+    #             else:
+    #                 self.consumidos = [(1, 0, [])]
+    #     else:
+    #         self.consumidos = [(6, 0, [])]
 
 
 
