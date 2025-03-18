@@ -21,13 +21,13 @@ class HrFields(models.Model):
         for rec in self:
             rec._valorhora()
             rec._total()
-
+    tz = pytz.timezone('America/Sao_Paulo')
     ordem_servico = fields.Many2many('ordem.servico', 'hr_attendance_os_rel', 'hr_attendance_id',
                                                    'ordem_servico_id',
                                                    string='Linha Apontamento', store=True, copy=True)
     os_tree = fields.Many2one('ordem.servico',string="OS", store=True)
-    check_in = fields.Datetime(string="Check In", default=datetime.now().replace(hour=10, minute=12, second=00), required=True)
-    check_out = fields.Datetime(string="Check Out", default=datetime.now().replace(hour=10, minute=12, second=00), required=True)
+    check_in = fields.Datetime(string="Check In", default=tz.datetime.now().replace(hour=7, minute=12, second=00), required=True)
+    check_out = fields.Datetime(string="Check Out", default=tz.datetime.now().replace(hour=17, minute=00, second=00), required=True)
     valor_hora = fields.Float(string='Valor Hora', store=True)
     retrabalho = fields.Boolean(string='Retrabalho', store=True)
     cem_porcento = fields.Boolean(string='100%', store=True)
