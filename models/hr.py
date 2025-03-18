@@ -1,6 +1,6 @@
 
 from odoo import fields, models, api
-from datetime import datetime,time
+from datetime import datetime,timedelta
 import pytz
 
 class HrEmployee(models.Model):
