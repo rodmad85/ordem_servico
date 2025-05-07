@@ -67,14 +67,22 @@
             <field name="inherit_id" ref="sale.view_quotation_tree"/>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="after">
+               
+              <xpath expr="//field[@name='name']" position="after">
                     <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
+                    
+                </xpath>
+                <xpath expr="//field[@name='create_date']" position="after">
+                  <field name="date_order" widget="date"/>
                 </xpath>
 
                 <xpath expr="//field[@name='amount_total']" position="before">
                     <field name="mediadesc" string="Desconto(%)" optional="show" avg="Media de Desconto"/>
                     <!--            <field name="discount_total" string="Total Desconto" optional="show" sum="Total Desconto"/>-->
                 </xpath>
+
+          
+               
 
             </field>
         </record>
