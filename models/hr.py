@@ -47,7 +47,7 @@ class HrFields(models.Model):
         for line in self:
             if line.ordem_servico:
                 os = line.ordem_servico[0]
-                line.update({'os_tree': os})
+                line.write({'os_tree': os})
 
     @api.onchange('employee_id')
     def _valorhora(self):
@@ -58,7 +58,7 @@ class HrFields(models.Model):
     def _tree_to_os(self):
         for line in self:
             if line.os_tree:
-                line.update({'ordem_servico': self.os_tree})
+                line.write({'ordem_servico': self.os_tree})
 
     @api.depends('check_out', 'check_in')
     def _total(self):
@@ -162,7 +162,7 @@ class HrFields(models.Model):
                         if entrada <= entalm:
                             if self.tipo_contrato == 'clt':
                                 if self.cem_porcento:
-                                    line.update({
+                                    line.write({
                                         'valor_total': 2*(line.valor_hora * (line.worked_hours + almoco)),
                                         'valor_extra_total': line.valor_hora * (line.worked_hours + almoco),
                                         'extra_total': line.worked_hours + almoco,
@@ -170,7 +170,7 @@ class HrFields(models.Model):
                                         'soma_total': self.extra_total + self.normal_total
                                     })
                                 else:
-                                    line.update({
+                                    line.write({
                                         'valor_total': line.valor_hora * (line.worked_hours - extra + almoco) + (extra * line.valor_hora * 1.5),
                                         'valor_extra_total': extra * line.valor_hora * 1.5,
                                         'normal_total': line.worked_hours + almoco - extra,
@@ -179,7 +179,7 @@ class HrFields(models.Model):
 
                                     })
                             else:
-                                line.update({
+                                line.write({
                                     'valor_total': line.valor_hora * (line.worked_hours + almoco),
                                     'normal_total': line.worked_hours + almoco - extra,
                                     'valor_extra_total': extra * line.valor_hora,
@@ -189,7 +189,7 @@ class HrFields(models.Model):
                         else:
                             if self.tipo_contrato == 'clt':
                                 if self.cem_porcento:
-                                    line.update({
+                                    line.write({
                                         'valor_total': 2*(line.valor_hora * (line.worked_hours + almoco)),
                                         'valor_extra_total': line.valor_hora * (extra + almoco),
                                         'extra_total': extra + almoco,
@@ -197,7 +197,7 @@ class HrFields(models.Model):
                                         'soma_total': self.extra_total + self.normal_total
                                     })
                                 else:
-                                    line.update({
+                                    line.write({
                                         'valor_total': line.valor_hora * (line.worked_hours - extra + almoco) + (extra * line.valor_hora * 1.5),
                                         'valor_extra_total': extra * line.valor_hora * 1.5,
                                         'extra_total': extra,
@@ -206,7 +206,7 @@ class HrFields(models.Model):
 
                                     })
                             else:
-                                line.update({
+                                line.write({
                                     'valor_total': line.valor_hora * line.worked_hours,
                                     'normal_total': line.worked_hours + almoco,
                                     'soma_total': self.extra_total + self.normal_total
@@ -214,7 +214,7 @@ class HrFields(models.Model):
                     else:
                         if self.tipo_contrato == 'clt':
                             if self.cem_porcento:
-                                line.update({
+                                line.write({
                                     'valor_total': 2*(line.valor_hora * line.worked_hours),
                                     'valor_extra_total': line.valor_total / 2,
                                     'extra_total': line.worked_hours + almoco,
@@ -222,7 +222,7 @@ class HrFields(models.Model):
                                     'soma_total': self.extra_total + self.normal_total
                                 })
                             else:
-                                line.update({
+                                line.write({
                                         'valor_total': line.valor_hora * (line.worked_hours - extra) + (extra * line.valor_hora * 1.5),
                                         'valor_extra_total': extra * line.valor_hora * 1.5,
                                         'extra_total': extra,
@@ -230,7 +230,7 @@ class HrFields(models.Model):
                                         'soma_total': self.extra_total + self.normal_total
                                     })
                         else:
-                            line.update({
+                            line.write({
                                     'valor_total': line.valor_hora * line.worked_hours,
                                     'normal_total': line.worked_hours + almoco,
                                     'soma_total': self.extra_total + self.normal_total
@@ -240,15 +240,15 @@ class HrFields(models.Model):
                 if noturna > 0 and self.hora_not:
                     if self.tipo_contrato == 'clt':
                         if almoco < 0:
-                                line.update({
+                                line.write({
                                     'valor_total': ((noturna * 1.35 * line.valor_hora) + ((line.worked_hours - noturna + almoco) * line.valor_hora)),
                                 })
                         else:
-                                line.update({
+                                line.write({
                                     'valor_total': ((noturna * 1.35 * line.valor_hora) + ((line.worked_hours - noturna) * line.valor_hora)),
                                 })
                     else:
-                        line.update({
+                        line.write({
                             'valor_total': (line.worked_hours * line.valor_hora),
                         })
 
@@ -256,7 +256,7 @@ class HrFields(models.Model):
                 if noturna > 0 and extra > 0 and not self.hora_not:
                     if self.tipo_contrato == 'clt':
                         if almoco < 0:
-                            line.update({
+                            line.write({
                                 'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra + almoco * line.valor_hora) + (extra * 1.5 * line.valor_hora)),
                                 'valor_extra_total':extra * 1.5 * line.valor_hora,
                                 'extra_total': extra,
@@ -264,7 +264,7 @@ class HrFields(models.Model):
                                 'soma_total': self.extra_total + self.normal_total
                             })
                         else:
-                            line.update({
+                            line.write({
                                 'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra * line.valor_hora) + (extra * 1.5 * line.valor_hora)),
                                 'valor_extra_total': extra * 1.5 * line.valor_hora,
                                 'extra_total': extra,
@@ -273,7 +273,7 @@ class HrFields(models.Model):
 
                             })
                     else:
-                        line.update({
+                        line.write({
                             'valor_total': ((noturna * line.valor_hora) + (line.worked_hours - noturna - extra * line.valor_hora) + (extra * line.valor_hora)),
                             'valor_extra_total': extra * line.valor_hora,
                             'extra_total': extra,

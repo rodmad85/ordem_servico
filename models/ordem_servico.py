@@ -56,7 +56,6 @@ class OrdemServico(models.Model):
     nao_conform =fields.Many2many('mgmtsystem.nonconformity', 'os_rel_mgmt', 'os_id','mgmt_id', string='Não Conformidades')
 
     inspecoes = fields.Many2many('os.inspecoes', 'inspecoes_rel_os', 'os_inspecoes_id', 'os_id', string='Inspeções', store=True, copy=True)
-
     state = fields.Selection(
         [('draft', 'Provisória'), ('aberta', 'Aberta'), ('parcial', 'Parcialmente Entregue'), ('concluida', 'Concluida'), ('cancel', 'Cancelada')],
         string='Status', store=True, copy=True, default='draft')

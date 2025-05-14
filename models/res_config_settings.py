@@ -5,7 +5,7 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     horasmensais =fields.Float(string='Horas Mensais', config_parameter='ordem_servico.horasmensais',default=176)
-    funcionarios = fields.Many2many('hr.employee')
+    funcionarios = fields.Many2many('hr.employee','oshr_rel_config', 'conf_id', 'os_id', string='Funcionários')
     totalhoras = fields.Float(string='Total Horas', config_parameter='ordem_servico.totalhoras', default='')
 
     @api.onchange('funcionarios')

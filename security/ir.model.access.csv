@@ -3,6 +3,8 @@ access_os_user,ordem.servico.user,model_ordem_servico,ordem_user,1,1,1,0
 access_os_admin,ordem.servico.admin,model_ordem_servico,ordem_admin,1,1,1,1
 access_os_desenhos_user,ordem.servico.user.desenhos,model_os_desenhos,ordem_user,1,1,1,0
 access_os_desenhos_admin,ordem.servico.admin.desenhos,model_os_desenhos,ordem_admin,1,1,1,1
+access_os_fotos_user,ordem.servico.fotos.user,model_os_fotos,ordem_user,1,1,1,0
+access_os_fotos_admin,ordem.servico.fotos.admin,model_os_fotos,ordem_admin,1,1,1,1
 access_os_pedcli_user,ordem.servico.user.pedcli,model_os_pedcli,ordem_user,1,1,1,1
 access_os_pedcli_admin,ordem.servico.admin.pedcli,model_os_pedcli,ordem_admin,1,1,1,1
 access_os_nfs_user,ordem.servico.user.nfs,model_os_nfs,ordem_user,1,1,1,0

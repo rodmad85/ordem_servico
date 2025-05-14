@@ -20,6 +20,7 @@
         'sale_last_price_info',
         'sale_mrp',
         'stock',
+        'maintenance',
         'mrp',
         'mgmtsystem',
         'product_dimension',
@@ -27,6 +28,7 @@
         'purchase_stock',
         'purchase_discount',
         'purchase_last_price_info',
+        'l10n_br_fiscal',
        
 
 
@@ -38,9 +40,9 @@
         'views/account.xml',
         'views/fechamento.xml',
         'views/hr.xml',
-        # 'views/horas.xml',
         'views/inspecoes.xml',
         'views/l10n_br.xml',
+        'views/maintenance.xml',
         'views/menus.xml',
         'views/mgmtsystem.xml',
         'views/mrp.xml',
@@ -65,6 +67,7 @@
             'ordem_servico/static/src/css/progress_bar_color.css',
             'ordem_servico/static/src/js/progress_bar_color.js',
             'static/src/js/progress_bar_color.js',
+
 
             ],
     },

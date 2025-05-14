@@ -241,6 +241,7 @@
                         <field name="user_id" string="Elaborado Por"/>
                         <field name="liberado" string="Liberado Por"/>
                         <field name="terc_total"/>
+<!--                        <field name="orcamentos" widget="many2many_tags"/>-->
 
 
                     </group>

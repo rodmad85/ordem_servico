@@ -60,9 +60,9 @@
                        position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
                     <field name="dimensoes"/>
                 </xpath>
-                <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']" position="replace">
-                    <field name="product_id" domain="[('type', 'in',('product', 'consu'))]"/>
-                </xpath>
+<!--                <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']" position="replace">-->
+<!--                    <field name="product_id" domain="[('type', 'in',('product', 'consu'))]"/>-->
+<!--                </xpath>-->
                 <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_uom_id']"
                        position="after"><!--<xpath expr="//field[@name='order_line']/tree" position="inside">-->
                     <field name="estoque"/>

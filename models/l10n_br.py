@@ -12,7 +12,7 @@ class OsImpostos(models.Model):
     _inherit = ["l10n_br_fiscal.operation"]
 
     meses = fields.One2many('os.impostos.line', 'fiscal_position',
-                            string="Taxas", required=False, ondelete='cascade', auto_join=True)
+                            string="Taxas", required=False, auto_join=True)
 
 
 class OsImpostosLine(models.Model):
