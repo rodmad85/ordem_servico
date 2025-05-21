@@ -10,19 +10,25 @@
                        </t>
 
                       <div class="page">
+                         <h5 t-if="o.state == 'draft'"><b>Cotação: </b><span t-field="o.name"/></h5>
+                      <h5 t-if="o.state in ['sent', 'to approve']"><b>Pedido Aguardando Confirmação: </b><span t-field="o.name"/></h5>
+                      <h5 t-if="o.state in ['purchase', 'done']"><b>Pedido de Compra: </b><span t-field="o.name"/></h5>
+                      <h5 t-if="o.state == 'cancel'"><b>Pedido de Compra Cancelado: </b><span t-field="o.name"/> </h5>
                       <table class="table table-sm o_main_table">
                       <td>
                       <div class="oe_structure"/>
 
 
-                          <h5 t-if="o.state == 'draft'">Request for Quotation #<span t-field="o.name"/></h5>
-                      <h5 t-if="o.state in ['sent', 'to approve']">Purchase Order #<span t-field="o.name"/></h5>
-                      <h5 t-if="o.state in ['purchase', 'done']">Purchase Order Confirmation #<span t-field="o.name"/></h5>
-                      <h5 t-if="o.state == 'cancel'">Cancelled Purchase Order #<span t-field="o.name"/> </h5>
-
+                        
+                        <h5 t-if="o.partner_id.name"><strong><span t-field="o.partner_id.name"/></strong><br/></h5> 
                       </td>
-                         <td>
-                         <strong>Data do Pedido: </strong><span t-field="o.date_order"  t-options='{"widget": "date"}'/>
+                         
+                        <td>
+                          <strong>Comprador(a): </strong><span t-field="o.user_id" t-options="{&quot;fields&quot;: [&quot;name&quot;]}" class="m-0"/><br/>
+                          <strong>E-mail: </strong><span t-field="o.user_id.email" class="m-0"/>
+                        </td>
+                        <td style="vertical-align: middle;">
+                         <strong>Data do Pedido: </strong><span t-field="o.date_order"  t-options='{"widget": "date"}'/>                  
                         </td>
                       <tr>
 
@@ -30,25 +36,31 @@
                                 <t t-set="information_block">
                                     <strong>Shipping address:</strong>
                                     <div t-if="o.dest_address_id">
-                                        <div t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" name="purchase_shipping_address"/>
+                                        <div t-field="o.dest_address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;address2&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" name="purchase_shipping_address"/>
                                     </div>
                                </t>
                          </t>
                       <td>
-                        <strong>Fornecedor: </strong><div t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;email&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" />
+                        <strong>Endereço: </strong>
+                        <div>
+                           
+                            <t t-if="o.partner_id.street"> <t t-esc="o.partner_id.street"/> - </t>
+                            <t t-if="o.partner_id.street2"><t t-esc="o.partner_id.street2"/><br/></t>
+                            <t t-if="o.partner_id.district">Bairro: <t t-esc="o.partner_id.district"/><br/></t>
+                            <t t-if="o.partner_id.zip or o.partner_id.city">
+                              <t t-if="o.partner_id.zip">CEP: <t t-esc="o.partner_id.zip"/><br/> </t>
+                              <t t-if="o.partner_id.city"><t t-esc="o.partner_id.city"/></t>
+                              <t t-if="o.partner_id.state_id"> - <t t-esc="o.partner_id.state_id.code"/> - </t>
+                            </t>
+                            <t t-if="o.partner_id.country_id"><t t-esc="o.partner_id.country_id.name"/></t>
+                        </div>
+
+                        <!-- <strong>Fornecedor: </strong><div t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;street&quot;, &quot;name&quot;, &quot;email&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" /> -->
                       </td>
 
-                      <td>
+                      <td style="vertical-align: middle;">
 
-                        <strong>Comprador(a): </strong><span t-field="o.user_id" t-options="{&quot;fields&quot;: [&quot;name&quot;]}" class="m-0"/><br/>
-                      <strong>E-mail: </strong><span t-field="o.user_id.email" class="m-0"/>
 
-                      <div t-if="o.payment_term_id">
-                      <span class="m-0"><strong>Condição de Pagamento: </strong></span><span t-field="o.payment_term_id" class="m-0" />
-                      </div>
-
-                      <span class="m-0"><strong>Forma de Pagamento: </strong></span><span t-field="o.forma_pagamento" class="m-0" />
-                      <br/>
                       <span class="m-0"><strong>Finalidade: </strong></span><span t-field="o.fiscal_position_id" class="m-0" />
                       <br/>
                       <!--<div t-if="o.incoterm_id">class="col-3 bm-2"-->
@@ -63,6 +75,20 @@
                       <strong>Your Order Reference:</strong><span t-field="o.partner_ref" class="m-0"/>
                       </div>
                       <!--</div>-->
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <div t-if="o.payment_term_id">
+                        <span class="m-0"><strong>Condição de Pagamento: </strong></span><span t-field="o.payment_term_id" class="m-0" />
+                        </div>
+
+                        <span class="m-0"><strong>Forma de Pagamento: </strong></span><span t-field="o.forma_pagamento" class="m-0" />
+                        <br/>
+                        <div t-if="o.chave_pix">
+                          <t t-foreach="o.chave_pix" t-as="chave">
+                            <span class="m-0"><strong>Tipo: </strong></span><span t-field="chave.key_type" class="m-0" t-options="{&quot;fields&quot;: [&quot;key_type&quot;]}" /><br/>
+                            <span class="m-0"><strong>Chave: </strong></span><span t-field="chave.key" class="m-0" t-options="{&quot;fields&quot;: [&quot;key&quot;]}" />
+                              </t>
+                        </div>
                       </td>
 
                        </tr>

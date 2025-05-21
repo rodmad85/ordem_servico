@@ -1,5 +1,6 @@
 
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 class OsPurchaseLine(models.Model):
     _inherit = "purchase.order.line"
 
@@ -31,6 +32,28 @@ class OsPurchase(models.Model):
     oss = fields.Many2many('os.total.purchase', 'purchase_totalos_rel','purchase_order_id', 'os_total_purchase_id', string='Total OS', store=True, copy=True)
     certificados = fields.Many2many('ir.attachment', 'certificados_os_rel', 'ir_attachment_id', 'arquivos_id',
                                     string='Certificado', store=True, copy=False, required=True)
+    chave_pix = fields.Many2one('res.partner.pix', string='Chave Pix', readonly=True, required=True, ondelete='restrict', index=True, copy=False, compute='_compute_chave_pix')
+
+    @api.depends('partner_id')
+    def _compute_chave_pix(self):
+        for rec in self:
+            if rec.forma_pagamento and rec.forma_pagamento.name == 'PIX':
+                    if rec.partner_id:
+                        rec.chave_pix = rec.partner_id.pix_key_ids[0].id if rec.partner_id.pix_key_ids else False
+                    else:
+                        rec.chave_pix = False
+                        return {
+                        'type': 'ir.actions.act_window',
+                        'res_model': 'missing.pix.key.wizard',
+                        'view_mode': 'form',
+                        'target': 'new',
+                        'context': {
+                            'default_partner_id': rec.partner_id.id,
+                            }
+                        }
+            else:
+                rec.chave_pix = False
+
 
     def _prepare_invoice(self):
         invoice_vals = super(OsPurchase,self)._prepare_invoice()
@@ -59,9 +82,32 @@ class OsPurchase(models.Model):
                         self.oss = [(2,i.id)]
                 self.oss = [(0,0, {'os': rec.id, 'valor': total, 'pedido': self, })]
 
+
+
+class MissingPixKeyWizard(models.TransientModel):
+    _name = 'missing.pix.key.wizard'
+    _description = 'Chave PIX ausente'
+
+    partner_id = fields.Many2one('res.partner', string="Parceiro", required=True)
+
+    def action_choose_other_payment(self):
+        # Apenas fecha o wizard, o usuário pode escolher outra forma de pagamento manualmente
+        return {'type': 'ir.actions.act_window_close'}
+
+    def action_create_pix_key(self):
+        # Abre o formulário do parceiro na aba de vendas e compras
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Criar Chave PIX',
+            'res_model': 'res.partner',
+            'res_id': self.partner_id.id,
+            'view_mode': 'form',
+            'target': 'current',
+        }
+
+
 class TotalOs(models.Model):
     _name = "os.total.purchase"
     os = fields.Many2one('ordem.servico', string='Ordem de Serviço', store=True, copy=True)
     valor = fields.Float(string="Total")
     pedido = fields.Many2many('purchase.order', 'purchase_totalos_rel', 'os_total_purchase_id', 'purchase_order_id', string='Total OS', store=True, copy=True)
-
