@@ -1,6 +1,7 @@
 
 from odoo import fields, models, api
 from odoo.exceptions import UserError
+
 class OsPurchaseLine(models.Model):
     _inherit = "purchase.order.line"
 
@@ -29,31 +30,62 @@ class OsPurchase(models.Model):
 
     forma_pagamento = fields.Many2one('payment.provider', string='Forma de Pagamento', required=True,
                                       ondelete='restrict', index=True, copy=False)
+    forma_pagamento_nome = fields.Char(
+        string="Nome da Forma de Pagamento",
+        related="forma_pagamento.name",
+        store=False,
+    )
+
     oss = fields.Many2many('os.total.purchase', 'purchase_totalos_rel','purchase_order_id', 'os_total_purchase_id', string='Total OS', store=True, copy=True)
     certificados = fields.Many2many('ir.attachment', 'certificados_os_rel', 'ir_attachment_id', 'arquivos_id',
                                     string='Certificado', store=True, copy=False, required=True)
-    chave_pix = fields.Many2one('res.partner.pix', string='Chave Pix', readonly=True, required=True, ondelete='restrict', index=True, copy=False, compute='_compute_chave_pix')
+    chave_pix = fields.Char(
+        string='Chave Pix',
+        readonly=True,
+        compute='_compute_chave_pix',
+        store=False,  # ou True, se quiser armazenar
+        copy=False
+    )
 
-    @api.depends('partner_id')
+    def action_open_pix_wizard(self):
+        self.ensure_one()
+        if not self.partner_id:
+            raise UserError("Informe o parceiro antes de tentar cadastrar a chave PIX.")
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'missing.pix.key.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_partner_id': self.partner_id.id,
+            }
+        }
+
+    @api.depends('forma_pagamento', 'partner_id', 'partner_id.pix_key_ids')
     def _compute_chave_pix(self):
         for rec in self:
-            if rec.forma_pagamento and rec.forma_pagamento.name == 'PIX':
-                    if rec.partner_id:
-                        rec.chave_pix = rec.partner_id.pix_key_ids[0].id if rec.partner_id.pix_key_ids else False
-                    else:
-                        rec.chave_pix = False
-                        return {
-                        'type': 'ir.actions.act_window',
-                        'res_model': 'missing.pix.key.wizard',
-                        'view_mode': 'form',
-                        'target': 'new',
-                        'context': {
-                            'default_partner_id': rec.partner_id.id,
-                            }
-                        }
+            if (
+                    rec.forma_pagamento and rec.forma_pagamento.name == 'PIX'
+                    and rec.partner_id and rec.partner_id.pix_key_ids
+            ):
+                # Pega o valor da chave pix do primeiro item
+                rec.chave_pix = rec.partner_id.pix_key_ids[0].key
             else:
                 rec.chave_pix = False
 
+    @api.onchange('forma_pagamento')
+    def _onchange_forma_pagamento_pix(self):
+        if self.forma_pagamento and self.forma_pagamento.name == 'PIX':
+            if self.partner_id and not self.partner_id.pix_key_ids:
+                self.chave_pix = False
+                return {
+                    'warning': {
+                        'title': "Chave PIX ausente",
+                        'message': "Este parceiro não possui chave PIX cadastrada. Por favor, cadastre uma chave antes de continuar.",
+                    }
+                }
+        else:
+            self.chave_pix = False
 
     def _prepare_invoice(self):
         invoice_vals = super(OsPurchase,self)._prepare_invoice()

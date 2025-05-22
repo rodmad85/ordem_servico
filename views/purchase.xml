@@ -16,6 +16,23 @@
 
             <xpath expr="//field[@name='origin']" position="after">
                <field name="forma_pagamento" string="Forma de Pagamento" domain="[('state', '=', 'enabled')]"/>
+                <field name="forma_pagamento_nome" invisible="1"/>
+
+                            <field name="chave_pix" readonly="1" class="o_input"/>
+<!--                                <div class="o_input_group_btn">-->
+<!--                                    <button name="action_open_pix_wizard"-->
+<!--                                            type="object"-->
+<!--                                            string="Cadastrar"-->
+<!--                                            class="btn btn-sm btn-success"-->
+<!--                                            attrs="{-->
+<!--                                                'invisible': ['|', ('forma_pagamento_nome', '!=', 'PIX'), ('partner_id', '=', False), ('chave_pix', '!=', False)]-->
+<!--                                            }"/>-->
+
+<!--                            </div>-->
+
+
+
+
             </xpath>
 
             <xpath expr="//field[@name='incoterm_id']" position="attributes">
@@ -56,16 +73,24 @@
         </field>
         </record>
 
-<!--        <record id="purchase_os_form" model="ir.ui.view">-->
-<!--           <field name="name">purchase.os.form</field>-->
-<!--           <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit" />-->
-<!--           <field name="model">purchase.order</field>-->
-<!--           <field name="arch" type="xml">-->
-<!--               <xpath expr="//field[@name='order_line']/form//field[@name='price_subtotal']" position="before">-->
-<!--                    <field name="ordem_servico" string="OS" widget="many2many_tags"/>-->
-<!--                </xpath>-->
-<!--           </field>-->
-<!--        </record>-->
+
+        <record id="view_missing_pix_key_wizard_form" model="ir.ui.view">
+    <field name="name">missing.pix.key.wizard.form</field>
+    <field name="model">missing.pix.key.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Chave PIX ausente">
+        <group>
+          <field name="partner_id" readonly="1"/>
+        </group>
+        <footer>
+          <button name="action_choose_other_payment" string="Selecionar Outro Pagamento" type="object" class="btn-secondary"/>
+          <button name="action_create_pix_key" string="Criar Chave PIX" type="object" class="btn-primary"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+
 
     </data>
 </odoo>
