@@ -1,67 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  -->
-
 <odoo>
-    <data>
-        <record id="purchase_os_form_line" model="ir.ui.view">
-        <field name="name">purchase.os.form</field>
-        <field name="inherit_id" ref="purchase.purchase_order_form" />
+    <record id="view_purchase_order_form_custom" model="ir.ui.view">
+        <field name="name">purchase.order.form.custom</field>
         <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/tree" position="inside">
+            <xpath expr="//field[@name='user_id']" position="replace"/>
+            <xpath expr="//h1[field[@name='name']]" position="replace"/>
+            <xpath expr="//div[@class='oe_title']/span[@class='o_form_label'][1]" position="replace">
+                <div class="oe_title" style="width: 100%;">
+                <div class="d-flex justify-content-between w-100" style="max-width: 100%;">
+                    <!-- Coluna esquerda (títulos + nome do pedido) -->
+                    <div class="d-flex align-items-center" style="flex: 1; min-width: 0;">
+                        <div class="d-flex flex-column mr-3">
+                            <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">
+                                Request for Quotation
+                            </span>
+                            <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">
+                                Purchase Order
+                            </span>
+                        </div>
+                        <br/>
+                        <h1 class="d-flex align-items-center mb-0">
+                            <field name="priority" widget="priority" class="me-2"/>
+                            <field name="name" readonly="1" class="oe_form_field text-truncate"
+                                   style="max-width: 100%;"/>
+                        </h1>
+                    </div>
 
-                <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+                    <!-- Coluna direita (campos de data) -->
+                    <div class="d-flex" style="flex: 1; justify-content: flex-end;">
+                        <div class="d-flex flex-column" style="width: 250px; font-size: 14px;">
+                            <!-- Campo user_id -->
+                            <div class="mb-1">
+                                <div class="d-flex align-items-center">
+                                    <label for="user_id" string="Comprador(a)" class="o_form_label o_required_modifier"
+                                           style="width: 80px;"/>
+                                    <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"
+                                           class="w-100"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column" style="width: 200px; font-size: 14px;">
+                            <!-- Campo date_order -->
+                            <div class="mb-1" attrs="{'invisible': [('state','in',('purchase','done'))]}">
+                                <div class="d-flex align-items-center">
+                                    <label for="date_order" string="Data do Pedido"
+                                           class="o_form_label o_required_modifier"/>
+                                    <field name="date_order" class="oe_form_field w-100"/>
+                                </div>
+                            </div>
+
+                            <!-- Campo date_approve -->
+                            <div class="mb-1" attrs="{'invisible': [('state','not in',('purchase','done'))]}">
+                                <div class="d-flex align-items-center">
+                                    <label for="date_approve" string="Data de Confirmação" class="o_form_label"
+                                           style="width: 80px;"/>
+                                    <div class="d-flex align-items-center w-100">
+                                        <field name="date_approve" class="oe_form_field"/>
+                                        <field name="mail_reception_confirmed" invisible="1"/>
+                                        <span class="text-muted ml-1" style="font-size: 12px;"
+                                              attrs="{'invisible': [('mail_reception_confirmed','=', False)]}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Campo date_planned -->
+                            <div class="mb-1">
+                                <div class="d-flex align-items-center">
+                                    <label for="date_planned" string="Chegada Prevista"
+                                           class="o_form_label o_required_modifier" style="width: 80px;"/>
+                                    <div class="d-flex align-items-center w-100">
+                                        <field name="date_planned" class="oe_form_field"
+                                               attrs="{'readonly': [('state', 'not in', ('draft', 'sent', 'to approve', 'purchase'))]}"/>
+                                        <field name="mail_reminder_confirmed" invisible="1"/>
+                                        <span class="text-muted ml-1" style="font-size: 12px;"
+                                              attrs="{'invisible': [('mail_reminder_confirmed', '=', False)]}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            </xpath>
+            <!--            <xpath expr="//field[@name='fiscal_position_id']" position="replace"/>-->
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="fiscal_position_id" position="move"/>
             </xpath>
 
-            <xpath expr="//field[@name='origin']" position="after">
-               <field name="forma_pagamento" string="Forma de Pagamento" domain="[('state', '=', 'enabled')]"/>
-                <field name="forma_pagamento_nome" invisible="1"/>
-
-                            <field name="chave_pix" readonly="1" class="o_input"/>
-<!--                                <div class="o_input_group_btn">-->
-<!--                                    <button name="action_open_pix_wizard"-->
-<!--                                            type="object"-->
-<!--                                            string="Cadastrar"-->
-<!--                                            class="btn btn-sm btn-success"-->
-<!--                                            attrs="{-->
-<!--                                                'invisible': ['|', ('forma_pagamento_nome', '!=', 'PIX'), ('partner_id', '=', False), ('chave_pix', '!=', False)]-->
-<!--                                            }"/>-->
-
-<!--                            </div>-->
-
-
-
-
+            <!--            <xpath expr="//field[@name='incoterm_id']" position="replace"/>-->
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="incoterm_id" position="move"/>
             </xpath>
 
+
+            <xpath expr="//field[@name='payment_term_id']" position="replace"/>
+
+            <xpath expr="//group[field[@name='date_order']]" position="before">
+                <group name="pagamentos">
+                    <field name="payment_term_id" position="move"/>
+                    <field name="forma_pagamento" string="Forma de Pagamento" domain="[('state', '=', 'enabled')]"/>
+                    <field name="forma_pagamento_nome" invisible="1"/>
+                    <field name="chave_pix"
+                           attrs="{'invisible': ['|', ('forma_pagamento_nome', '!=', 'PIX'), ('partner_id', '=', False), ('chave_pix', '!=', False)]}"/>
+                </group>
+            </xpath>
+            <!-- Mover campos de data para antes do origin -->
+            <!--            <xpath expr="//group[@name='other_info']/field[@name='origin']" position="before">-->
+            <!--               -->
+            <!--            </xpath>-->
+
+            <!-- Adiciona o campo effective_date invisível para evitar erro -->
+            <xpath expr="//form" position="inside">
+                <field name="effective_date" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//group[field[@name='date_order']]" position="replace"/>
+
+
+            <!-- Tornar campos obrigatórios -->
             <xpath expr="//field[@name='incoterm_id']" position="attributes">
-               <attribute name="required">True</attribute>
+                <attribute name="required">True</attribute>
             </xpath>
 
             <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
-               <attribute name="required">True</attribute>
+                <attribute name="required">True</attribute>
             </xpath>
 
             <xpath expr="//field[@name='payment_term_id']" position="attributes">
-               <attribute name="required">True</attribute>
+                <attribute name="required">True</attribute>
             </xpath>
 
+            <!-- Alterar ordenação padrão -->
             <xpath expr="//tree" position="attributes">
-                    <attribute name="default_order">qty_received asc</attribute>
-                </xpath>
+                <attribute name="default_order">qty_received asc</attribute>
+            </xpath>
 
+            <!-- Adicionar novas páginas -->
             <xpath expr="//form/sheet/notebook/page[2]" position="after">
                 <page string="Total OS">
-
                     <group>
-                        <button name="uposs" string="Atualizar" type="object" class="oe_link oe_edit_only fa fa-refresh"/>
+                        <button name="uposs" string="Atualizar" type="object"
+                                class="oe_link oe_edit_only fa fa-refresh"/>
                         <field name="oss" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
-
                             <tree string="Total OS" editable="bottom">
                                 <field name="os" string="Ordem de Serviço"/>
                                 <field name="valor" sum="Total Geral"/>
-
                             </tree>
                         </field>
                     </group>
@@ -71,26 +157,5 @@
                 </page>
             </xpath>
         </field>
-        </record>
-
-
-        <record id="view_missing_pix_key_wizard_form" model="ir.ui.view">
-    <field name="name">missing.pix.key.wizard.form</field>
-    <field name="model">missing.pix.key.wizard</field>
-    <field name="arch" type="xml">
-      <form string="Chave PIX ausente">
-        <group>
-          <field name="partner_id" readonly="1"/>
-        </group>
-        <footer>
-          <button name="action_choose_other_payment" string="Selecionar Outro Pagamento" type="object" class="btn-secondary"/>
-          <button name="action_create_pix_key" string="Criar Chave PIX" type="object" class="btn-primary"/>
-        </footer>
-      </form>
-    </field>
-  </record>
-
-
-
-    </data>
+    </record>
 </odoo>
