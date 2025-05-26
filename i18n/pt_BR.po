@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 18:56+0000\n"
-"PO-Revision-Date: 2025-02-05 12:00-0300\n"
+"POT-Creation-Date: 2025-05-26 18:19+0000\n"
+"PO-Revision-Date: 2025-05-26 15:30-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: pt_BR\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__progress_compra
@@ -35,11 +35,6 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.actions.report,print_report_name:ordem_servico.action_capa_os
 msgid "'OS - %s' % (object.name or '')"
-msgstr ""
-
-#. module: ordem_servico
-#: model:ir.actions.report,print_report_name:ordem_servico.action_os_inspecoes
-msgid "'Relatorio - %s' % (object.name or '')"
 msgstr ""
 
 #. module: ordem_servico
@@ -75,6 +70,36 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__cem_porcento
 msgid "100%"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<b>Cotação:</b>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<b>Dt. Pedido: </b>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<b>Pedido Aguardando Confirmação:</b>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<b>Pedido de Compra Cancelado:</b>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<b>Pedido de Compra:</b>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<b>Prazo: </b>"
 msgstr ""
 
 #. module: ordem_servico
@@ -124,14 +149,30 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
 msgid ""
 "<br/>\n"
-"                      <span class=\"m-0\"><strong>Finalidade: </strong></span>"
+"                            <span class=\"m-0\"><strong>Chave: </strong></span>"
 msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
 msgid ""
 "<br/>\n"
+"                          <strong>E-mail: </strong>"
+msgstr ""
+"<br/>\n"
 "                      <strong>E-mail: </strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_maintenance_request_kanban
+msgid ""
+"<br/>\n"
+"                    <b>Assistência:</b>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_maintenance_request_kanban
+msgid ""
+"<br/>\n"
+"                    <b>Funcionário:</b>"
 msgstr ""
 
 #. module: ordem_servico
@@ -170,17 +211,33 @@ msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<span class=\"m-0\"><strong>Condição de Pagamento: </strong></span>"
-msgstr ""
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<span class=\"m-0\"><strong>Forma de Pagamento: </strong></span>"
+msgid "<span class=\"m-0\"><strong>Finalidade: </strong></span>"
 msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
 msgid "<span class=\"m-0\"><strong>Frete: </strong></span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<span class=\"m-0\"><strong>Pagamento: </strong></span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<span class=\"m-0\"><strong>Tipo: </strong></span>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
+msgid ""
+"<span class=\"o_form_label\" attrs=\"{'invisible': [('state','not in',('draft','sent'))]}\">\n"
+"                                    Cotação\n"
+"                                </span>\n"
+"                                <span class=\"o_form_label\" attrs=\"{'invisible': [('state','in',('draft','sent'))]}\">\n"
+"                                    Pedido de Compra\n"
+"                                </span>"
 msgstr ""
 
 #. module: ordem_servico
@@ -212,23 +269,8 @@ msgid "<span>Atenciosamente,</span><br/><br/>"
 msgstr ""
 
 #. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_kanban
-msgid ""
-"<span>Certificados</span>\n"
-"                                <span class=\"fa fa-circle text-success\" role=\"img\" aria-label=\"Certificados\" title=\"Certificados\" name=\"certpend"
-"\">\n"
-"\n"
-"                                </span>"
-msgstr ""
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_kanban
-msgid ""
-"<span>Certificados</span>\n"
-"                                <span class=\"fa fa-circle text-warning\" role=\"img\" aria-label=\"Certificados\" title=\"Certificados\" name=\"certpend"
-"\">\n"
-"\n"
-"                                </span>"
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_web_external_layout_boxed
+msgid "<span>Celular/Whatsapp: </span>"
 msgstr ""
 
 #. module: ordem_servico
@@ -392,7 +434,7 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "<strong>Commitiment: </strong>"
-msgstr ""
+msgstr "<strong>Data de Entrega: </strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
@@ -444,19 +486,14 @@ msgid "<strong>Data de Entrega: </strong>"
 msgstr ""
 
 #. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<strong>Data do Pedido: </strong>"
-msgstr ""
-
-#. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_os_insp
 msgid "<strong>Data: </strong>"
 msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<strong>Date Req.</strong>"
-msgstr "<strong>Dt. Entrega</strong>"
+msgid "<strong>Desc.</strong>"
+msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
@@ -490,8 +527,8 @@ msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<strong>Discount</strong>"
-msgstr "<strong>Desconto</strong>"
+msgid "<strong>Endereço: </strong>"
+msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
@@ -501,6 +538,11 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
 msgid "<strong>Entrega Efetiva:</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Entrega</strong>"
 msgstr ""
 
 #. module: ordem_servico
@@ -516,12 +558,7 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "<strong>Fiscal Position Remark:</strong>"
-msgstr ""
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<strong>Fornecedor: </strong>"
-msgstr ""
+msgstr "<strong>Position Fiscal:</strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
@@ -551,6 +588,11 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
 msgid "<strong>Horas:</strong>"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Imp.</strong>"
 msgstr ""
 
 #. module: ordem_servico
@@ -626,12 +668,17 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
 msgid "<strong>Operation</strong>"
-msgstr ""
+msgstr "<strong>Operação</strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "<strong>Order Date: </strong>"
 msgstr "<strong>Data do Pedido: </strong>"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>P.Unit</strong>"
+msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
@@ -718,6 +765,11 @@ msgid "<strong>Real</strong>"
 msgstr ""
 
 #. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "<strong>Referencia: </strong>"
+msgstr ""
+
+#. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
 msgid "<strong>Responsável: </strong>"
 msgstr ""
@@ -735,22 +787,17 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
 msgid "<strong>Shipping address:</strong>"
-msgstr ""
+msgstr "<strong>Endereço de Entrega:</strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "<strong>Signature</strong>"
-msgstr ""
+msgstr "<strong>Assinatura</strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "<strong>Subtotal</strong>"
 msgstr ""
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<strong>Taxes</strong>"
-msgstr "<strong>Impostos</strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
@@ -766,11 +813,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "<strong>Total</strong>"
 msgstr ""
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<strong>Unit Price</strong>"
-msgstr "<strong>Preço Unitário</strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_fecha
@@ -800,17 +842,12 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
 msgid "<strong>WorkCenter</strong>"
-msgstr ""
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "<strong>Your Order Reference:</strong>"
-msgstr ""
+msgstr "<strong>Centro de Trabalho</strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "<strong>Your Reference: </strong>"
-msgstr ""
+msgstr "<strong>Sua Referência: </strong>"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
@@ -892,8 +929,13 @@ msgid "Aprovado"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__desenhos model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__desenhos
 msgid "Arquivos"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_maintenance_request__res_partner
+msgid "Assistência"
 msgstr ""
 
 #. module: ordem_servico
@@ -922,24 +964,19 @@ msgid "Attendance"
 msgstr "Frequência"
 
 #. module: ordem_servico
-#: model:ir.model,name:ordem_servico.model_product_attribute_value
-msgid "Attribute Value"
-msgstr "Valor do Atributo"
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence
-msgid "Atualiza Valor Hora"
-msgstr ""
-
-#. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence
 msgid "Atualiza Valor Total"
 msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
-#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
 msgid "Atualizar"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "Bairro:"
 msgstr ""
 
 #. module: ordem_servico
@@ -948,8 +985,18 @@ msgid "Bill of Material Line"
 msgstr "Linha da Lista de Materias"
 
 #. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "CEP:"
+msgstr ""
+
+#. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__hr_employee__tipo_contrato__clt
 msgid "CLT"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_web_external_layout_boxed
+msgid "CNPJ:"
 msgstr ""
 
 #. module: ordem_servico
@@ -975,32 +1022,46 @@ msgid "Cancelar"
 msgstr ""
 
 #. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "Cancelled Purchase Order #"
-msgstr "Pedido de Compra Cancelado #"
-
-#. module: ordem_servico
 #: model:ir.actions.report,name:ordem_servico.action_capa_os
 msgid "Capa OS"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__certificado
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__certificado
 #: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__certificados
 msgid "Certificado"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__certpend model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
-#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__certpend
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
 msgid "Certificados"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_missing_pix_key_wizard
+msgid "Chave PIX ausente"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__chave_pix
+msgid "Chave Pix"
 msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__check_in
 msgid "Check In"
 msgstr "Entrada"
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__check_out
+msgid "Check Out"
+msgstr "Saída"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
+msgid "Chegada Prevista"
+msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__cliente_id
@@ -1025,6 +1086,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__empresa
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__cliente
 msgid "Company"
+msgstr "Empresa"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
+msgid "Compl:"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
+msgid "Comprador(a)"
 msgstr ""
 
 #. module: ordem_servico
@@ -1067,6 +1138,11 @@ msgid "Condição de Pagamento:"
 msgstr ""
 
 #. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "Conforme vossa solicitação apresentamos nossa proposta."
 msgstr ""
@@ -1095,9 +1171,15 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_mrp_bom_line__valor
 msgid "Cost"
+msgstr "Custo"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Cotação -"
 msgstr ""
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_missing_pix_key_wizard__create_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__create_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__create_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__create_uid
@@ -1110,12 +1192,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__create_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__create_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__create_uid
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais__create_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__create_uid
 msgid "Created by"
 msgstr "Criado por"
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_missing_pix_key_wizard__create_date
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__create_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__create_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__create_date
@@ -1128,7 +1210,6 @@ msgstr "Criado por"
 #: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__create_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__create_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__create_date
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais__create_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__create_date
 msgid "Created on"
 msgstr "Criado em"
@@ -1137,7 +1218,7 @@ msgstr "Criado em"
 #: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__currency_id
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Moeda"
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_sale_order_line__cost
@@ -1186,6 +1267,11 @@ msgid "Data Entrega"
 msgstr ""
 
 #. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
+msgid "Data de Confirmação"
+msgstr ""
+
+#. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__data_criacao
 msgid "Data de Criação"
 msgstr ""
@@ -1196,8 +1282,13 @@ msgid "Data de Entrega"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model.fields,help:ordem_servico.field_stock_move__secondary_uom_id
-msgid "Default Secondary Unit of Measure."
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
+msgid "Data do Pedido"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_maintenance_request_kanban
+msgid "Delete"
 msgstr ""
 
 #. module: ordem_servico
@@ -1258,11 +1349,6 @@ msgid "Dimensional"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_product__dimensional_uom_id
-msgid "Dimensional UoM"
-msgstr "UdM das dimensões"
-
-#. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_mrp_bom_line__dimensoes
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__dim_con
 #: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__dimensoes
@@ -1272,6 +1358,7 @@ msgid "Dimensões"
 msgstr ""
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_missing_pix_key_wizard__display_name
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__display_name
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__display_name
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__display_name
@@ -1284,7 +1371,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__display_name
 #: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__display_name
 #: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__display_name
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais__display_name
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__display_name
 msgid "Display Name"
 msgstr "Nome exibido"
@@ -1298,6 +1384,11 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__documento
 msgid "Documento"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_maintenance_request_kanban
+msgid "Dropdown menu"
 msgstr ""
 
 #. module: ordem_servico
@@ -1338,6 +1429,11 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
 msgid "ELABORADO POR:"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_maintenance_request_kanban
+msgid "Edit..."
 msgstr ""
 
 #. module: ordem_servico
@@ -1501,17 +1597,6 @@ msgid "Fiscal Operation"
 msgstr "Operação Fiscal"
 
 #. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__posicao
-#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__posicao
-msgid "Fiscal Position"
-msgstr "Posição Fiscal"
-
-#. module: ordem_servico
-#: model:ir.model.fields,help:ordem_servico.field_ordem_servico__posicao model:ir.model.fields,help:ordem_servico.field_os_fechamento__posicao
-msgid "Fiscal positions are used to adapt taxes and accounts for particular customers or sales orders/invoices.The default value comes from the customer."
-msgstr ""
-
-#. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_follower_ids
 msgid "Followers"
 msgstr ""
@@ -1528,7 +1613,7 @@ msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__forma_pagamento
-#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
 msgid "Forma de Pagamento"
 msgstr ""
 
@@ -1555,9 +1640,24 @@ msgid "Funcionario"
 msgstr ""
 
 #. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_maintenance_request_form
+msgid "Funcionario resposável"
+msgstr ""
+
+#. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_mrp_bom_line__funcionarios
 #: model:ir.model.fields,field_description:ordem_servico.field_stock_move__funcionarios
 msgid "Funcionarios"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_maintenance_request__funcionario
+msgid "Funcionário"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_res_config_settings__funcionarios
+msgid "Funcionários"
 msgstr ""
 
 #. module: ordem_servico
@@ -1594,6 +1694,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_hr_attendance__extra_total
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__extra_real model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
 msgid "Horas Extras"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_res_config_settings__horasmensais
+msgid "Horas Mensais"
 msgstr ""
 
 #. module: ordem_servico
@@ -1649,6 +1754,7 @@ msgid "I.E.:"
 msgstr ""
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_missing_pix_key_wizard__id
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__id model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__id
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__id model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__id
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fotos__id model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__id
@@ -1656,7 +1762,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes_linhas__id
 #: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__id model:ir.model.fields,field_description:ordem_servico.field_os_nfs__id
 #: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__id model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__id
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais__id
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__id
 msgid "ID"
 msgstr "Identificação"
@@ -1725,13 +1830,23 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_account_incoterms
 msgid "Incoterms"
-msgstr ""
+msgstr "Fretes"
 
 #. module: ordem_servico
 #. odoo-python
 #: code:addons/ordem_servico/models/ordem_servico.py:0
 #, python-format
 msgid "Informe uma medida para salvar!"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_res_config_settings_view_form
+msgid "Insira o total de horas mensais líquidas."
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_res_config_settings_view_form
+msgid "Insira os funcionários disponíveis para produção."
 msgstr ""
 
 #. module: ordem_servico
@@ -1766,7 +1881,7 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_account_move
 msgid "Journal Entry"
-msgstr "Lançamento de Diário"
+msgstr "Entrada Diário"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
@@ -1784,6 +1899,7 @@ msgid "Laser"
 msgstr ""
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_missing_pix_key_wizard____last_update
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico____last_update
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos____last_update
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos____last_update
@@ -1796,12 +1912,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_os_nfs____last_update
 #: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard____last_update
 #: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli____last_update
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais____last_update
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase____last_update
 msgid "Last Modified on"
 msgstr "Última modificação em"
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_missing_pix_key_wizard__write_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__write_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__write_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__write_uid
@@ -1814,12 +1930,12 @@ msgstr "Última modificação em"
 #: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__write_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__write_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__write_uid
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais__write_uid
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última atualização por"
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_missing_pix_key_wizard__write_date
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__write_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__write_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__write_date
@@ -1832,10 +1948,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_os_nfs__write_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_parcial_wizard__write_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_pedcli__write_date
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais__write_date
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última atualização em"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_form
@@ -1925,6 +2040,11 @@ msgid "MP Prevista"
 msgstr ""
 
 #. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_os_fechamento__orcado
+msgid "MP Prevista + Valor Horas Prevista + Terceiros Previsto"
+msgstr ""
+
+#. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
 msgid "MP Resultado"
 msgstr ""
@@ -1938,6 +2058,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__message_main_attachment_id
 msgid "Main Attachment"
 msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_maintenance_request
+msgid "Maintenance Request"
+msgstr "Solicitação de Manutenção"
 
 #. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__tipo_os__manutencao
@@ -1958,12 +2083,6 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_form_view
 msgid "Materia Prima/Terceiros"
-msgstr ""
-
-#. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_product__material
-#: model:ir.model.fields,field_description:ordem_servico.field_product_template__material
-msgid "Material"
 msgstr ""
 
 #. module: ordem_servico
@@ -2024,8 +2143,14 @@ msgid "Montagem"
 msgstr ""
 
 #. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.stock_os_picking_form
+msgid "Motorista"
+msgstr ""
+
+#. module: ordem_servico
 #: model:ir.actions.act_window,name:ordem_servico.ordem_movimentacoes_act_window
-#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__movimentacoes model:ir.ui.menu,name:ordem_servico.ordem_movimentacoes
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__movimentacoes model:ir.ui.menu,name:ordem_servico.ordem_movi
+#: model:ir.ui.menu,name:ordem_servico.ordem_movimentacoes
 msgid "Movimentações"
 msgstr ""
 
@@ -2060,7 +2185,7 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__terceiros__nenhum
@@ -2072,7 +2197,7 @@ msgstr ""
 #: code:addons/ordem_servico/models/ordem_servico.py:0
 #, python-format
 msgid "New"
-msgstr ""
+msgstr "Novo"
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_calendar_event_id
@@ -2101,19 +2226,23 @@ msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__name
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais__name
 msgid "Nome"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__forma_pagamento_nome
+msgid "Nome da Forma de Pagamento"
 msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__non_conformity_ids
 msgid "Non Conformity"
-msgstr ""
+msgstr "Não Conformidade"
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__non_conformity_count
 msgid "Non Conformity Count"
-msgstr ""
+msgstr "Não Conformidade Contagem"
 
 #. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_mgmtsystem_nonconformity
@@ -2187,8 +2316,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_production_os model_terms:ir.ui.view,arch_db:ordem_servico.mrp_production_os_form
 #: model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_search_view model_terms:ir.ui.view,arch_db:ordem_servico.os_fechamento_tree_view
 #: model_terms:ir.ui.view,arch_db:ordem_servico.os_fiscal_document model_terms:ir.ui.view,arch_db:ordem_servico.os_mgmt_form
-#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line model_terms:ir.ui.view,arch_db:ordem_servico.sale_order_os
-#: model_terms:ir.ui.view,arch_db:ordem_servico.stock_move_line_os_form model_terms:ir.ui.view,arch_db:ordem_servico.stock_move_line_os_tree
+#: model_terms:ir.ui.view,arch_db:ordem_servico.sale_order_os model_terms:ir.ui.view,arch_db:ordem_servico.stock_move_line_os_form
+#: model_terms:ir.ui.view,arch_db:ordem_servico.stock_move_line_os_tree
 msgid "OS"
 msgstr ""
 
@@ -2212,6 +2341,11 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.mrp_report_mrporder_os
 msgid "Operations Planned"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__ordem_servico
+msgid "Ordem Servico"
 msgstr ""
 
 #. module: ordem_servico
@@ -2239,10 +2373,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:ordem_servico.field_os_listaprod__os
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__os
 #: model:ir.model.fields,field_description:ordem_servico.field_sale_order__ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line__ordem_servico model:ir.ui.menu,name:ordem_servico.ordem_root
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line__ordem_servico model:ir.ui.menu,name:ordem_servico.ordem_servico_menu
 #: model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence model_terms:ir.ui.view,arch_db:ordem_servico.extra_fields_attendence_search
-#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
 msgid "Ordem de Serviço"
 msgstr ""
 
@@ -2266,13 +2399,13 @@ msgid "Ordens de Serviço"
 msgstr ""
 
 #. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
-msgid "Order #"
-msgstr "Pedido #"
-
-#. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__orcado
 msgid "Orçado"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,help:ordem_servico.field_os_fechamento__orcado_gasto
+msgid "Orçado - Gastos (sem custo fixo)"
 msgstr ""
 
 #. module: ordem_servico
@@ -2323,6 +2456,11 @@ msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
 msgstr "Pagina: <span class=\"page\"/> / <span class=\"topage\"/>"
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_missing_pix_key_wizard__partner_id
+msgid "Parceiro"
+msgstr ""
+
+#. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__apontapend__parcial
 #: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__certpend__parcial
 #: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__comprapend__parcial
@@ -2343,8 +2481,14 @@ msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_mgmtsystem_nonconformity__partner_id
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_picking__partner_id_carrier
 msgid "Partner"
 msgstr "Parceiro"
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_res_config_settings_view_form
+msgid "Parâmetros de horas"
+msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__condicao
@@ -2361,6 +2505,11 @@ msgstr ""
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_search_view model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_tree_view
 msgid "Pedido de Venda"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
+msgid "Pedido de Venda -"
 msgstr ""
 
 #. module: ordem_servico
@@ -2403,23 +2552,6 @@ msgid "Percentual"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_product__peso_calc
-#: model:ir.model.fields,field_description:ordem_servico.field_product_template__peso_calc
-msgid "Peso Calculado"
-msgstr ""
-
-#. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_product__peso_esp
-#: model:ir.model.fields,field_description:ordem_servico.field_product_template__peso_esp
-msgid "Peso Específico Kg/m³"
-msgstr ""
-
-#. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_os_pesomateriais__peso
-msgid "Peso Kg/m³"
-msgstr ""
-
-#. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__os_desenhos__tipo__peça
 msgid "Peça"
 msgstr ""
@@ -2427,6 +2559,11 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__terceiros__pintura
 msgid "Pintura"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line__placa
+msgid "Placa"
 msgstr ""
 
 #. module: ordem_servico
@@ -2440,9 +2577,11 @@ msgid "Posição"
 msgstr ""
 
 #. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__posicao
+#: model:ir.model.fields,field_description:ordem_servico.field_os_fechamento__posicao
 #: model:ir.model.fields,field_description:ordem_servico.field_os_impostos_line__fiscal_position
 msgid "Posição Fiscal"
-msgstr ""
+msgstr "Operação Fiscal"
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
@@ -2462,12 +2601,12 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_product_template
 msgid "Product"
-msgstr "Modelo de Produto"
+msgstr "Produto"
 
 #. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_product_category
 msgid "Product Category"
-msgstr "Categoria de produtos"
+msgstr "Categoria de Produtos"
 
 #. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_stock_move_line
@@ -2475,20 +2614,9 @@ msgid "Product Moves (Stock Move Line)"
 msgstr "Movimentos do produto (Linha do Movimento do Estoque)"
 
 #. module: ordem_servico
-#: model:ir.model,name:ordem_servico.model_product_product
-msgid "Product Variant"
-msgstr "Produto"
-
-#. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_mrp_production
 msgid "Production Order"
 msgstr "Ordem de Produção"
-
-#. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_product__product_variant_ids
-#: model:ir.model.fields,field_description:ordem_servico.field_product_template__product_variant_ids
-msgid "Products"
-msgstr "Produtos"
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__produto_cli
@@ -2535,16 +2663,6 @@ msgid "Purchase Order"
 msgstr "Pedido de Compra"
 
 #. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "Purchase Order #"
-msgstr "Pedido de Compra #"
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "Purchase Order Confirmation #"
-msgstr "Pedido de Compra Confirmado #"
-
-#. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_purchase_order_line
 msgid "Purchase Order Line"
 msgstr "Linha de Pedido de Compra"
@@ -2557,12 +2675,6 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_consumidos__qtd_consumido
 msgid "Qtd. Consumido"
-msgstr ""
-
-#. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__secondary_uom_qty
-#: model:ir.model.fields,field_description:ordem_servico.field_stock_move_line__secondary_uom_qty
-msgid "Qtd. Secundária"
 msgstr ""
 
 #. module: ordem_servico
@@ -2580,11 +2692,6 @@ msgstr "Qtd."
 #: model:ir.model,name:ordem_servico.model_stock_quant
 msgid "Quants"
 msgstr "Qtds"
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
-msgid "Quotation #"
-msgstr ""
 
 #. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_ordem_capa
@@ -2620,11 +2727,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ordem_servico.selection__os_inspecoes__status__reprovado
 msgid "Reprovado"
 msgstr ""
-
-#. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.ordem_servico_purchase
-msgid "Request for Quotation #"
-msgstr "Cotação #"
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__activity_user_id
@@ -2686,17 +2788,17 @@ msgstr "Pedido de venda"
 #. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Linha do Pedido de Vendas"
-
-#. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_stock_move__secondary_uom_id
-msgid "Secondary Unit of Measure"
-msgstr ""
+msgstr "Linha de pedidos de venda"
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_desenhos__setor
 #: model:ir.model.fields,field_description:ordem_servico.field_os_inspecoes__setor
 msgid "Setor"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_maintenance_request__show_res_partner
+msgid "Show Res Partner"
 msgstr ""
 
 #. module: ordem_servico
@@ -2735,7 +2837,7 @@ msgstr ""
 #. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_stock_move
 msgid "Stock Move"
-msgstr "Movimento de Estoque"
+msgstr "Movimentação de Estoque"
 
 #. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__ordem_servico__pro_solda__tig
@@ -2805,8 +2907,13 @@ msgid "Total Extra"
 msgstr ""
 
 #. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+#: model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
 msgid "Total Geral"
+msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model.fields,field_description:ordem_servico.field_res_config_settings__totalhoras
+msgid "Total Horas"
 msgstr ""
 
 #. module: ordem_servico
@@ -2826,7 +2933,7 @@ msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_os_total_purchase__pedido
-#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__oss model_terms:ir.ui.view,arch_db:ordem_servico.purchase_os_form_line
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order__oss model_terms:ir.ui.view,arch_db:ordem_servico.view_purchase_order_form_custom
 msgid "Total OS"
 msgstr ""
 
@@ -2842,13 +2949,23 @@ msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,help:ordem_servico.field_os_fechamento__total_gasto
-msgid "Total de MP Real + Total de MO Real + Comissao + Impostos"
+msgid "Total de MP Real + Total de MO Real + Comissao + Custo Fixo + Impostos"
+msgstr ""
+
+#. module: ordem_servico
+#: model_terms:ir.ui.view,arch_db:ordem_servico.os_res_config_settings_view_form
+msgid "Total de horas."
 msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__terc_total
 msgid "Totalmente Terceirizada"
 msgstr ""
+
+#. module: ordem_servico
+#: model:ir.model,name:ordem_servico.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
 
 #. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__terceiros__tratamento
@@ -2871,19 +2988,9 @@ msgid "Ultrasom em Solda"
 msgstr ""
 
 #. module: ordem_servico
-#: model_terms:ir.ui.view,arch_db:ordem_servico.stock_quant_os
-msgid "Unid. Secundaria"
-msgstr ""
-
-#. module: ordem_servico
 #: model_terms:ir.ui.view,arch_db:ordem_servico.report_saleorder_document_os
 msgid "Unit Price"
 msgstr "Preço Unitário"
-
-#. module: ordem_servico
-#: model:ir.model.fields,help:ordem_servico.field_product_product__dimensional_uom_id
-msgid "UoM for length, height, width"
-msgstr "UdM para comprimento, altura e largura"
 
 #. module: ordem_servico
 #: model:ir.model.fields.selection,name:ordem_servico.selection__mrp_production__andamento__usinagem
@@ -2961,9 +3068,9 @@ msgid "Valor de Venda - Total de Gastos"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_attribute_value__name
-msgid "Value"
-msgstr "Valor"
+#: model:ir.model.fields,field_description:ordem_servico.field_purchase_order_line__valor_os
+msgid "Valor proporcional"
+msgstr ""
 
 #. module: ordem_servico
 #: model:ir.model.fields,field_description:ordem_servico.field_ordem_servico__vendedor
@@ -3007,18 +3114,6 @@ msgid "dia(s)"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_product__product_height
-#: model:ir.model.fields,field_description:ordem_servico.field_product_template__product_height
-msgid "height"
-msgstr "altura"
-
-#. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_product__product_length
-#: model:ir.model.fields,field_description:ordem_servico.field_product_template__product_length
-msgid "length"
-msgstr "comprimento"
-
-#. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_os_consumidos
 msgid "os.consumidos"
 msgstr ""
@@ -3039,17 +3134,6 @@ msgid "os.nfs"
 msgstr ""
 
 #. module: ordem_servico
-#: model:ir.model,name:ordem_servico.model_os_pesomateriais
-msgid "os.pesomateriais"
-msgstr ""
-
-#. module: ordem_servico
 #: model:ir.model,name:ordem_servico.model_os_total_purchase
 msgid "os.total.purchase"
 msgstr ""
-
-#. module: ordem_servico
-#: model:ir.model.fields,field_description:ordem_servico.field_product_product__product_width
-#: model:ir.model.fields,field_description:ordem_servico.field_product_template__product_width
-msgid "width"
-msgstr "largura"

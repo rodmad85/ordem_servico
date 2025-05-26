@@ -3,7 +3,7 @@
 <data>
     <template id="report_saleorder_document_os" inherit_id="sale.report_saleorder_document">
     <xpath expr="//t[@t-call='web.external_layout']" position="replace">
-   
+
     <t t-call="web.external_layout">
         <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
         <t t-set="address">
@@ -27,8 +27,24 @@
             <table class="table table-sm o_main_table">
 
                  <tr>
-                    <td><strong>Cliente: </strong><div t-field="doc.partner_id.parent_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;,&quot;name&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" /></td>
-                    <td><strong>Contato: </strong><div t-field="doc.partner_id.name"></div><div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;contact&quot;,&quot;email&quot;, &quot;phone&quot;, &quot;mobile&quot;], &quot;no_marker&quot;: False, &quot;phone_icons&quot;: True}" /></td>
+                    <td>
+                        <span><t t-if="doc.partner_id.parent_id.name"/><b><t t-esc="doc.partner_id.parent_id.name"/></b></span>
+                        <br/>
+                         <div>
+                            
+                            <t t-if="doc.partner_id.parent_id.street"> <t t-esc="doc.partner_id.street"/></t><br/>
+                            <t t-if="doc.partner_id.parent_id.street2">Compl: <t t-esc="doc.partner_id.street2"/><br/></t>
+                            <t t-if="doc.partner_id.parent_id.district">Bairro: <t t-esc="doc.partner_id.district"/><br/></t>
+                            <t t-if="doc.partner_id.parent_id.zip or doc.partner_id.parent_id.city">
+                              <t t-if="doc.partner_id.parent_id.city"><t t-esc="doc.partner_id.parent_id.city"/></t>
+                              <t t-if="doc.partner_id.parent_id.state_id"> - <t t-esc="doc.partner_id.parent_id.state_id.code"/> - </t>
+                            </t>
+                            <t t-if="doc.partner_id.parent_id.country_id"><t t-esc="doc.partner_id.parent_id.country_id.name"/> - </t>
+                            <t t-if="doc.partner_id.parent_id.zip">CEP: <t t-esc="doc.partner_id.parent_id.zip"/> </t>
+                        </div>
+                    </td>
+                        <!-- <div t-field="doc.partner_id.parent_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;,&quot;name&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}" /></td> -->
+                    <td><strong>Contato: </strong><span t-field="doc.partner_id.name"/><div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;contact&quot;,&quot;email&quot;, &quot;phone&quot;, &quot;mobile&quot;], &quot;no_marker&quot;: False, &quot;phone_icons&quot;: True}" /></td>
                 </tr>
                 <br/>
                 <span class="m-0"><h6>Prezado Sr(a).: </h6></span><h6><strong><div class="m-0" t-field="doc.partner_id.name"></div></strong></h6> <span><h6>Conforme vossa solicitação apresentamos nossa proposta.</h6></span><br/>
@@ -114,9 +130,19 @@
                         <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                             <t t-if="not line.display_type">
                                 <td name="td_name"><span t-field="line.name"/></td>
-                                <td name="td_quantity" class="text-end">
-                                    <span t-field="line.product_uom_qty"/>
-                                    <span t-field="line.product_uom"/>
+                                <td name="td_quantity" class="text-center">
+                                                      <!-- <span t-field="line.product_qty"/> -->
+                                    <t t-set="product_qty" t-value="line.product_qty"/>
+                                
+                                    <t t-set="rounded_2_raw" t-value="'{:,.2f}'.format(product_qty)"/>
+                                    <t t-set="rounded_5_raw" t-value="'{:,.5f}'.format(product_qty)"/>
+
+                                    <t t-set="rounded_2" t-value="rounded_2_raw.replace(',', 'X').replace('.', ',').replace('X', '.')"/>
+                                    <t t-set="rounded_5" t-value="rounded_5_raw.replace(',', 'X').replace('.', ',').replace('X', '.')"/>
+
+                                    <t t-set="product_qty" t-value="rounded_5 if float(product_qty) != round(product_qty, 2) else rounded_2"/>
+                                    <span t-esc="product_qty"/>
+                                    <span t-field="line.product_uom.name" groups="uom.group_uom"/>
                                 </td>
                                <td t-if="mo_line" class="text-end">
                                     <span t-field="line.mo_line" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: line.currency_id}"/>
