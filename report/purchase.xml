@@ -101,10 +101,10 @@
                       </td>
                       <td style="vertical-align: middle;">
                         <div t-if="o.payment_term_id">
-                        <span class="m-0"><strong>Pagamento: </strong></span><span t-field="o.forma_pagamento" class="m-0" /><br/>
-                        <b>Prazo: </b><span t-field="o.payment_term_id" class="m-0" />
+                          <b>Prazo: </b><span t-field="o.payment_term_id" class="m-0" />
                         </div>
-                        <br/>
+                        <span class="m-0"><strong>Pagamento: </strong></span><span t-field="o.forma_pagamento" class="m-0" /><br/>
+                        
                         <div t-if="o.chave_pix">
                           <t t-foreach="o.chave_pix" t-as="chave">
                             <span class="m-0"><strong>Tipo: </strong></span><span t-field="chave.key_type" class="m-0" t-options="{&quot;fields&quot;: [&quot;key_type&quot;]}" /><br/>
@@ -125,7 +125,10 @@
                         <th class="text-center"><strong>Qty</strong></th>
                         <th class="text-center"><strong>P.Unit</strong></th>
                         <th class="text-center"><strong>Imp.</strong></th>
-                        <th class="text-center"><strong>Desc.</strong></th>
+                        <t t-set="has_discount" t-value="any(line.discount for line in o.order_line if not line.display_type)"/>
+                        <t t-if="has_discount">
+                            <th class="text-center"><strong>Desc.</strong></th>
+                        </t>
                         <th class="text-center"><strong>Amount</strong></th>
                       </tr>
                       </thead>
@@ -149,8 +152,20 @@
                                                     </td>
                                                     <td class="text-center">
                                                       <!-- <span t-field="line.product_qty"/> -->
-                                                      <span t-esc="'%.5f' % line.product_qty if line.product_qty % 1 else int(line.product_qty)"/> <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                                                      <t t-set="product_qty" t-value="line.product_qty"/>
+                                                    
+
+                                                      <t t-set="rounded_2_raw" t-value="'{:,.2f}'.format(product_qty)"/>
+                                                      <t t-set="rounded_5_raw" t-value="'{:,.5f}'.format(product_qty)"/>
+
+                                                      <t t-set="rounded_2" t-value="rounded_2_raw.replace(',', 'X').replace('.', ',').replace('X', '.')"/>
+                                                      <t t-set="rounded_5" t-value="rounded_5_raw.replace(',', 'X').replace('.', ',').replace('X', '.')"/>
+
+                                                      <t t-set="product_qty" t-value="rounded_5 if float(product_qty) != round(product_qty, 2) else rounded_2"/>
+                                                      <span t-esc="product_qty"/>
+                                                      <span t-field="line.product_uom.name" groups="uom.group_uom"/>
                                                     </td>
+                                                    
                                                     <td class="text-center">
                                                         <!-- <span t-field="line.price_unit"  t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;display_currency&quot;: o.currency_id}"/> -->
                                                       <t t-set="unit_price" t-value="line.price_unit"/>
@@ -171,9 +186,11 @@
                                                       <td name="td_taxes">
                                                         <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
                                                       </td>
+                                                      <t t-if="has_discount">
                                                         <td class="text-center">
                                                       <span t-field="line.discount"/>
                                                     </td>
+                                                    </t>
                                                       <td class="text-end">
                                                         <span t-field="line.price_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                                                       </td>
