@@ -3,7 +3,7 @@
   -->
 
 <odoo>
-    <data>
+    
         <record id="stock_os_form" model="ir.ui.view">
        <field name="name">stock.os.form</field>
        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable" />
@@ -34,27 +34,20 @@
        <field name="inherit_id" ref="stock.view_picking_form" />
        <field name="model">stock.picking</field>
        <field name="arch" type="xml">
+             <field name="carrier_id" position="attributes">
+                    <attribute name="required">1</attribute>
+            </field>
+            <field name="carrier_id" position="after">
+                <field name="partner_id_carrier" string="Motorista"/>
+            </field>
            <xpath expr="//field[@name='move_ids_without_package']/tree" position="inside">
                <field name="funcionarios" options="{'no_create_edit': True,'no_create': True}"/>
                <field name="ordem_servico" widget="many2many_tags"/>
                <field name="certificado"/>
-           </xpath>
+            </xpath>
+               
        </field>
    </record>
 
-   <record id="stock_os_picking_form" model="ir.ui.view">
-       <field name="name">stock.os.picking.form</field>
-       <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form" />
-       <field name="model">stock.picking</field>
-       <field name="arch" type="xml">
-           <field name="carrier_id" position="attributes">
-            <attribute name="required">1</attribute>
-           </field>
-           <field name="carrier_id" position="after">
-               <field name="partner_id_carrier" string="Motorista"/>
-           </field>
-       </field>
-   </record>
 
-    </data>
 </odoo>

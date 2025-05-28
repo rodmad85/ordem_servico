@@ -10,6 +10,3 @@ class OsAttach(models.Model):
         publico = {'public': True}
         vals.update(publico)
         return super().create(vals)
-
-
-

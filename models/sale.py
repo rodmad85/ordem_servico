@@ -1,6 +1,7 @@
 
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
+
 class OsSale(models.Model):
     _inherit = ["sale.order"]
 
@@ -17,6 +18,14 @@ class OsSale(models.Model):
     pedido = fields.Many2many('ir.attachment', 'pedicliente_os_rel', 'ir_attachment_id', 'pedido_id',
                               string='Pedido', store=True, copy=True)
 
+
+    @api.constrains('client_order_ref', 'state')
+    def _check_client_order_ref(self):
+        for order in self:
+            if order.state in ['sale', 'done'] and not order.client_order_ref:
+                raise ValidationError("O campo Referência do Cliente é obrigatório para pedidos confirmados.")
+            if order.state in ['sale', 'done'] and not order.pedido:    
+                raise ValidationError("O campo Pedido do Cliente é obrigatório para pedidos confirmados.")
 
     #Cálculo de valor de orçamento
     def _amount_resultado(self):

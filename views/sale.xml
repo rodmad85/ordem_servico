@@ -3,26 +3,38 @@
   -->
 
 <odoo>
-    <data>
-
+    
         <record id="sale_order_orcamento" model="ir.ui.view">
             <field name="name">sale.order.orcamento</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
 
-                <xpath expr="//field[@name='partner_id']" position="after">
+                <xpath expr="//field[@name='sale_order_template_id']" position="after">
 
                     <field name="ordem_servico" widget="many2many_tags"/> <!--options="{'no_create': True}" context="{'tree_view_ref': False, 'kanban_view_ref': False}"-->
 
 
                 </xpath>
 
-                <xpath expr="//field[@name='payment_term_id']" position="after">
-                    <field name="pedido" string="Pedido do Cliente" widget="many2many_binary"
-                           attrs="{'required': [('state', '=', 'sale')]}"/>
+               <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="pedido" string="Pedido do Cliente"
+                        widget="many2many"
+                        domain="[('res_id', '=', active_id), ('res_model', '=', 'sale.order'),('name', '!=', False)]"
+                        context="{
+                            'default_res_model': 'sale.order',
+                            'default_res_id': active_id,
+                            'delete_warning': False,
+                            'tree_view_ref': 'ordem_servico.custom_ir_attachment_tree_view'
+                        }"
+                        options="{
+                            'create': True,
+                            'delete': True
+                        }"
+                        attrs="{'readonly': [('state', 'in', ['sale', 'done'])], 'required': [('state', 'in', ['sale', 'done'])]}"/>
+                    <field name="tag_ids" position="move"/>
                 </xpath>
-
+              
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <xpath expr="//field[@name='client_order_ref']" position="move"/>
                 </xpath>
@@ -33,13 +45,28 @@
 
                 <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
                     <attribute name="required">True</attribute>
+                    <attribute name="attrs">{'readonly': [('state', 'in', ['sale', 'done'])]}</attribute>
                 </xpath>
 
                 <xpath expr="//field[@name='payment_term_id']" position="attributes">
                     <attribute name="required">True</attribute>
+                    <attribute name="attrs">{'readonly': [('state', 'in', ['sale', 'done'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='incoterm']" position="attributes">
+                    <attribute name="required">True</attribute>
+                    <attribute name="attrs">{'readonly': [('state', 'in', ['sale', 'done'])]}</attribute>
                 </xpath>
 
                 <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="incoterm" position="move"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='partner_id']" position="after">
                     <xpath expr="//field[@name='fiscal_position_id']" position="move"/>
                 </xpath>
 
@@ -50,7 +77,10 @@
                 <xpath expr="//field[@name='fiscal_position_id']" position="after">
                     <xpath expr="//field[@name='tag_ids']" position="move"/>
                 </xpath>
-
+                
+                <xpath expr="//form//field[@name='client_order_ref']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ['sale', 'done'])],'required': [('state', 'in', ['sale', 'done'])]}</attribute>
+                </xpath>
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
                     <field name="mo_line" optional="show"/>
@@ -80,6 +110,38 @@
 
             </field>
         </record>
+        
+        <record id="custom_ir_attachment_tree_view" model="ir.ui.view">
+            <field name="name">ir.attachment.custom.tree</field>
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <tree string="Anexos">
+                    <field name="name"/>
+                    <field name="file_size"/>
+                    <header>
+                        <button name="unlink" 
+                                type="object" 
+                                string="Excluir"
+                                icon="fa-trash"
+                                class="oe_highlight" 
+                                confirm="Deseja realmente excluir este arquivo?"/>
+                    </header>
+                </tree>
+            </field>
+        </record>
 
-    </data>
+        <record id="ir_attachment_search_view_custom" model="ir.ui.view">
+        <field name="name">ir.attachment.custom.search</field>
+        <field name="model">ir.attachment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter string="Meus Anexos" name="my_attachments" domain="[('create_uid', '=', uid)]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Tipo" name="group_by_type" context="{'group_by': 'mimetype'}"/>
+                </group>
+            </search>
+        </field>
+        </record>
+   
 </odoo>
