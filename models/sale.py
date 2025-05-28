@@ -41,6 +41,14 @@ class OsSale(models.Model):
             if order.state in ['sale', 'done'] and not order.pedido_ids:    
                 raise ValidationError("O campo Pedido do Cliente é obrigatório para pedidos confirmados.")
 
+    @api.constrains('client_order_ref', 'state')
+    def _check_client_order_ref(self):
+        for order in self:
+            if order.state in ['sale', 'done'] and not order.client_order_ref:
+                raise ValidationError("O campo Referência do Cliente é obrigatório para pedidos confirmados.")
+            if order.state in ['sale', 'done'] and not order.pedido:    
+                raise ValidationError("O campo Pedido do Cliente é obrigatório para pedidos confirmados.")
+
     #Cálculo de valor de orçamento
     def _amount_resultado(self):
 
