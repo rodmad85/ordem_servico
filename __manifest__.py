@@ -5,7 +5,7 @@
     'name': 'Ordem de Servico',
     'description': """
         Ordem de Serviço""",
-    'version': '16.0.1.0.1',
+    'version': '16.0.1.0.2',
     'license': 'AGPL-3',
     'author': 'Madureira Ind. e Com.',
     'website': 'www.madureira.ind.br',
