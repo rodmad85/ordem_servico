@@ -13,6 +13,7 @@
         'hr_attendance',
         'hr',
         'base',
+        'dms',
         'sale',
         'sale_order_revision',
         'sale_order_general_discount',

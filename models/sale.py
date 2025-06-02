@@ -15,10 +15,24 @@ class OsSale(models.Model):
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", )
     grupo = fields.Boolean(string='Grupo', compute='_check_group', default=True)
     mediadesc = fields.Float(string='Media Desc', compute='_mediadesc', store=True)
-    pedido = fields.Many2many('ir.attachment', 'pedicliente_os_rel', 'ir_attachment_id', 'pedido_id',
-                              string='Pedido', store=True, copy=True)
+    # pedido = fields.Many2many('ir.attachment', 'pedicliente_os_rel', 'ir_attachment_id', 'pedido_id',
+                            #   string='Pedido', store=True, copy=True)
+    dms_file_ids = fields.One2many(
+        'dms.file', 'res_id',
+        domain="[('res_model', '=', 'sale.order')]",
+        string='Arquivos DMS'
+    )
 
-
+    @api.constrains('pedido_attachment_ids')
+    def _check_attachment_links(self):
+        for order in self:
+            for attach in order.pedido_attachment_ids:
+                if attach.res_model != 'sale.order' or attach.res_id != order.id:
+                    raise ValidationError(
+                        f"O anexo '{attach.name}' não está vinculado corretamente a este pedido.\n"
+                        f"res_model esperado: 'sale.order', res_id esperado: {order.id}."
+                    )
+                
     @api.constrains('client_order_ref', 'state')
     def _check_client_order_ref(self):
         for order in self:
@@ -105,3 +119,24 @@ class OsSaleLine(models.Model):
         for order in self:
             for line in order:
                 line.valordesc = line.price_unit * (line.discount / 100.0) * line.product_uom_qty
+
+
+
+
+class DmsSaleIntegration(models.Model):
+    _inherit = 'dms.file'
+
+    sale_order_id = fields.Many2one(
+        'sale.order',
+        string='Pedido de Venda',
+        compute='_compute_sale_order',
+        store=True
+    )
+
+    @api.depends('res_model', 'res_id')
+    def _compute_sale_order(self):
+        for record in self:
+            if record.res_model == 'sale.order':
+                record.sale_order_id = self.env['sale.order'].browse(record.res_id)
+            else:
+                record.sale_order_id = False
