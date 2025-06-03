@@ -145,7 +145,7 @@
 
 
             </field>
-        </record>
+        
         
         <record id="custom_ir_attachment_tree_view" model="ir.ui.view">
             <field name="name">ir.attachment.custom.tree</field>
