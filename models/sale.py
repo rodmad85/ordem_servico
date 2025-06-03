@@ -26,7 +26,7 @@ class OsSale(models.Model):
     @api.constrains('pedido_attachment_ids')
     def _check_attachment_links(self):
         for order in self:
-            for attach in order.pedido_attachment_ids:
+            for attach in order.dms_file_ids:
                 if attach.res_model != 'sale.order' or attach.res_id != order.id:
                     raise ValidationError(
                         f"O anexo '{attach.name}' não está vinculado corretamente a este pedido.\n"
