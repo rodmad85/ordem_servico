@@ -17,7 +17,7 @@ class OsSale(models.Model):
     mediadesc = fields.Float(string='Media Desc', compute='_mediadesc', store=True)
     # pedido = fields.Many2many('ir.attachment', 'pedicliente_os_rel', 'ir_attachment_id', 'pedido_id',
                             #   string='Pedido', store=True, copy=True)
-    dms_file_ids = fields.One2many(
+    pedido_ids = fields.One2many(
         'dms.file', 'res_id',
         domain="[('res_model', '=', 'sale.order')]",
         string='Arquivos DMS'
@@ -26,7 +26,7 @@ class OsSale(models.Model):
     @api.constrains('pedido_attachment_ids')
     def _check_attachment_links(self):
         for order in self:
-            for attach in order.dms_file_ids:
+            for attach in order.pedido_ids:
                 if attach.res_model != 'sale.order' or attach.res_id != order.id:
                     raise ValidationError(
                         f"O anexo '{attach.name}' não está vinculado corretamente a este pedido.\n"
@@ -38,7 +38,7 @@ class OsSale(models.Model):
         for order in self:
             if order.state in ['sale', 'done'] and not order.client_order_ref:
                 raise ValidationError("O campo Referência do Cliente é obrigatório para pedidos confirmados.")
-            if order.state in ['sale', 'done'] and not order.pedido:    
+            if order.state in ['sale', 'done'] and not order.pedido_ids:    
                 raise ValidationError("O campo Pedido do Cliente é obrigatório para pedidos confirmados.")
 
     #Cálculo de valor de orçamento

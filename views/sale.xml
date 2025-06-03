@@ -14,7 +14,7 @@
             <!-- Campo de anexos DMS -->
              
                  <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="dms_file_ids"
+                <field name="pedido_ids"
                     widget="one2many"
                     mode="kanban"
                     context="{
