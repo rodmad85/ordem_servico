@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<!--
+  -->
 
+<odoo>
     
         <record id="sale_order_orcamento" model="ir.ui.view">
             <field name="name">sale.order.orcamento</field>
@@ -11,7 +13,10 @@
                 <xpath expr="//field[@name='sale_order_template_id']" position="after">
 
                     <field name="ordem_servico" widget="many2many_tags"/> <!--options="{'no_create': True}" context="{'tree_view_ref': False, 'kanban_view_ref': False}"-->
+
+
                 </xpath>
+
                <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="pedido" string="Pedido do Cliente"
                         widget="many2many"
@@ -34,13 +39,9 @@
                     <xpath expr="//field[@name='client_order_ref']" position="move"/>
                 </xpath>
 
-
-            <!-- Regras de obrigatoriedade e readonly -->
-            <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
-                <attribute name="required">True</attribute>
-                <attribute name="attrs">{'readonly': [('state', 'in', ['sale', 'done'])]}</attribute>
-            </xpath>
-
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="grupo" invisible="1"/>
+                </xpath>
 
                 <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
                     <attribute name="required">True</attribute>
@@ -69,13 +70,9 @@
                     <xpath expr="//field[@name='fiscal_position_id']" position="move"/>
                 </xpath>
 
-
-            <!-- Reorganizando campos -->
-            <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="fiscal_position_id" position="move"/>
-                <field name="tag_ids" position="move"/>
-            </xpath>
-
+                <xpath expr="//field[@name='analytic_account_id']" position="after">
+                    <xpath expr="//field[@name='pricelist_id']" position="move"/>
+                </xpath>
 
                 <xpath expr="//field[@name='fiscal_position_id']" position="after">
                     <xpath expr="//field[@name='tag_ids']" position="move"/>
@@ -85,67 +82,34 @@
                     <attribute name="attrs">{'readonly': [('state', 'in', ['sale', 'done'])],'required': [('state', 'in', ['sale', 'done'])]}</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                    <field name="mo_line" optional="show"/>
+                    <field name="mp_line" optional="show"/>
+                </xpath>
 
-            <!-- Adicionando campos na tree de order_line -->
-            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
-                <field name="mo_line" optional="show"/>
-                <field name="mp_line" optional="show"/>
-            </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                </xpath>
 
-            <!-- Bloqueando criação/edição de unidade de medida -->
-            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
-                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
-            </xpath>
-        </field>
-    </record>
+            </field>
+        </record>
 
-    <!-- Tree view personalizada da cotação -->
-    <record id="sale_order_os" model="ir.ui.view">
-        <field name="name">sale.order.os</field>
-        <field name="inherit_id" ref="sale.view_quotation_tree"/>
-        <field name="model">sale.order</field>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='name']" position="after">
-                <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
-            </xpath>
-            <xpath expr="//field[@name='amount_total']" position="before">
-                <field name="mediadesc" string="Desconto(%)" optional="show" avg="Media de Desconto"/>
-            </xpath>
-        </field>
-    </record>
+        <record id="sale_order_os" model="ir.ui.view">
+            <field name="name">sale.order.os</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
+                </xpath>
 
-    <!-- Tree view para anexos do DMS -->
-    <record id="view_dms_file_tree" model="ir.ui.view">
-        <field name="name">dms.file.tree</field>
-        <field name="model">dms.file</field>
-        <field name="arch" type="xml">
-            <tree class="dms_tree" js_class="dms_list">
-                <field name="name" filename="name" widget="dms_file"/>
-                <!-- <field name="file_size" widget="dms_file_size"/>
-                <field name="create_date" string="Data" widget="date"/> -->
-            </tree>
-        </field>
-    </record>
+                <xpath expr="//field[@name='amount_total']" position="before">
+                    <field name="mediadesc" string="Desconto(%)" optional="show" avg="Media de Desconto"/>
+                    <!--            <field name="discount_total" string="Total Desconto" optional="show" sum="Total Desconto"/>-->
+                </xpath>
 
-    <!-- Search view para anexos -->
-    <record id="view_dms_file_search" model="ir.ui.view">
-        <field name="name">dms.file.search</field>
-        <field name="model">dms.file</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="name"/>
-                <filter string="Meus Anexos" name="my_attachments" domain="[('create_uid', '=', uid)]"/>
-                <group expand="0" string="Agrupar por">
-                    <filter string="Tipo" name="group_by_type" context="{'group_by': 'mimetype'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
-
-
-
-          
-        
+            </field>
+        </record>
         
         <record id="custom_ir_attachment_tree_view" model="ir.ui.view">
             <field name="name">ir.attachment.custom.tree</field>
