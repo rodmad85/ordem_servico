@@ -29,25 +29,45 @@
        </field>
    </record>
 
+    <record id="stock_os_picking_tree" model="ir.ui.view">
+       <field name="name">stock.os.picking.tree</field>
+       <field name="inherit_id" ref="stock.vpicktree" />
+       <field name="model">stock.picking</field>
+       <field name="arch" type="xml">
+           <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="ordem_servico" widget="many2many_tags" string="OS"/>
+            </xpath>
+
+       </field>
+    </record>
+
     <record id="stock_quant_os" model="ir.ui.view">
        <field name="name">stock.quant.os</field>
        <field name="inherit_id" ref="stock.view_picking_form" />
        <field name="model">stock.picking</field>
        <field name="arch" type="xml">
-             <field name="carrier_id" position="attributes">
-                    <attribute name="required">1</attribute>
-            </field>
-            <field name="carrier_id" position="after">
-                <field name="partner_id_carrier" string="Motorista"/>
+
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="ordem_servico" widget="many2many_tags" string="OS"/>
+            </xpath>
+
+
+            <field name="location_dest_id" position="after">
+                <field name="carrier_id" position="move" attrs="{'required': [('picking_type_id', '=', 2)]}"/>
+                <field name="carrier_track_ref" string="Placa" attrs="{'required': [('picking_type_id', '=', 2)]}"/>
+                <field name="rg_cpf" attrs="{'required': [('picking_type_id', '=', 2)]}"/>
+                <field name="part_carrier" string="Motorista" attrs="{'required': [('picking_type_id', '=', 2)]}"/>
             </field>
            <xpath expr="//field[@name='move_ids_without_package']/tree" position="inside">
-               <field name="funcionarios" options="{'no_create_edit': True,'no_create': True}"/>
-               <field name="ordem_servico" widget="many2many_tags"/>
-               <field name="certificado"/>
+               <field name="funcionarios" options="{'no_create_edit': True,'no_create': True, 'invisible': [('picking_type_id', '=', 2)]}"/>
+               <field name="ordem_servico" widget="many2many_tags" attrs="{'invisible': [('picking_type_id', '=', 2)]}"/>
+               <field name="certificado" attrs="{'invisible': [('picking_type_id', '=', 2)]}"/>
             </xpath>
-               
+
+
        </field>
    </record>
+
 
 
 </odoo>

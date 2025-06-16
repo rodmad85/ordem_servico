@@ -1,5 +1,7 @@
+import logging
 from odoo import fields, models, api
 
+_logger = logging.getLogger(__name__)
 
 class OsStockQuant(models.Model):
     _inherit = "stock.quant"
@@ -37,16 +39,37 @@ class OsStock(models.Model):
             else:
                 rec.funcionarios = [(5,)]
 
+    @api.depends('raw_material_production_id.ordem_servico', 'production_id.ordem_servico')
+    def _compute_ordem_servico(self):
+        for move in self:
+            if move.raw_material_production_id:
+                move.ordem_servico = move.raw_material_production_id.ordem_servico
+            elif move.production_id:
+                move.ordem_servico = move.production_id.ordem_servico
+
+    def _set_ordem_servico(self):
+        """Método vazio necessário para campos computados editáveis"""
+        pass
 
 class OsStockLine(models.Model):
     _inherit = "stock.move.line"
-    ordem_servico = fields.Many2many('ordem.servico', 'stock_move_line_os', 'os_id', 'id',
-                                     string='Ordem de Serviço', required=False, index=True, copy=False,
-                                     related='move_id.ordem_servico')
-    
+    ordem_servico = fields.Many2many(
+        'ordem.servico',
+        'stock_move_line_os_rel',  # Nome diferente para evitar conflito
+        'move_line_id',  # Referência ao move.line
+        'os_id',  # Referência à ordem de serviço
+        string='Ordem de Serviço',
+        compute='_compute_ordem_servico',
+        store=True
+    )
     fornecedor = fields.Many2one(string='Fornecedor', related='picking_id.partner_id')
     funcionario = fields.Many2one('hr.employee', store=True)
     placa = fields.Char(string='Placa', size=7)
+
+    @api.depends('move_id.ordem_servico')
+    def _compute_ordem_servico(self):
+        for line in self:
+            line.ordem_servico = line.move_id.ordem_servico
 
 
 class OsIncoterm(models.Model):
@@ -62,4 +85,20 @@ class OsIncoterm(models.Model):
 class OSPicking(models.Model):
     _inherit = 'stock.picking'
 
-    partner_id_carrier = fields.Many2one('res.partner', string='Partner', required=True, ondelete='restrict')
+    part_carrier = fields.Char(string='Motorista')
+    rg_cpf = fields.Char(string='RG/CPF')
+    carrier_track_ref = fields.Char(string='Placa')
+
+    ordem_servico = fields.Many2many(
+        'ordem.servico',
+        'stock_picking_rel_os',
+        'picking_id',
+        'os_id',
+        string='Ordem de Serviço',
+        required=False,
+        index=True,
+        store=True,
+        copy=False
+
+    )
+
