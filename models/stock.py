@@ -101,4 +101,3 @@ class OSPicking(models.Model):
         copy=False
 
     )
-

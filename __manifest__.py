@@ -5,7 +5,7 @@
     'name': 'Ordem de Servico',
     'description': """
         Ordem de Serviço""",
-    'version': '16.0.1.0.2',
+    'version': '16.0.1.0.4',
     'license': 'AGPL-3',
     'author': 'Madureira Ind. e Com.',
     'website': 'www.madureira.ind.br',
@@ -21,6 +21,7 @@
         'sale_last_price_info',
         'sale_mrp',
         'stock',
+        'mail',
         'maintenance',
         'mrp',
         'mgmtsystem',
@@ -30,6 +31,7 @@
         'purchase_discount',
         'purchase_last_price_info',
         'l10n_br_fiscal',
+        'web',
        
 
 
@@ -63,16 +65,17 @@
         'report/sale.xml',
         'report/purchase.xml',
     ],
+    'controllers': ['controllers/binary_controller.py'],
     'assets': {
         'web.assets_backend': [
             'ordem_servico/static/src/css/progress_bar_color.css',
+            'ordem_servico/static/src/css/os_capa.css',
             'ordem_servico/static/src/js/progress_bar_color.js',
-            'static/src/js/progress_bar_color.js',
-
-
             ],
     },
     'demo': [
     ],
     "installable": True,
+    'application': True,
+    'license': 'LGPL-3',
 }

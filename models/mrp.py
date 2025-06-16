@@ -40,7 +40,6 @@ class OsMrp(models.Model):
                 if os_ids:
                     picking.write({'ordem_servico': [(6, 0, os_ids)]})
         return res
-
     @api.model
     def _get_move_raw_values(self, product_id, product_uom_qty, product_uom, operation_id=False, bom_line=False):
         vals = super(OsMrp, self)._get_move_raw_values(product_id, product_uom_qty, product_uom, operation_id=False, bom_line=False)

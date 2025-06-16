@@ -37,7 +37,6 @@
            <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="ordem_servico" widget="many2many_tags" string="OS"/>
             </xpath>
-
        </field>
     </record>
 

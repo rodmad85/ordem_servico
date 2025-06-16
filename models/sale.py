@@ -138,7 +138,6 @@ class OsSale(models.Model):
                                        ) % product_list
                 }
             }
-
         # Se todas as linhas estão marcadas como MTO, confirma normalmente
         # Atualiza estado das ordens de serviço
         self.ordem_servico.write({'state': 'aberta'})
