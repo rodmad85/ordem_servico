@@ -65,7 +65,6 @@
         'report/sale.xml',
         'report/purchase.xml',
     ],
-    'controllers': ['controllers/binary_controller.py'],
     'assets': {
         'web.assets_backend': [
             'ordem_servico/static/src/css/progress_bar_color.css',

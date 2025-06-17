@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   -->
-
 <odoo>
     
         <record id="stock_os_form" model="ir.ui.view">
@@ -49,7 +48,6 @@
             <xpath expr="//field[@name='origin']" position="after">
                 <field name="ordem_servico" widget="many2many_tags" string="OS"/>
             </xpath>
-
 
             <field name="location_dest_id" position="after">
                 <field name="carrier_id" position="move" attrs="{'required': [('picking_type_id', '=', 2)]}"/>

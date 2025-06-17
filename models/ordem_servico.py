@@ -31,8 +31,6 @@ class OrdemServico(models.Model):
 
     responsavel = fields.Many2many('res.partner', 'os_partner_contact_rel', 'os_id', 'partner_id', string='Responsável Técnico', translate=True, readonly=False, required=False,
                                    index=True, domain="[('parent_id','=',cliente_id)]")
-    vendedor =fields.Many2one('res.users', string='Vendedor', translate=True, readonly=True, required=False,
-                              change_default=True, index=True, tracking=1, related='pedido_venda.user_id')
     user_id = fields.Many2one('res.users', string='Elaborado por', required=True, default=lambda self: self.env.user)
     movimentacoes = fields.Many2many('stock.move.line', 'stock_move_line_os', 'id', 'os_id',
                                      string='Movimentações', required=False, index=True, copy=False)
@@ -68,9 +66,6 @@ class OrdemServico(models.Model):
         [('normal', 'Normal'), ('repeticao', 'Repetição'), ('manutencao', 'Manutencao'), ('rafael', 'Rafael')], default='normal',
         string='Tipo', store=True, copy=True, required=True)
     terc_total = fields.Boolean(string='Totalmente Terceirizada')
-
-    ultimamsg = fields.Char(string='Mensagens', compute='_compute_last_msg')
-    ultiuser = fields.Char(string='Usuario', compute='_compute_last_usr')
 
     visual_corte = fields.Boolean(string="Visual", store=True)
     dimen_corte = fields.Boolean(string="Dimensional", store=True)
@@ -297,7 +292,6 @@ class OrdemServico(models.Model):
     #         self.consumidos = [(6, 0, [])]
 
 
-
     @api.onchange('tipo_os')
     def compute_tipo_os(self):
         if self.tipo_os == 'manutencao':
@@ -341,29 +335,6 @@ class OrdemServico(models.Model):
             res.append((record.id, record.name))
         return res
 
-    @api.depends("message_ids")
-    def _compute_last_msg(self):
-        for rec in self:
-            ids = rec.message_ids.ids
-            if ids:
-                rec.ultimamsg = rec.message_ids[0].body
-            else:
-                rec.ultimamsg = False
-
-    @api.depends("message_ids")
-    def _compute_last_usr(self):
-        for rec in self:
-            msg_ids = rec.message_ids
-
-            if msg_ids:
-                ult = msg_ids[0].author_id.id
-                ult = self.env['res.partner'].browse(ult).name
-                if ult:
-                    rec.ultiuser = ult
-                else:
-                    rec.ultiuser = False
-
-    
     
     @api.onchange('pedido_venda')
     def _compute_cliente_id(self):
@@ -385,18 +356,6 @@ class OrdemServico(models.Model):
             posicoes = record.pedido_venda.mapped('fiscal_position_id')
             record.posicao = posicoes[0] if posicoes else False
 
-# class OrdemServicoPendencias(models.Model):
-#     _name = "ordem.servico.pendencias"
-#
-#     compras = fields.Many2many()
-#     desenhos = fields.Many2many()
-#     apontamentos = fields.Many2many()
-#     entregas = fields.Many2many()
-#     inspecoes = fields.Char()
-#
-# class OsComprasPend(models.Model):
-#     _name = "os.compras.pend"
-
 
 class OsListaprod(models.Model):
     _name="os.listaprod"
@@ -406,6 +365,7 @@ class OsListaprod(models.Model):
     estoque = fields.Boolean(string='Estoque')
     dimensoes = fields.Char(string='Dimensões')
     qtd = fields.Float(string='Quantidade')
+
 
 class OsConsumidos(models.Model):
     _name="os.consumidos"
@@ -418,6 +378,7 @@ class OsConsumidos(models.Model):
     qtd_con = fields.Float(string='Quantidade')
     qtd_consumido = fields.Float(string='Qtd. Consumido')
     valor_con = fields.Float(string='Total')
+
 
 class OsParcialWizard(models.TransientModel):
     _name = 'os.parcial.wizard'

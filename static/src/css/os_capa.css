@@ -1,10 +1,23 @@
 
-table {
-  border-collapse: collapse;
+.o_form_view .custom_attachments_only {
+    max-width: 100%;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 10px;
+    background: #fdfdfd;
 }
-tr {
-  border: solid;
-  border-width: 1px 0;
-  border-bottom: 1px solid black;
 
+.custom_attachments_only .o_mail_activity,
+.custom_attachments_only .o_ChatterTopbar,
+.custom_attachments_only .o_ChatterComposer,
+.custom_attachments_only .o_ChatterThread,
+.custom_attachments_only .o_chatter_button,
+.custom_attachments_only .o_followers {
+    display: none !important;
 }
+
+/* Ajuste para os cards de anexo ocuparem a largura */
+.custom_attachments_only .o_AttachmentBox {
+    width: 100%;
+}
+
