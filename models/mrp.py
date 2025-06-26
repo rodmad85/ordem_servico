@@ -48,11 +48,6 @@ class OsMrp(models.Model):
 
         return vals
 
-    @api.onchange('andamento')
-    def _seleciona_terceiro(self):
-        if self.andamento != 'terceiro':
-            self.terceiros = 'nenhum'
-
     def name_get(self):
         result = []
         for rec in self:

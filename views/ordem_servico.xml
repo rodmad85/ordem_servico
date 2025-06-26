@@ -311,7 +311,7 @@
                             </group>
                         </page>
                         <page string="Apontamento" name="Apontamento"
-                              groups="ordem_servico.ordem_admin,hr_attendance.group_hr_attendance_manager">
+                             >
                             <field name="apontamento" widget="section_and_note_one2many" mode="tree,kanban">
                                 <tree string="Employee attendances" editable="bottom" default_order="employee_id">
                                     <field name="currency_id" invisible="1"/>
@@ -327,9 +327,9 @@
                                     <field name="extra_total" widget="float_time" sum="Total Extra"/>
                                     <field name="soma_total" string="Total de Horas" widget="float_time"
                                            sum="Total de Horas"/>
-                                    <field name="valor_total" string="Valor Total" widget="monetary"
-                                           options="{'currency': %(base.BRL)d}" sum="Valor Total"
-                                           groups="ordem_servico.ordem_admin"/>
+<!--                                    <field name="valor_total" string="Valor Total" widget="monetary"-->
+<!--                                           options="{'currency': %(base.BRL)d}" sum="Valor Total"-->
+<!--                                           groups="ordem_servico.ordem_admin"/>-->
                                 </tree>
                             </field>
                         </page>

@@ -48,7 +48,7 @@
         <xpath expr="//kanban" position="inside">
                 <field name="funcionario"/>
             </xpath>
-             <xpath expr="//div[@class='o_kanban_record_body']" position="inside">
+             <xpath expr="//div[hasclass('o_kanban_record_body')]" position="inside">
 
                 <span t-if="record.funcionario.raw_value">
                     <br/>
