@@ -1,132 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_purchase_order_form_custom" model="ir.ui.view">
-        <field name="name">purchase.order.form.custom</field>
+    <record id="os_purchase_order_form" model="ir.ui.view">
+        <field name="name">os.purchase.order.form</field>
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
+         <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
                 <field name="ordem_servico" string="OS" widget="many2many_tags"/>
             </xpath>
-
             <xpath expr="//field[@name='user_id']" position="replace"/>
-            <xpath expr="//h1[field[@name='name']]" position="replace"/>
-            <xpath expr="//div[@class='oe_title']/span[@class='o_form_label'][2]" position="replace"></xpath>
-            <xpath expr="//div[@class='oe_title']/span[@class='o_form_label'][1]" position="replace">
-                <!-- <div class="oe_title" style="width: 100%;"> -->
-                    <div class="d-flex justify-content-between w-100" style="width: 100%;">
-                        <!-- Coluna esquerda (títulos + nome do pedido) -->
-                        <div class="d-flex align-items-center" style="flex: 1; min-width: 45%;">
-                            <div class="d-flex flex-column mr-3">
-                                
-                                <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">
-                                    Cotação
-                                </span>
-                                <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">
-                                    Pedido de Compra
-                                </span>
-                                
-                                <h1 class="d-flex align-items-center mb-0">
-                                <field name="priority" widget="priority" class="me-2"/>
-                                <field name="name" readonly="1" class="oe_form_field text-truncate"
-                                    style="max-width: 100%;"/>
-                            </h1>
-                            </div>
-                            
-                        
-                        </div>
 
-                        <!-- Coluna direita (campos de data) -->
-                     
-                      
-                                <div class="oe_inline" style="min-width: 35%">
-                                    <div class="d-flex align-items-center">
-                                        <label for="user_id" string="Comprador(a)" class="o_form_label o_required_modifier"/>
-                                        <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"
-                                           style="width: 100%;"/>
-                                    </div>
-                                </div>
-                            <!-- </div> -->
-                            <div class="o_inner_group grid col-lg-6" style="min-width: 33%; font-size: 14px;">
-                                <!-- Campo date_order -->
-                                <div class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0" attrs="{'invisible': [('state','in',('purchase','done'))]}">
-                                    <div class="d-flex align-items-center">
-                                        <label for="date_order" string="Data do Pedido"
-                                            class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900"/>
-                                        <field name="date_order" class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0"/>
-                                    </div>
-                                </div>
+            <xpath expr="//field[@name='partner_ref']" position="replace"/>
+            <xpath expr="//field[@name='partner_id']" position="after">
 
-                                <!-- Campo date_approve -->
-                                <div class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0" attrs="{'invisible': [('state','not in',('purchase','done'))]}">
-                                    <!-- <div class="d-flex align-items-center"> -->
-                                        <label for="date_approve" string="Data de Confirmação" class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900"/>
-                                        <div class="d-flex align-items-center w-100">
-                                            <field name="date_approve" class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0"/>
-                                            <field name="mail_reception_confirmed" invisible="1"/>
-                                            <span class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0" style="font-size: 12px;"
-                                                attrs="{'invisible': [('mail_reception_confirmed','=', False)]}"></span>
-                                        </div>
-                                    <!-- </div> -->
-                                </div>
-
-                                <!-- Campo date_planned -->
-                                <div class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
-                                    <!-- <div class="d-flex align-items-center"> -->
-                                        <label for="date_planned" string="Chegada Prevista"
-                                            class="o_form_label o_required_modifier" style="width: 80px;"/>
-                                        <div class="d-flex align-items-center w-100">
-                                            <field name="date_planned" class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0"
-                                                attrs="{'readonly': [('state', 'not in', ('draft', 'sent', 'to approve', 'purchase'))]}"/>
-                                                
-                                            <field name="mail_reminder_confirmed" invisible="1"/>
-                                            <span class="text-muted ml-1" style="font-size: 12px;"
-                                                attrs="{'invisible': [('mail_reminder_confirmed', '=', False)]}"></span>
-                                        </div>
-                                    <!-- </div> -->
-                                </div>
-                            </div>
-                       
-                    </div>
-                    <br/>
-                    
-                <!-- </div> -->
-
-            </xpath>
-            <!--            <xpath expr="//field[@name='fiscal_position_id']" position="replace"/>-->
-            <xpath expr="//field[@name='partner_ref']" position="after">
-                <field name="fiscal_position_id" position="move"/>
-            </xpath>
-
-            <!--            <xpath expr="//field[@name='incoterm_id']" position="replace"/>-->
-            <xpath expr="//field[@name='partner_ref']" position="after">
-                <field name="incoterm_id" position="move"/>
-            </xpath>
-
-
-            <xpath expr="//field[@name='payment_term_id']" position="replace"/>
-
-            <xpath expr="//group[field[@name='date_order']]" position="before">
+                <group>
+                    <field name="partner_ref" position="move"/>
+                    <field name="incoterm_id" position="move"/>
+                    <field name="fiscal_position_id" position="move"/>
+                </group>
                 <group name="pagamentos">
+
                     <field name="payment_term_id" position="move"/>
                     <field name="forma_pagamento" string="Forma de Pagamento" domain="[('state', '=', 'enabled')]"/>
                     <field name="forma_pagamento_nome" invisible="1"/>
-                    <field name="chave_pix"
-                           attrs="{'invisible': ['|', ('forma_pagamento_nome', '!=', 'PIX'), ('partner_id', '=', False), ('chave_pix', '!=', False)]}"/>
+                    <field name="chave_pix" attrs="{'invisible': ['|', ('forma_pagamento_nome', '!=', 'PIX'), ('partner_id', '=', False), ('chave_pix', '!=', False)]}"/>
                 </group>
-            </xpath>
-            <!-- Mover campos de data para antes do origin -->
-            <!--            <xpath expr="//group[@name='other_info']/field[@name='origin']" position="before">-->
-            <!--               -->
-            <!--            </xpath>-->
+                <group>
+                    <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user" style="width: 100%;"/>
 
-            <!-- Adiciona o campo effective_date invisível para evitar erro -->
+                            <field name="date_order" attrs="{'invisible': [('state','in',('purchase','done'))]}"/>
+                            <label for="date_approve" attrs="{'invisible': [('state','not in',('purchase','done'))]}"/>
+                            <div name="date_approve" attrs="{'invisible': [('state','not in',('purchase','done'))]}" class="o_row">
+                                <field name="date_approve"/>
+                                <field name="mail_reception_confirmed" invisible="1"/>
+                                <span class="text-muted" attrs="{'invisible': [('mail_reception_confirmed','=', False)]}">(confirmed by vendor)</span>
+                            </div>
+                            <label for="date_planned"/>
+                            <div name="date_planned_div" class="o_row">
+                                <field name="date_planned" attrs="{'readonly': [('state', 'not in', ('draft', 'sent', 'to approve', 'purchase'))]}"/>
+                                <field name="mail_reminder_confirmed" invisible="1"/>
+                                <span class="text-muted" attrs="{'invisible': [('mail_reminder_confirmed', '=', False)]}">(confirmed by vendor)</span>
+                            </div>
+                            <label for="receipt_reminder_email" class="d-none" groups="purchase.group_send_reminder"/>
+                            <div name="reminder" class="o_row" groups="purchase.group_send_reminder" title="Automatically send a confirmation email to the vendor X days before the expected receipt date, asking him to confirm the exact date.">
+                                <field name="receipt_reminder_email"/>
+                                <span>Ask confirmation</span>
+                                <div class="o_row oe_inline" attrs="{'invisible': [('receipt_reminder_email', '=', False)]}">
+                                    <field name="reminder_date_before_receipt"/>
+                                    day(s) before
+                                    <widget name="toaster_button" button_name="send_reminder_preview" title="Preview the reminder email by sending it to yourself." attrs="{'invisible': [('id', '=', False)]}"/>
+                                </div>
+                            </div>
+                        </group>
+            </xpath>
+
+
+
+
+
             <xpath expr="//form" position="inside">
                 <field name="effective_date" invisible="1"/>
             </xpath>
-
-            <xpath expr="//group[field[@name='date_order']]" position="replace"/>
-
 
             <!-- Tornar campos obrigatórios -->
             <xpath expr="//field[@name='incoterm_id']" position="attributes">
@@ -150,8 +84,7 @@
             <xpath expr="//form/sheet/notebook/page[2]" position="after">
                 <page string="Total OS">
                     <group>
-                        <button name="uposs" string="Atualizar" type="object"
-                                class="oe_link oe_edit_only fa fa-refresh"/>
+                        <button name="uposs" string="Atualizar" type="object" class="oe_link oe_edit_only fa fa-refresh"/>
                         <field name="oss" widget="section_and_note_one2many" mode="tree,kanban" nolabel="1">
                             <tree string="Total OS" editable="bottom">
                                 <field name="os" string="Ordem de Serviço"/>
@@ -164,6 +97,50 @@
                     <field name="certificados" widget="many2many_binary"/>
                 </page>
             </xpath>
+                        <xpath expr="//group[field[@name='date_order']]" position="replace"/>
+
+
         </field>
     </record>
+
+    <record id="os_purchase_order_tree" model="ir.ui.view">
+        <field name="name">os.purchase.order.tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="state"/>
+            </xpath>
+
+            <xpath expr="//tree" position="inside">
+               <header>
+                   <button name="action_approve_all_purchases" groups="purchase.group_purchase_manager" string="Aprovar" class="btn-primary" invisible="0" type="object"/>
+               </header>
+           </xpath>
+
+        </field>
+    </record>
+
+       <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+            <field name="domain">[('state', 'in', ['draft', 'sent', 'to approve','done','purchase'])]</field>
+        </record>
+
+<!--    <record id="action_purchase_orders_to_approve" model="ir.actions.act_window">-->
+<!--        <field name="name">Pedidos a Aprovar</field>-->
+<!--        <field name="res_model">purchase.order</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--        <field name="domain">[('state','=','to approve')]</field>-->
+
+
+<!--    </record>-->
+
+<!--    <record id="menu_purchase_to_approve" model="ir.ui.menu">-->
+<!--        <field name="name">Pedidos a Aprovar</field>-->
+<!--        <field name="parent_id" ref="purchase.menu_purchase_root"/>-->
+<!--        <field name="action" ref="action_purchase_orders_to_approve"/>-->
+<!--        <field name="groups_id" eval="[(4, ref('purchase.group_purchase_manager'))]"/>-->
+<!--        -->
+<!--    </record>-->
+
 </odoo>
