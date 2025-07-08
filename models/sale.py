@@ -31,10 +31,11 @@ class OsSale(models.Model):
                     raise ValidationError("O campo Pedido do Cliente é obrigatório para pedidos confirmados.")
                 if not order.ordem_servico:
                     raise ValidationError("O campo Ordem de Serviço é obrigatório para pedidos confirmados.")
+                if not order.order_line:
+                    raise ValidationError("Insira ao menos 1 item para confirmar o pedido.")
+                if order.amount_total == 0:
+                    raise ValidationError("O pedido precisa ter um valor maior que 0.")
 
-    # def _amount_resultado(self):
-    #     for rec in self:
-    #         rec.update({'resultado': rec.valor_horas + rec.materia_prima + rec.terceiros})
 
     def _mediadesc(self):
         for order in self:
