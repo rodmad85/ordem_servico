@@ -56,7 +56,10 @@ class OsPurchase(models.Model):
             res = super().button_confirm()
 
             grupo_admin = self.env.ref('purchase.group_purchase_manager')
-            users = grupo_admin.users
+            grupo_interno = self.env.ref('base.group_user')
+
+            # Filtra apenas os usuários do grupo de administradores de compras que também são usuários internos
+            users = grupo_admin.users.filtered(lambda u: grupo_interno in u.groups_id)
 
             partner_ids = users.mapped('partner_id').ids
 
