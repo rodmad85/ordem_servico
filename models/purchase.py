@@ -36,6 +36,9 @@ class OsPurchase(models.Model):
         related="payment_mode_id.name",
         store=False,
     )
+    incoterm_id = fields.Many2one(required=True)
+    fiscal_position_id = fields.Many2one(required=True)
+    payment_term_id = fields.Many2one(required=True)
 
     oss = fields.Many2many('os.total.purchase', 'purchase_totalos_rel','purchase_order_id', 'os_total_purchase_id', string='Total OS', store=True, copy=True)
     certificados = fields.Many2many('ir.attachment', 'certificados_os_rel', 'ir_attachment_id', 'arquivos_id',
