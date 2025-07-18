@@ -14,9 +14,9 @@
             <xpath expr="//field[@name='partner_id']" position="after">
 
                 <group>
-                    <field name="partner_ref" position="move"/>
-                    <field name="incoterm_id" position="move"/>
-                    <field name="fiscal_position_id" position="move"/>
+                    <field name="partner_ref" required="1" position="move"/>
+                    <field name="incoterm_id" required="1" position="move"/>
+                    <field name="fiscal_position_id" required="1" position="move"/>
                 </group>
                 <group name="pagamentos">
 
@@ -62,18 +62,7 @@
                 <field name="effective_date" invisible="1"/>
             </xpath>
 
-            <!-- Tornar campos obrigatórios -->
-            <xpath expr="//field[@name='incoterm_id']" position="attributes">
-                <attribute name="required">True</attribute>
-            </xpath>
 
-            <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
-                <attribute name="required">True</attribute>
-            </xpath>
-
-            <xpath expr="//field[@name='payment_term_id']" position="attributes">
-                <attribute name="required">True</attribute>
-            </xpath>
 
             <!-- Alterar ordenação padrão -->
             <xpath expr="//tree" position="attributes">
