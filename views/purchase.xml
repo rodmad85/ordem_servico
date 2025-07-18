@@ -14,7 +14,7 @@
             <xpath expr="//field[@name='partner_id']" position="after">
 
                 <group>
-                    <field name="partner_ref" required="1" position="move"/>
+                    <field name="partner_ref" position="move"/>
                     <field name="incoterm_id" required="1" position="move"/>
                     <field name="fiscal_position_id" required="1" position="move"/>
                 </group>
