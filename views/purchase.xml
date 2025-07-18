@@ -21,9 +21,9 @@
                 <group name="pagamentos">
 
                     <field name="payment_term_id" position="move"/>
-                    <field name="forma_pagamento" string="Forma de Pagamento" domain="[('state', '=', 'enabled')]"/>
-                    <field name="forma_pagamento_nome" invisible="1"/>
-                    <field name="chave_pix" attrs="{'invisible': ['|', ('forma_pagamento_nome', '!=', 'PIX'), ('partner_id', '=', False), ('chave_pix', '!=', False)]}"/>
+                    <field name="payment_mode_id" required="1"/>
+                    <field name="payment_mode_id_name" invisible="1"/>
+                    <field name="chave_pix" attrs="{'invisible': ['|',('payment_mode_id_name', '!=', 'PIX'), ('partner_id', '=', False), ('chave_pix', '!=', False)]}"/>
                 </group>
                 <group>
                     <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user" style="width: 100%;"/>

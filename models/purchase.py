@@ -20,6 +20,7 @@ class OsPurchaseLine(models.Model):
     def _prepare_stock_move_vals(self, picking, price_unit, product_uom_qty, product_uom):
         vals = super(OsPurchaseLine, self)._prepare_stock_move_vals(picking, price_unit, product_uom_qty, product_uom)
         vals['ordem_servico'] = self.ordem_servico.ids
+
         # vals['secondary_uom_qty'] = self.secondary_uom_qty
         # vals['secondary_uom_id'] = self.secondary_uom_id
         return vals
@@ -28,11 +29,11 @@ class OsPurchaseLine(models.Model):
 class OsPurchase(models.Model):
     _inherit = "purchase.order"
 
-    forma_pagamento = fields.Many2one('payment.provider', string='Forma de Pagamento', required=True,
+    forma_pagamento = fields.Many2one('payment.provider', string='Forma de Pagamento',
                                       ondelete='restrict', index=True, copy=False)
-    forma_pagamento_nome = fields.Char(
+    payment_mode_id_name = fields.Char(
         string="Nome da Forma de Pagamento",
-        related="forma_pagamento.name",
+        related="payment_mode_id.name",
         store=False,
     )
 
@@ -47,59 +48,56 @@ class OsPurchase(models.Model):
         copy=False
     )
 
-    from odoo import models
 
-    class PurchaseOrder(models.Model):
-        _inherit = 'purchase.order'
 
-        def button_confirm(self):
-            res = super().button_confirm()
+    def button_confirm(self):
+        res = super().button_confirm()
 
-            grupo_admin = self.env.ref('purchase.group_purchase_manager')
-            grupo_interno = self.env.ref('base.group_user')
+        grupo_admin = self.env.ref('purchase.group_purchase_manager')
+        grupo_interno = self.env.ref('base.group_user')
 
-            # Filtra apenas os usuários do grupo de administradores de compras que também são usuários internos
-            users = grupo_admin.users.filtered(lambda u: grupo_interno in u.groups_id)
+        # Filtra apenas os usuários do grupo de administradores de compras que também são usuários internos
+        users = grupo_admin.users.filtered(lambda u: grupo_interno in u.groups_id)
 
-            partner_ids = users.mapped('partner_id').ids
+        partner_ids = users.mapped('partner_id').ids
 
-            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-            link = f"{base_url}/web#id={self.id}&model=purchase.order&view_type=form"
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        link = f"{base_url}/web#id={self.id}&model=purchase.order&view_type=form"
 
-            mensagem = (
-                f"Pedido de compra nº: <b>{self.name}</b><br/>"
-                f"Fornecedor: <b>{self.partner_id.display_name}</b><br/>"
-                f"Aguardando sua aprovação.<br/>"
-                f"<a href='{link}' target='_blank'>Clique aqui para abrir o pedido</a>"
-            )
+        mensagem = (
+            f"Pedido de compra nº: <b>{self.name}</b><br/>"
+            f"Fornecedor: <b>{self.partner_id.display_name}</b><br/>"
+            f"Aguardando sua aprovação.<br/>"
+            f"<a href='{link}' target='_blank'>Clique aqui para abrir o pedido</a>"
+        )
 
-            # ✅ Passo 1: Cria mensagem sem notificação por e-mail para seguidores
-            message = self.message_post(
-                body=mensagem,
-                message_type='notification',
-                subtype_xmlid='mail.mt_comment',
-                notify_by_email=False,  # <- ESSENCIAL!
-            )
+        # ✅ Passo 1: Cria mensagem sem notificação por e-mail para seguidores
+        message = self.message_post(
+            body=mensagem,
+            message_type='notification',
+            subtype_xmlid='mail.mt_comment',
+            notify_by_email=False,  # <- ESSENCIAL!
+        )
 
-            # ✅ Passo 2: Cria notificações manuais apenas no sino
-            existing_notifications = self.env['mail.notification'].sudo().search([
-                ('mail_message_id', '=', message.id),
-                ('res_partner_id', 'in', partner_ids),
-            ])
-            notified_partners = existing_notifications.mapped('res_partner_id').ids
-            missing_partners = set(partner_ids) - set(notified_partners)
+        # ✅ Passo 2: Cria notificações manuais apenas no sino
+        existing_notifications = self.env['mail.notification'].sudo().search([
+            ('mail_message_id', '=', message.id),
+            ('res_partner_id', 'in', partner_ids),
+        ])
+        notified_partners = existing_notifications.mapped('res_partner_id').ids
+        missing_partners = set(partner_ids) - set(notified_partners)
 
-            notifications = [{
-                'mail_message_id': message.id,
-                'res_partner_id': partner_id,
-                'notification_type': 'inbox',
-                'is_read': False,
-            } for partner_id in missing_partners]
+        notifications = [{
+            'mail_message_id': message.id,
+            'res_partner_id': partner_id,
+            'notification_type': 'inbox',
+            'is_read': False,
+        } for partner_id in missing_partners]
 
-            if notifications:
-                self.env['mail.notification'].sudo().create(notifications)
+        if notifications:
+            self.env['mail.notification'].sudo().create(notifications)
 
-            return res
+        return res
 
     def action_approve_all_purchases(self):
         for rec in self:
@@ -120,11 +118,11 @@ class OsPurchase(models.Model):
             }
         }
 
-    @api.depends('forma_pagamento', 'partner_id', 'partner_id.pix_key_ids')
+    @api.depends('payment_mode_id', 'partner_id', 'partner_id.pix_key_ids')
     def _compute_chave_pix(self):
         for rec in self:
             if (
-                    rec.forma_pagamento and rec.forma_pagamento.name == 'PIX'
+                    rec.payment_mode_id and rec.payment_mode_id.name == 'PIX'
                     and rec.partner_id and rec.partner_id.pix_key_ids
             ):
                 # Pega o valor da chave pix do primeiro item
@@ -132,9 +130,9 @@ class OsPurchase(models.Model):
             else:
                 rec.chave_pix = False
 
-    @api.onchange('forma_pagamento')
+    @api.onchange('payment_mode_id')
     def _onchange_forma_pagamento_pix(self):
-        if self.forma_pagamento and self.forma_pagamento.name == 'PIX':
+        if self.payment_mode_id and self.payment_mode_id.name == 'PIX':
             if self.partner_id and not self.partner_id.pix_key_ids:
                 self.chave_pix = False
                 return {
@@ -154,6 +152,7 @@ class OsPurchase(models.Model):
                 ordens = tuple(set(ids.ordem_servico.ids))
 
             invoice_vals['ordem_servico'] = ordens
+            invoice_vals['payment_mode_id'] = order.payment_mode_id.id
         return invoice_vals
 
     def uposs(self):
