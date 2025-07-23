@@ -103,7 +103,7 @@
                         <div t-if="o.payment_term_id">
                           <b>Prazo: </b><span t-field="o.payment_term_id" class="m-0" />
                         </div>
-                        <span class="m-0"><strong>Pagamento: </strong></span><span t-field="o.forma_pagamento" class="m-0" /><br/>
+                        <span class="m-0"><strong>Pagamento: </strong></span><span t-field="o.payment_mode_id.name" class="m-0" /><br/>
                         
                         <div t-if="o.chave_pix">
                           <t t-foreach="o.chave_pix" t-as="chave">
