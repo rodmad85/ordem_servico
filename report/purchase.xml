@@ -43,8 +43,7 @@
                       <td style="vertical-align: middle;">
                       <div class="oe_structure"/>
                         <h5 t-if="o.partner_id.name"><strong><span t-field="o.partner_id.name"/></strong><br/></h5> 
-                      </td>
-                         
+                      </td>                        
                         <td style="vertical-align: middle;">
                           <div t-if="o.partner_ref" class="m-0">
                       <strong>Referencia: </strong><span t-field="o.partner_ref" class="m-0"/>
@@ -106,9 +105,9 @@
                         <span class="m-0"><strong>Pagamento: </strong></span><span t-field="o.payment_mode_id.name" class="m-0" /><br/>
                         
                         <div t-if="o.chave_pix">
-                          <t t-foreach="o.chave_pix" t-as="chave">
-                            <span class="m-0"><strong>Tipo: </strong></span><span t-field="chave.key_type" class="m-0" t-options="{&quot;fields&quot;: [&quot;key_type&quot;]}" /><br/>
-                            <span class="m-0"><strong>Chave: </strong></span><span t-field="chave.key" class="m-0" t-options="{&quot;fields&quot;: [&quot;key&quot;]}" />
+                          <t t-foreach="o.chave_pix">
+                            <span class="m-0"><strong>Tipo: </strong></span><span t-field="o.chave_pix.key_type" class="m-0" t-options="{&quot;fields&quot;: [&quot;key_type&quot;]}" /><br/>
+                            <span class="m-0"><strong>Chave: </strong></span><span t-field="o.chave_pix.key" class="m-0" t-options="{&quot;fields&quot;: [&quot;key&quot;]}" />
                               </t>
                         </div>
                       </td>
@@ -127,7 +126,7 @@
                         <th class="text-center"><strong>Imp.</strong></th>
                         <t t-set="has_discount" t-value="any(line.discount for line in o.order_line if not line.display_type)"/>
                         <t t-if="has_discount">
-                            <th class="text-center"><strong>Desc.</strong></th>
+                            <th class="text-center"><strong>Desc.%</strong></th>
                         </t>
                         <th class="text-center"><strong>Amount</strong></th>
                       </tr>
@@ -186,9 +185,9 @@
                                                       <td name="td_taxes">
                                                         <span t-esc="', '.join(map(lambda x: x.name, line.fiscal_tax_ids))"/>
                                                       </td>
-                                                      <t t-if="has_discount">
+                                                      <t t-if="line.discount">
                                                         <td class="text-center">
-                                                      <span t-field="line.discount"/>
+                                                      <span t-field="line.discount" t-options="{'widget': 'percentage'}"/>
                                                     </td>
                                                     </t>
                                                       <td class="text-end">
@@ -223,7 +222,20 @@
                         <div id="total" class="row justify-content-end">
                         <div class="col-4">
                           <table class="table table-sm">
-
+                            <tr>
+                              <td>Total Bruto</td>
+                              <td class="text-end">
+                                <span t-field="o.amount_price_gross" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                              </td>
+                            </tr>
+                            <t t-if="has_discount">
+                            <tr>
+                              <td>Discount</td>
+                              <td class="text-end">
+                                <span t-field="o.amount_discount_value" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                              </td>
+                            </tr>
+                            </t>  
                             <tr>
                               <td>Taxes</td>
                               <td class="text-end">
@@ -232,12 +244,12 @@
                             </tr>
 
 
-                                <tr class="border-black o_total">
+                              <tr class="border-black o_total">
                                 <td><strong>Total</strong></td>
                                 <td class="text-end">
-                      <span t-field="o.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
-                      </td>
-                      </tr>
+                                   <span t-field="o.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                </td>
+                              </tr>
                       </table>
                       </div>
                       </div>
