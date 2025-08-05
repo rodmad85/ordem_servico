@@ -105,10 +105,10 @@
                         <span class="m-0"><strong>Pagamento: </strong></span><span t-field="o.payment_mode_id.name" class="m-0" /><br/>
                         
                         <div t-if="o.chave_pix">
-                          <t t-foreach="o.chave_pix">
+
                             <span class="m-0"><strong>Tipo: </strong></span><span t-field="o.chave_pix.key_type" class="m-0" t-options="{&quot;fields&quot;: [&quot;key_type&quot;]}" /><br/>
                             <span class="m-0"><strong>Chave: </strong></span><span t-field="o.chave_pix.key" class="m-0" t-options="{&quot;fields&quot;: [&quot;key&quot;]}" />
-                              </t>
+
                         </div>
                       </td>
 
@@ -236,7 +236,24 @@
                               </td>
                             </tr>
                             </t>  
-                            <tr>
+                            <t t-if="o.amout_icms_value">
+                              <tr>
+                              <td>ICMS</td>
+                              <td class="text-end">
+                                <span t-field="o.amout_icms_value" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                              </td>
+                              </tr>
+                            </t>
+                            
+                            <t t-if="o.amount_ipi_value">
+                              <tr>
+                              <td>IPI</td>
+                              <td class="text-end">
+                                <span t-field="o.amount_ipi_value" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                              </td>
+                              </tr>
+                            </t>
+                              <tr>
                               <td>Taxes</td>
                               <td class="text-end">
                                 <span t-field="o.amount_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
