@@ -236,7 +236,7 @@
                               </td>
                             </tr>
                             </t>  
-                            <t t-if="o.amout_icms_value">
+                            <t t-if="o.amount_icms_value">
                               <tr>
                               <td>ICMS</td>
                               <td class="text-end">
