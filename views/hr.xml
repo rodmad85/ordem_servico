@@ -62,6 +62,19 @@
        </field>
    </record>
 
+     <record id="os_hr_attendance_report_view_pivot" model="ir.ui.view">
+        <field name="name">os.hr.attendance.report.view.pivot</field>
+        <field name="model">hr.attendance.report</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_report_view_pivot" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worked_hours']" position="after">
+                <field name="normal_total" type="measure" />
+                <field name="valor_total" type="measure" />
+                <field name="extra_total" type="measure" />
+                <field name="valor_extra_total" type="measure" />
+            </xpath>
+        </field>
+    </record>
     <record id="valor_hora_employee" model="ir.ui.view">
        <field name="name">Adiciona valor hora</field>
        <field name="inherit_id" ref="hr.view_employee_form" />
@@ -70,7 +83,10 @@
            <xpath expr="//field[@name='coach_id']" position="after">
                <field name="valor_hora"/>
                <field name="tipo_contrato"/>
+               <field name="horas_normais_total"/>
            </xpath>
+
+
        </field>
    </record>
 

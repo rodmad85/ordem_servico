@@ -8,6 +8,82 @@ class HrEmployee(models.Model):
     valor_hora = fields.Float(string='Valor Hora', store=True)
     tipo_contrato = fields.Selection([('clt', 'CLT'), ('ht', 'HT'), ('pj', 'PJ')], string='Tipo de Contrato', store=True,
                             copy=True, required=True)
+    horas_normais_total = fields.Float(string='Total Horas Normais', compute='_compute_horas_normais_total')
+    horas_extras_total = fields.Float(string='Total Extras')
+
+    # @api.depends('attendance_ids.check_in', 'attendance_ids.check_out')
+    def _compute_horas_normais_total(self):
+        """Computa horas normais de todos os funcionários em uma única busca."""
+        if not self:
+            return
+
+        # Obter IDs de todos os funcionários a serem computados
+        employee_ids = self.ids
+        hoje = fields.Date.context_today(self)
+        mes = hoje.month
+        ano = hoje.year
+
+        # Determinar início e fim do mês em UTC
+        data_inicio = fields.Datetime.to_string(fields.Datetime.from_string(f"{ano}-{mes:02d}-01 00:00:00"))
+        if mes == 12:
+            data_fim = fields.Datetime.to_string(fields.Datetime.from_string(f"{ano + 1}-01-01 00:00:00"))
+        else:
+            data_fim = fields.Datetime.to_string(fields.Datetime.from_string(f"{ano}-{mes + 1:02d}-01 00:00:00"))
+
+        # Buscar todas as marcações relevantes em uma única consulta
+        domain = [
+            ('employee_id', '=', employee_ids),
+            ('check_in', '>=', data_inicio),
+            ('check_in', '<', data_fim),
+        ]
+        attendances = self.env['hr.attendance'].search(domain)
+
+        # Agrupar as horas normais por funcionário
+        totals = {
+            emp_id: 0.0
+            for emp_id in employee_ids
+        }
+        for att in attendances:
+            totals[att.employee_id.id] += att.normal_total or 0.0
+
+        # Atribuir valores a cada funcionário
+        for emp in self:
+            emp.horas_normais_total = totals.get(emp.id, 0.0)
+
+    @api.depends('attendance_ids.check_in', 'attendance_ids.check_out')
+    def _compute_horas_extras_total(self):
+        """Computa horas extras de todos os funcionários em uma única busca."""
+        if not self:
+            return
+
+        employee_ids = self.ids
+        hoje = fields.Date.context_today(self)
+        mes = hoje.month
+        ano = hoje.year
+
+        data_inicio = fields.Datetime.to_string(fields.Datetime.from_string(f"{ano}-{mes:02d}-01 00:00:00"))
+        if mes == 12:
+            data_fim = fields.Datetime.to_string(fields.Datetime.from_string(f"{ano + 1}-01-01 00:00:00"))
+        else:
+            data_fim = fields.Datetime.to_string(fields.Datetime.from_string(f"{ano}-{mes + 1:02d}-01 00:00:00"))
+
+        domain = [
+            ('employee_id', 'in', employee_ids),
+            ('check_in', '>=', data_inicio),
+            ('check_in', '<', data_fim),
+        ]
+        attendances = self.env['hr.attendance'].search(domain)
+
+        totals = {
+            emp_id: 0.0
+            for emp_id in employee_ids
+        }
+        for att in attendances:
+            totals[att.employee_id.id] += att.extra_total or 0.0
+
+        for emp in self:
+            emp.horas_extras_total = totals.get(emp.id, 0.0)
+
 
 class HrFields(models.Model):
     _inherit = "hr.attendance"
@@ -281,3 +357,65 @@ class HrFields(models.Model):
                             'soma_total': self.extra_total + self.normal_total
 
                         })
+
+class HrReport(models.Model):
+    _inherit = "hr.attendance.report"
+
+    normal_total = fields.Float(string='Horas Normais', store=True, readonly=True)
+    extra_total = fields.Float(string='Horas Extras', store=True, readonly=True)
+    valor_extra_total = fields.Float(string="Valor Extras", store=True, readonly=True)
+    valor_total = fields.Float(string='Valor Total', readonly=True, store=True)
+
+
+    @api.model
+    def _select(self):
+        return """
+                SELECT
+                    hra.id,
+                    hr_employee.department_id,
+                    hra.employee_id,
+                    hr_employee.company_id,
+                    hra.check_in,
+                    hra.worked_hours,
+                    hra.normal_total,
+                    hra.valor_total,
+                    hra.extra_total,
+                    hra.valor_extra_total,
+                    
+                    coalesce(ot.duration, 0) as overtime_hours
+            """
+
+    @api.model
+    def _from(self):
+        return """
+                FROM (
+                    SELECT
+                        id,
+                        row_number() over (partition by employee_id, CAST(check_in AS DATE)) as ot_check,
+                        employee_id,
+                        CAST(check_in
+                                at time zone 'utc'
+                                at time zone
+                                    (SELECT calendar.tz FROM resource_calendar as calendar
+                                    INNER JOIN hr_employee as employee ON employee.id = hr_attendance.employee_id
+                                    WHERE calendar.id = employee.resource_calendar_id)
+                        as DATE) as check_in,
+                        worked_hours,
+                        normal_total,
+                        valor_total,
+                        extra_total,
+                        valor_extra_total
+                    FROM
+                        hr_attendance
+                    ) as hra
+            """
+
+    def _join(self):
+        return """
+                LEFT JOIN hr_employee ON hr_employee.id = hra.employee_id
+                LEFT JOIN hr_attendance_overtime ot
+                    ON hra.ot_check = 1
+                    AND ot.employee_id = hra.employee_id
+                    AND ot.date = hra.check_in
+                    AND ot.adjustment = FALSE
+            """
