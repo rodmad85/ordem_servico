@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
+    
 
         <record id="report_os_capa" model="ir.actions.report"/>
-            <field name="name">Impressão Capa OS<field/>
+            <field name="name">Impressão Capa OS</field>
             <field name="model">ordem.servico</field>
             <field name="repot_type">qweb-pdf</field>
             <field name="report_name">ordem_servico_capa</field>
@@ -22,7 +22,5 @@
                     </t>
                 </t>
             </t>
-        </template>
-
-    </data>
+        </template>  
 </odoo>

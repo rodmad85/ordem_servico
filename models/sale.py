@@ -4,9 +4,8 @@ from odoo.exceptions import ValidationError
 class OsSale(models.Model):
     _inherit = "sale.order"
 
-    ordem_servico = fields.Many2many(
-        'ordem.servico', 'ordem_servico_rel_sale', 'sale_order_id', 'os_id',
-        string='Ordem de Serviço', copy=True, tracking=True
+    ordem_servico = fields.One2many(
+        'ordem.servico', 'pedido_venda', string='Ordem de Serviço', copy=True, tracking=True
     )
     partner_id = fields.Many2one(
         'res.partner', string='Customer', readonly=True,

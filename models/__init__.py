@@ -12,6 +12,7 @@ from . import ordem_servico
 from . import products
 from . import purchase
 from . import res_config_settings
+from . import resumo
 from . import sale
 from . import stock
 

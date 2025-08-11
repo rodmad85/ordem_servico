@@ -3,7 +3,7 @@
   -->
 
 <odoo>
-    
+
         <record id="sale_order_os_form" model="ir.ui.view">
             <field name="name">sale.order.os.form</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
@@ -112,6 +112,21 @@
 
             </field>
         </record>
+
+        <record id="sale_order_os_search" model="ir.ui.view">
+       <field name="name">Filtro Sale OS</field>
+       <field name="inherit_id" ref="sale.view_sales_order_filter" />
+       <field name="model">sale.order</field>
+       <field name="arch" type="xml">
+           <xpath expr="//search/group" position="inside">
+               <filter string="Ordem de Serviço" name="ordem_servico" domain="[]" context="{'group_by':'ordem_servico', 'default_order':'ordem_servico'}" />
+           </xpath>
+           <xpath expr="//search/field[@name='name']" position="after">
+               <field name="ordem_servico"/>
+               <filter string="Ordem de Serviço" name="ordem_servico" domain="[('ordem_servico', '!=', False)]" context="{'order': 'ordem_servico desc'}"/>
+           </xpath>
+       </field>
+    </record>
         
         <record id="custom_ir_attachment_tree_view" model="ir.ui.view">
             <field name="name">ir.attachment.custom.tree</field>

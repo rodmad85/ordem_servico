@@ -99,10 +99,7 @@ class HrFields(models.Model):
             rec._total()
 
     data_atual = datetime.now()
-    ordem_servico = fields.Many2many('ordem.servico', 'hr_attendance_os_rel', 'hr_attendance_id',
-                                                   'ordem_servico_id',
-                                                   string='Linha Apontamento', store=True, copy=True)
-    os_tree = fields.Many2one('ordem.servico',string="OS", store=True)
+    ordem_servico = fields.One2many('ordem.servico', 'apontamento', string='Linha Apontamento', store=True, copy=True)
     check_in = fields.Datetime(string="Check In", default=data_atual.replace(hour=10, minute=12, second=00,  microsecond=00, tzinfo=None), required=True)
     check_out = fields.Datetime(string="Check Out", default=data_atual.replace(hour=20, minute=00, second=00, microsecond=00, tzinfo=None), required=True)
     valor_hora = fields.Float(string='Valor Hora', store=True, readonly=True)

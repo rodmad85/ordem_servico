@@ -1,0 +1,68 @@
+ <odoo>
+    <record id="view_os_resumo_form" model="ir.ui.view">
+        <field name="name">os.resumo.form</field>
+        <field name="model">os.resumo</field>
+        <field name="arch" type="xml">
+            <form string="Resumo de OS" edit="false">
+                <header>
+                    <button name="print_report" type="object" string="Imprimir PDF" class="btn-primary"/>
+                    <button name="action_ver_linhas_group" type="object" string="Ver por Cliente" class="btn-secondary"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="hprevista" widget="float_time"/>
+                        <field name="hrealizada" widget="float_time"/>
+                        <field name="diff_horas" widget="float_time"/>
+                    </group>
+                    <group>
+                        <field name="cprevista" widget="monetary"/>
+                        <field name="crealizada" widget="monetary"/>
+                        <field name="percentcompra" widget="progressbar"/>
+                        <field name="compra_valor_aberto" widget="monetary"/>
+                    </group>
+                    </group>
+                
+                <field name="linha_ids">
+                    <tree editable="bottom" >
+                        <field name="currency_id" invisible="1"/>
+                        <field name="os_id"/>
+                        <field name="cliente"/>
+                        <field name="valor_pedido" widget="monetary" sum="Total"/>
+                        <field name="data_entrega"/>
+                        <field name="mp_prevista" sum="MP Prevista" widget="monetary" />
+                        <field name="mp_real" sum="MP Real" widget="monetary" />
+                        <field name="progress_compra" widget="progressbar"/>
+                        <field name="diff_compra" widget="monetary"/>
+                        <field name="horas_prevista" widget="float_time"/>
+                        <field name="horas_real" widget="float_time"/>
+                        <field name="perc_horas" widget="progressbar"/>
+                        <field name="diff_horas"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_os_resumo_linha_tree" model="ir.ui.view">
+    <field name="name">os.resumo.linha.tree</field>
+    <field name="model">os.resumo.linha</field>
+    <field name="arch" type="xml">
+        <tree>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="os_id"/>
+                        <field name="cliente"/>
+                        <field name="valor_pedido" widget="monetary" sum="Total"/>
+                        <field name="data_entrega"/>
+                        <field name="mp_prevista" sum="MP Prevista" widget="monetary" />
+                        <field name="mp_real" sum="MP Real" widget="monetary" />
+                        <field name="progress_compra" widget="progressbar"/>
+                        <field name="diff_compra" sum="Diferença Compra" widget="monetary"/>
+                        <field name="horas_prevista" sum="Horas Previstas" widget="float_time"/>
+                        <field name="horas_real" sum="Horas Reais" widget="float_time"/>
+                        <field name="perc_horas" widget="progressbar"/>
+                        <field name="diff_horas" sum="Diferença Horas" widget="float_time"/>
+                    </tree>
+    </field>
+    </record>
+
+ </odoo>

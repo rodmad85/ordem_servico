@@ -3,8 +3,7 @@ from odoo import fields, models, api
 class OsMrp(models.Model):
     _inherit = "mrp.production"
 
-    ordem_servico = fields.Many2many('ordem.servico', 'mrp_rel_os', 'os_id', 'mrp_production_id',
-                                     string='Ordem de Serviço', required=False, index=True, copy=False)
+    ordem_servico = fields.Many2one('ordem.servico', string='Ordem de Serviço', required=False, index=True, copy=False)
 
     terceiros = fields.Selection([('nenhum','Nenhum'),('laser','Laser'),('dobra','Dobra'),('pintura','Pintura'),('tratamento','Tratamento Químico')],string='Andamento', default='nenhum',store=True, copy=True, required=False)
 

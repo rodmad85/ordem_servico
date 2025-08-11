@@ -10,11 +10,11 @@
        <field name="model">hr.attendance</field>
        <field name="arch" type="xml">
            <xpath expr="//search/group" position="inside">
-               <filter string="Ordem de Serviço" name="os_tree" domain="[]" context="{'group_by':'os_tree', 'default_order':'os_tree'}" />
+               <filter string="Ordem de Serviço" name="ordem_servico" domain="[]" context="{'group_by':'ordem_servico', 'default_order':'ordem_servico'}" />
            </xpath>
            <xpath expr="//search/field[@name='employee_id']" position="before">
-               <field name="os_tree"/>
-               <filter string="Ordem de Serviço" name="os_tree"/>
+               <field name="ordem_servico"/>
+               <filter string="Ordem de Serviço" name="ordem_servico"/>
            </xpath>
        </field>
     </record>
@@ -33,8 +33,7 @@
            </xpath>
            <xpath expr="//field[@name='employee_id']" position="after">
                <field name="currency_id" invisible="1"/>
-               <field name="os_tree" string="OS"/>
-               <field name="ordem_servico" string="Ordem de Serviço" widget="many2many_tags" invisible="1"/>
+               <field name="ordem_servico" string="Ordem de Serviço" />
            </xpath>
            <xpath expr="//field[@name='employee_id']" position="after">
                <field name="retrabalho"/>

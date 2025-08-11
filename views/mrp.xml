@@ -10,12 +10,26 @@
             <field name="model">mrp.production</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="before">
-                    <field name="ordem_servico" string="OS" widget="many2many_tags" optional="show"/>
+                    <field name="ordem_servico" string="OS" optional="show"/>
                 </xpath>
 
             </field>
         </record>
 
+        <record id="mrp_production_os_search" model="ir.ui.view">
+       <field name="name">Filtro OS</field>
+       <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
+       <field name="model">mrp.production</field>
+       <field name="arch" type="xml">
+           <xpath expr="//search/group" position="inside">
+               <filter string="Ordem de Serviço" name="ordem_servico" domain="[]" context="{'group_by':'ordem_servico', 'default_order':'ordem_servico'}" />
+           </xpath>
+           <xpath expr="//search/field[@name='name']" position="before">
+               <field name="ordem_servico"/>
+               <filter string="Ordem de Serviço" name="ordem_servico"/>
+           </xpath>
+       </field>
+    </record>
 
         <record id="mrp_production_os_form" model="ir.ui.view">
             <field name="name">mrp.production.os.form</field>
@@ -23,7 +37,7 @@
             <field name="model">mrp.production</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="ordem_servico" string="OS" widget="many2many_tags"/>
+                    <field name="ordem_servico" string="OS" />
                 </xpath>
 
                 <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_id']"

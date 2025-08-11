@@ -13,10 +13,7 @@ class OrdemServico(models.Model):
 
     name = fields.Char('Número', index=True, required=True, readonly=True, tracking=True,
                        translate=True, default=lambda self: _('New'))
-    apontamento = fields.Many2many('hr.attendance', 'hr_attendance_os_rel', 'ordem_servico_id', 'hr_attendance_id',
-                                   string='Linha Apontamento', store=True, copy=True, index=True)
-    #compra = fields.Many2one(related='pedidos_compra.order_id')
-    #certificado = fields.Many2many( related='pedidos_compra.order_id.certificados')
+    apontamento = fields.Many2one('hr.attendance', string='Linha Apontamento', store=True, copy=True, index=True)
     cliente_id = fields.Many2one('res.partner', string='Cliente', store=True, readonly=True, compute='_compute_cliente')
     desenhos = fields.Many2many('ir.attachment', 'os_desenho_arquivo', 'os_id', 'desenhos_id',
                                 string='Arquivos', store=True, copy=True)
@@ -41,13 +38,15 @@ class OrdemServico(models.Model):
     observacoes = fields.Text(string="Observações", store=True, copy=True)
 
     pedidos_compra = fields.Many2many('purchase.order.line', 'purchase_order_line_os_rel', 'os_id','purchase_order_line_id', string='Pedidos de Compra',  store=True, copy=True, domain="[('state', '=', 'purchase')]")
-    pedido_venda = fields.Many2many('sale.order', 'ordem_servico_rel_sale', 'os_id', 'sale_order_id',
-                                    string='Pedidos de Venda', store=True, copy=True)
+    pedido_venda = fields.Many2one('sale.order', string='Pedidos de Venda', store=True, copy=True)
     posicao = fields.Many2one('account.fiscal.position', string='Posição Fiscal', compute='_compute_posicao', store=True)
     pedido_venda_original = fields.Many2many('sale.order', 'os_rel_sale_original', 'os_id', 'sale_order_id',
                                     string='Pedido de Venda Original', store=True, copy=True)
-    produtos = fields.Many2many('mrp.production', 'mrp_rel_os', 'mrp_production_id', 'os_id',
-                                string='Produtos', store=True, copy=True, domain="[('state', '!=', 'cancel')]")
+    produtos = fields.One2many('mrp.production', 'ordem_servico', string='Produtos', store=True, copy=True, domain="[('state', '!=', 'cancel')]")
+    produtos_nomes = fields.Char(
+        string="Produtos",
+        compute="_compute_produtos_nomes"
+    )
 
     lista_produtos = fields.Many2many('os.listaprod','mrplist_rel_os','mrplist_id', 'os_id', string='Lista de Materiais', store=True, compute='_lista_produtos')
     consumidos = fields.Many2many('os.consumidos', 'consumidos_rel_os','consumido_id', 'os_id', string='Ordem de Serviço', compute='_consumidos')
@@ -118,12 +117,13 @@ class OrdemServico(models.Model):
     desenhopend = fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Desenhos', compute='_desenhopend')
     insppend =fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Inspeções', compute='_insppend')
 
-    # def _certificados(self):
-    #     compras = self.pedidos_compra.order_id.certificados.ids
-    #     if compras:
-    #         self.certificado = [(4,0,compras)]
-    #     else:
-    #         self.certificado = [(5,0,0)]
+
+    def _compute_produtos_nomes(self):
+        for rec in self:
+            rec.produtos_nomes = ", ".join(
+                rec.produtos.mapped("product_id.name")
+            ) if rec.produtos else ""
+
     def abrir_os(self):
 
 
@@ -444,7 +444,7 @@ class OsInspecoes(models.TransientModel):
     status = fields.Selection([('Aprovado', 'Aprovado'), ('Reprovado', 'Reprovado')],
                               string='Status', default='Aprovado', store=True, copy=True)
     cliente_id = fields.Many2one('res.partner', string='Cliente', store=True, related='ordem_servico.pedido_venda.partner_id.parent_id')
-    pedido_venda = fields.Many2many('sale.order', 'insp_rel_sale', 'os_id', 'sale_order_id',string='Pedidos de Venda', store=True, copy=True, related='ordem_servico.pedido_venda')
+    pedido_venda = fields.Many2one('sale.order', string='Pedido de Venda', store=True, copy=True, related='ordem_servico.pedido_venda')
     ordem_servico = fields.Many2many('ordem.servico', 'inspecoes_rel_os', 'os_id', 'os_inspecoes_id', string='Ordem de Serviço', store=True, copy=True)
     produto_desenho = fields.Char(string='Desenho', store=True, related='producao.product_id.default_code')
     producao = fields.Many2one('mrp.production',string='Produto', required=True, store=True)

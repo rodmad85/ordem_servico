@@ -6,3 +6,4 @@ class OrdemServicoReport(models.TransientModel):
     _description = 'Impressão OS'
 
     def action_print_report(self):
+        
