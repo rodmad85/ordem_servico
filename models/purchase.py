@@ -53,54 +53,54 @@ class OsPurchase(models.Model):
 
 
 
-    def button_confirm(self):
-        res = super().button_confirm()
+    # def button_confirm(self):
+    #     res = super().button_confirm()
 
-        grupo_admin = self.env.ref('purchase.group_purchase_manager')
-        grupo_interno = self.env.ref('base.group_user')
+    #     grupo_admin = self.env.ref('purchase.group_purchase_manager')
+    #     grupo_interno = self.env.ref('base.group_user')
 
-        # Filtra apenas os usuários do grupo de administradores de compras que também são usuários internos
-        users = grupo_admin.users.filtered(lambda u: grupo_interno in u.groups_id)
+    #     # Filtra apenas os usuários do grupo de administradores de compras que também são usuários internos
+    #     users = grupo_admin.users.filtered(lambda u: grupo_interno in u.groups_id)
 
-        partner_ids = users.mapped('partner_id').ids
+    #     partner_ids = users.mapped('partner_id').ids
 
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-        link = f"{base_url}/web#id={self.id}&model=purchase.order&view_type=form"
+    #     base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+    #     link = f"{base_url}/web#id={self.id}&model=purchase.order&view_type=form"
 
-        mensagem = (
-            f"Pedido de compra nº: <b>{self.name}</b><br/>"
-            f"Fornecedor: <b>{self.partner_id.display_name}</b><br/>"
-            f"Aguardando sua aprovação.<br/>"
-            f"<a href='{link}' target='_blank'>Clique aqui para abrir o pedido</a>"
-        )
+    #     mensagem = (
+    #         f"Pedido de compra nº: <b>{self.name}</b><br/>"
+    #         f"Fornecedor: <b>{self.partner_id.display_name}</b><br/>"
+    #         f"Aguardando sua aprovação.<br/>"
+    #         f"<a href='{link}' target='_blank'>Clique aqui para abrir o pedido</a>"
+    #     )
 
-        # ✅ Passo 1: Cria mensagem sem notificação por e-mail para seguidores
-        message = self.message_post(
-            body=mensagem,
-            message_type='notification',
-            subtype_xmlid='mail.mt_comment',
-            notify_by_email=False,  # <- ESSENCIAL!
-        )
+    #     # ✅ Passo 1: Cria mensagem sem notificação por e-mail para seguidores
+    #     message = self.message_post(
+    #         body=mensagem,
+    #         message_type='notification',
+    #         subtype_xmlid='mail.mt_comment',
+    #         notify_by_email=False,  # <- ESSENCIAL!
+    #     )
 
-        # ✅ Passo 2: Cria notificações manuais apenas no sino
-        existing_notifications = self.env['mail.notification'].sudo().search([
-            ('mail_message_id', '=', message.id),
-            ('res_partner_id', 'in', partner_ids),
-        ])
-        notified_partners = existing_notifications.mapped('res_partner_id').ids
-        missing_partners = set(partner_ids) - set(notified_partners)
+    #     # ✅ Passo 2: Cria notificações manuais apenas no sino
+    #     existing_notifications = self.env['mail.notification'].sudo().search([
+    #         ('mail_message_id', '=', message.id),
+    #         ('res_partner_id', 'in', partner_ids),
+    #     ])
+    #     notified_partners = existing_notifications.mapped('res_partner_id').ids
+    #     missing_partners = set(partner_ids) - set(notified_partners)
 
-        notifications = [{
-            'mail_message_id': message.id,
-            'res_partner_id': partner_id,
-            'notification_type': 'inbox',
-            'is_read': False,
-        } for partner_id in missing_partners]
+    #     notifications = [{
+    #         'mail_message_id': message.id,
+    #         'res_partner_id': partner_id,
+    #         'notification_type': 'inbox',
+    #         'is_read': False,
+    #     } for partner_id in missing_partners]
 
-        if notifications:
-            self.env['mail.notification'].sudo().create(notifications)
+    #     if notifications:
+    #         self.env['mail.notification'].sudo().create(notifications)
 
-        return res
+    #     return res
 
     def action_approve_all_purchases(self):
         for rec in self:
