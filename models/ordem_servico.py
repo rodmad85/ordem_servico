@@ -13,7 +13,7 @@ class OrdemServico(models.Model):
 
     name = fields.Char('Número', index=True, required=True, readonly=True, tracking=True,
                        translate=True, default=lambda self: _('New'))
-    apontamento = fields.Many2one('hr.attendance', string='Linha Apontamento', store=True, copy=True, index=True)
+    apontamento = fields.One2many('hr.attendance', 'ordem_servico',string='Linha Apontamento', store=True, copy=True, index=True)
     cliente_id = fields.Many2one('res.partner', string='Cliente', store=True, readonly=True, compute='_compute_cliente')
     desenhos = fields.Many2many('ir.attachment', 'os_desenho_arquivo', 'os_id', 'desenhos_id',
                                 string='Arquivos', store=True, copy=True)
