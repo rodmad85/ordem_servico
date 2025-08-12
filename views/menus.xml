@@ -45,6 +45,7 @@
         <field name="name">Resumo de OS</field>
         <field name="res_model">os.resumo</field>
         <field name="view_mode">form</field>
+        <field name="view_id" ref="ordem_servico.view_os_resumo_form"/>
     </record>
 
 <!--    <record model="ir.actions.act_window" id="action_os_conf" >-->
@@ -86,6 +87,7 @@
                       
             <menuitem
                 id="ordem_relatorio_resumo"
+                groups="ordem_admin"
                 name="Resumo"
                 action="action_os_resumo"
                 sequence="16"/>

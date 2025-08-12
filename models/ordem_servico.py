@@ -43,9 +43,11 @@ class OrdemServico(models.Model):
     pedido_venda_original = fields.Many2many('sale.order', 'os_rel_sale_original', 'os_id', 'sale_order_id',
                                     string='Pedido de Venda Original', store=True, copy=True)
     produtos = fields.One2many('mrp.production', 'ordem_servico', string='Produtos', store=True, copy=True, domain="[('state', '!=', 'cancel')]")
-    produtos_nomes = fields.Char(
-        string="Produtos",
-        compute="_compute_produtos_nomes"
+    produtos_ids = fields.Many2many(
+        comodel_name="mrp.production",
+        string="Produtos das ordens",
+        compute="_compute_produtos_ids",
+        store=False
     )
 
     lista_produtos = fields.Many2many('os.listaprod','mrplist_rel_os','mrplist_id', 'os_id', string='Lista de Materiais', store=True, compute='_lista_produtos')
@@ -118,11 +120,9 @@ class OrdemServico(models.Model):
     insppend =fields.Selection([('Faltando', 'Faltando'), ('Parcial', 'Parcial'), ('Concluido', 'Concluido')],string='Inspeções', compute='_insppend')
 
 
-    def _compute_produtos_nomes(self):
+    def _compute_produtos_ids(self):
         for rec in self:
-            rec.produtos_nomes = ", ".join(
-                rec.produtos.mapped("product_id.name")
-            ) if rec.produtos else ""
+            rec.produtos_ids = rec.produtos
 
     def abrir_os(self):
 

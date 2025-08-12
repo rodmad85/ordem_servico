@@ -57,7 +57,6 @@
                 <field name="name" string="Número da OS" readonly="1" decoration-bf="1"/>
                 <field name="cliente_id" string="Cliente" readonly="1" decoration-bf="1"/>
                 <field name="empresa" string="Empresa"/>
-                <field name="produtos_nomes"/>
                 <field name="apontapend"/>
                 <field name="comprapend"/>
                  <field name="desenhopend"/>
@@ -79,7 +78,9 @@
                             
                             <div class="o_kanban_record_bottom">
                                
-                           <span t-esc="record.produtos_nomes.value or '—'"/>
+                           <div class="oe_kanban_bottom_left">
+                                    <field name="produtos_ids" widget="many2many_tags"/>
+                                </div>
 
                             
                         </div>
