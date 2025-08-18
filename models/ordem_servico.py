@@ -413,6 +413,7 @@ class OsPedidosCliente(models.Model):
     pedido = fields.Many2many('ir.attachment', 'pedidos_os_rel', 'pedido_id', 'ir_attachment_id',
                               string='Pedido', store=True, copy=True)
 
+
 class OsDesenhos(models.Model):
     _name = "os.desenhos"
     _description = "Desenhos"
@@ -429,7 +430,6 @@ class OsDesenhos(models.Model):
         [('Caldeiraria', 'Caldeiraria'), ('Equipamentos', 'Equipamentos'), ('Usinagem', 'Usinagem'),
          ('Outros', 'Outros')],
         string='Setor', store=True, copy=True, required=True)
-
 
 
 class OsInspecoes(models.TransientModel):
@@ -494,6 +494,7 @@ class OsInspecoes(models.TransientModel):
         }
         return self.env.ref('ordem_servico.action_os_inspecoes').report_action(self)
 
+
 class OsInspecoesLinhas(models.Model):
     _name = "os.inspecoes.linhas"
     _description = "Linhas Inspeções"
@@ -513,15 +514,6 @@ class OsInspecoesLinhas(models.Model):
 
                 })
 
-# class OsCertificados(models.Model):
-#     _name = "os.certificados"
-#     _description = "Certificados"
-
-    # data_criacao = fields.Date(string='Data', store=True, copy=True)
-    # certificado = fields.Many2many('ir.attachment', 'certificados_os_rel', 'arquivos_id', 'ir_attachment_id',
-    #                                string='Certificado', store=True, copy=False, required=True)
-    # fornecedor = fields.Many2one('res.partner',string='Fornecedor',store=True, copy=True, required=True)
-    # nota_fiscal = fields.Char(string='Número NFE', copy=True, store=True, readonly=False)
 
 class OsFotos(models.Model):
     _name = "os.fotos"
@@ -530,6 +522,7 @@ class OsFotos(models.Model):
     data_criacao = fields.Date(string='Data', store=True, copy=True)
     certificado = fields.Many2many('ir.attachment', 'fotos_os_rel', 'os_fotos_id', 'ir_attachment_id',
                                    string='Certificado', store=True, copy=False)
+
 
 class OsNfs(models.Model):
     _name = "os.nfs"
