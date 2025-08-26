@@ -1,6 +1,6 @@
 
 from odoo import fields, models, api
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta, time
 import pytz
 
 class HrEmployee(models.Model):
@@ -91,7 +91,6 @@ class HrFields(models.Model):
     def upaponta(self):
         for rec in self:
             rec._total()
-            rec._tree_to_os()
 
     def upvalor(self):
         for rec in self:
@@ -102,7 +101,7 @@ class HrFields(models.Model):
     ordem_servico = fields.Many2one('ordem.servico', string='Linha Apontamento', store=True, copy=True)
     check_in = fields.Datetime(string="Check In", default=data_atual.replace(hour=10, minute=12, second=00,  microsecond=00, tzinfo=None), required=True)
     check_out = fields.Datetime(string="Check Out", default=data_atual.replace(hour=20, minute=00, second=00, microsecond=00, tzinfo=None), required=True)
-    valor_hora = fields.Float(string='Valor Hora', store=True, readonly=True)
+    valor_hora = fields.Float(string='Valor Hora', store=True)
     retrabalho = fields.Boolean(string='Retrabalho', store=True)
     cem_porcento = fields.Boolean(string='100%', store=True)
     hora_not = fields.Boolean(string='Noturno', store=True)
@@ -115,245 +114,126 @@ class HrFields(models.Model):
     currency_id = fields.Many2one('res.currency', 'Currency',
                                   default=lambda self: self.env.user.company_id.currency_id.id, required=True)
 
-
-    def _os_tree(self):
-        for line in self:
-            if line.ordem_servico:
-                os = line.ordem_servico[0]
-                line.write({'os_tree': os})
-
     @api.onchange('employee_id')
-    def _valorhora(self):
-        self.valor_hora = self.employee_id.valor_hora
+    def _onchange_employee_id(self):
+        """Atualiza valor_hora quando o funcionário é alterado"""
+        if self.employee_id:
+            self.valor_hora = self.employee_id.valor_hora
 
-
-    @api.depends('check_out','check_in')
-    def _tree_to_os(self):
-        for line in self:
-            if line.os_tree:
-                line.write({'ordem_servico': self.os_tree})
 
     @api.depends('check_out', 'check_in')
     def _total(self):
-        tz = pytz.timezone('America/Sao_Paulo')
-        dtent = self.check_in.date()
-        if self.valor_hora == 0:
-            self.valor_hora = self.employee_id.valor_hora
-        if self.check_out:
-            dtsai = self.check_out.date()
-            entnormal = tz.localize(datetime.combine(dtent, datetime.strptime("07:12:00", '%H:%M:%S').time()))
-            sainormal = tz.localize(datetime.combine(dtent, datetime.strptime("17:00:00", '%H:%M:%S').time()))
-            entalm = tz.localize(datetime.combine(dtent,datetime.strptime("12:00:00", '%H:%M:%S').time()))
-            saialm = tz.localize(datetime.combine(dtent, datetime.strptime("13:00:00", '%H:%M:%S').time()))
-            ininot = tz.localize(datetime.combine(dtent, datetime.strptime("22:00:00", '%H:%M:%S').time()))
-            fimnot = tz.localize(datetime.combine(dtsai, datetime.strptime("05:00:00", '%H:%M:%S').time()))
-            noturna = 0
-            extra = 0
-            almoco = 0
+        for line in self:
+            # if not line.check_in or not line.check_out:
+            #     line.normal_total = 0
+            #     line.extra_total = 0
+            #     line.valor_total = 0
+            #     line.valor_extra_total = 0
+            #     line.soma_total = 0
+            #     continue
 
-            for line in self:
+            # GARANTIR que valor_hora sempre tenha um valor
+            if not line.valor_hora and line.employee_id:
+                line.valor_hora = line.employee_id.valor_hora
 
-                if self.check_in and self.check_out:
-                    entrada = self.check_in.astimezone(tz) - timedelta(hours=3)
-                    #entrada = entrada.replace(tzinfo=None)
-                    saida = self.check_out .astimezone(tz) - timedelta(hours=3)
-                    #saida = saida.replace(tzinfo=None)
+            # Configuração de timezone
+            tz = pytz.timezone('America/Sao_Paulo')
+
+            # Converter para timezone local
+            entrada = line.check_in.astimezone(tz)
+            saida = line.check_out.astimezone(tz)
+
+            # Definir horários de referência
+            horario_inicio_jornada = time(7, 12)  # 07:12
+            horario_fim_jornada = time(17, 0)  # 17:00
+            horario_inicio_almoco = time(12, 0)  # 12:00
+            horario_fim_almoco = time(13, 0)  # 13:00
+            horario_inicio_noturno = time(22, 0)  # 22:00
+            horario_fim_noturno = time(5, 0)  # 05:00 (do dia seguinte)
+
+            # Calcular horas trabalhadas totais
+            horas_trabalhadas = (saida - entrada).total_seconds() / 3600
+
+            # Descontar almoço se necessário
+            if horas_trabalhadas >= 6:
+                # Verificar se o funcionário trabalhou durante o horário de almoço
+                if (entrada.time() < horario_fim_almoco and saida.time() > horario_inicio_almoco):
+                    horas_trabalhadas -= 1  # Desconta 1 hora de almoço
+
+            # Determinar horas normais e extras
+            hora_entrada_normal = datetime.combine(entrada.date(), horario_inicio_jornada)
+            hora_saida_normal = datetime.combine(entrada.date(), horario_fim_jornada)
+
+            hora_entrada_normal = tz.localize(hora_entrada_normal)
+            hora_saida_normal = tz.localize(hora_saida_normal)
+
+            # Horas dentro do período normal
+            inicio_periodo_normal = max(entrada, hora_entrada_normal)
+            fim_periodo_normal = min(saida, hora_saida_normal)
+
+            if inicio_periodo_normal < fim_periodo_normal:
+                horas_normais = (fim_periodo_normal - inicio_periodo_normal).total_seconds() / 3600
+            else:
+                horas_normais = 0
+
+            # Horas extras são o total menos as horas normais
+            horas_extras = max(0, horas_trabalhadas - horas_normais)
+
+            # Aplicar regras específicas por tipo de contrato
+            valor_hora = line.valor_hora
+
+            if line.tipo_contrato == 'clt':
+                # CLT: horas extras com adicional
+                if line.cem_porcento:
+                    valor_extra = horas_extras * valor_hora * 2
                 else:
-                    return
+                    valor_extra = horas_extras * valor_hora * 1.5
+            else:
+                # HT/PJ: sem adicional para horas extras
+                valor_extra = horas_extras * valor_hora
 
-#Calcula horas normais.-----------------------------------------------------------
-                if entrada >= entnormal and saida <= sainormal:
-                    if entrada >= saialm and saida <= sainormal:
-                        line.normal_total=line.worked_hours
-                    if entrada < entalm and saida <= entalm:
-                        line.normal_total=line.worked_hours
+            # Calcular valor total
+            valor_normal = horas_normais * valor_hora
+            valor_total = valor_normal + valor_extra
 
-#calcula hora extra-----------------------------------------------------
+            # Aplicar adicional noturno se necessário
+            if line.hora_not:
+                # Calcular horas noturnas
+                horas_noturnas = self._calcular_horas_noturnas(entrada, saida, tz)
+                adicional_noturno = horas_noturnas * valor_hora * 0.2  # 20% adicional
+                valor_total += adicional_noturno
 
-                if saida >= sainormal and entrada >= entnormal:
-                    extra = saida - sainormal
-                    extra = extra.total_seconds() / 3600
+            # Atualizar valores
+            line.update({
+                'normal_total': horas_normais,
+                'extra_total': horas_extras,
+                'valor_extra_total': valor_extra,
+                'valor_total': valor_total,
+                'soma_total': horas_normais + horas_extras
+            })
 
-                if entrada < entnormal and saida <= sainormal:
-                    extra = entnormal - entrada
-                    extra = extra.total_seconds() / 3600
+    def _calcular_horas_noturnas(self, entrada, saida, tz):
+        """Calcula horas no período noturno (22h às 5h)"""
+        horas_noturnas = 0
 
-                if entrada < entnormal and saida > sainormal:
-                    extra = (entnormal - entrada)+(saida - sainormal)
-                    extra = extra.total_seconds() / 3600
-#Hora noturna-------------------------------
-                if saida >= ininot and saida <= fimnot:
-                    noturna = saida - ininot
-                    noturna = float (noturna.total_seconds() / 3600)
+        # Para cada dia no período
+        current_date = entrada.date()
+        end_date = saida.date()
 
-#Almoço-------------------------------------------------------
-                if line.worked_hours >= 6:
-                    if entrada >= saialm:
-                        almoco = 0
-                    else:
-                        almoco = -1
+        while current_date <= end_date:
+            inicio_noturno = tz.localize(datetime.combine(current_date, time(22, 0)))
+            fim_noturno = tz.localize(datetime.combine(current_date + timedelta(days=1), time(5, 0)))
 
-#Calculos----------------------------------------------------
-#Hora normal--------------------------------------------
-                if entrada >= entnormal and saida <= sainormal:
-                    if almoco < 0:
-                        if self.cem_porcento:
-                            line.write({
-                                'valor_total': 2*(line.valor_hora * (line.worked_hours + almoco)),
-                                'extra_total':line.worked_hours + almoco,
-                                'valor_extra_total': line.valor_hora * (line.worked_hours + almoco),
-                                'normal_total': 0,
-                                'soma_total': self.extra_total + self.normal_total
-                            })
-                        else:
-                            line.write({
-                                'valor_total': line.valor_hora * (line.worked_hours + almoco),
-                                'normal_total': line.worked_hours + almoco - extra,
-                                'soma_total': self.extra_total + self.normal_total
-                            })
-                    else:
-                        if self.cem_porcento:
-                            line.write({
-                                'valor_total': 2*(line.valor_hora * line.worked_hours),
-                                'normal_total': 0,
-                                'valor_extra_total': line.valor_hora * (line.worked_hours + almoco),
-                                'extra_total': line.worked_hours + almoco,
-                                'soma_total': self.extra_total + self.normal_total
-                            })
-                        else:
-                            line.write({
-                                'valor_total': line.valor_hora * line.worked_hours,
-                                'normal_total': line.worked_hours + almoco - extra,
-                                'valor_extra_total': extra * line.valor_hora,
-                                'extra_total': extra,
-                                'soma_total': self.extra_total + self.normal_total
-                            })
+            # Calcular interseção com período noturno
+            inicio_periodo = max(entrada, inicio_noturno)
+            fim_periodo = min(saida, fim_noturno)
 
-#Hora Extra--------------------------------------------------------------
-                if extra > 0 and noturna == 0:
-                    if almoco < 0:
-                        if entrada <= entalm:
-                            if self.tipo_contrato == 'clt':
-                                if self.cem_porcento:
-                                    line.write({
-                                        'valor_total': 2*(line.valor_hora * (line.worked_hours + almoco)),
-                                        'valor_extra_total': line.valor_hora * (line.worked_hours + almoco),
-                                        'extra_total': line.worked_hours + almoco,
-                                        'normal_total': 0,
-                                        'soma_total': self.extra_total + self.normal_total
-                                    })
-                                else:
-                                    line.write({
-                                        'valor_total': line.valor_hora * (line.worked_hours - extra + almoco) + (extra * line.valor_hora * 1.5),
-                                        'valor_extra_total': extra * line.valor_hora * 1.5,
-                                        'normal_total': line.worked_hours + almoco - extra,
-                                        'extra_total': extra,
-                                        'soma_total': self.extra_total + self.normal_total
+            if inicio_periodo < fim_periodo:
+                horas_noturnas += (fim_periodo - inicio_periodo).total_seconds() / 3600
 
-                                    })
-                            else:
-                                line.write({
-                                    'valor_total': line.valor_hora * (line.worked_hours + almoco),
-                                    'normal_total': line.worked_hours + almoco - extra,
-                                    'valor_extra_total': extra * line.valor_hora,
-                                    'extra_total': extra,
-                                    'soma_total': self.extra_total + self.normal_total
-                                })
-                        else:
-                            if self.tipo_contrato == 'clt':
-                                if self.cem_porcento:
-                                    line.write({
-                                        'valor_total': 2*(line.valor_hora * (line.worked_hours + almoco)),
-                                        'valor_extra_total': line.valor_hora * (extra + almoco),
-                                        'extra_total': extra + almoco,
-                                        'normal_total': 0,
-                                        'soma_total': self.extra_total + self.normal_total
-                                    })
-                                else:
-                                    line.write({
-                                        'valor_total': line.valor_hora * (line.worked_hours - extra + almoco) + (extra * line.valor_hora * 1.5),
-                                        'valor_extra_total': extra * line.valor_hora * 1.5,
-                                        'extra_total': extra,
-                                        'normal_total': line.worked_hours - extra + almoco,
-                                        'soma_total': self.extra_total + self.normal_total
+            current_date += timedelta(days=1)
 
-                                    })
-                            else:
-                                line.write({
-                                    'valor_total': line.valor_hora * line.worked_hours,
-                                    'normal_total': line.worked_hours + almoco,
-                                    'soma_total': self.extra_total + self.normal_total
-                                })
-                    else:
-                        if self.tipo_contrato == 'clt':
-                            if self.cem_porcento:
-                                line.write({
-                                    'valor_total': 2*(line.valor_hora * line.worked_hours),
-                                    'valor_extra_total': line.valor_total / 2,
-                                    'extra_total': line.worked_hours + almoco,
-                                    'normal_total': 0,
-                                    'soma_total': self.extra_total + self.normal_total
-                                })
-                            else:
-                                line.write({
-                                        'valor_total': line.valor_hora * (line.worked_hours - extra) + (extra * line.valor_hora * 1.5),
-                                        'valor_extra_total': extra * line.valor_hora * 1.5,
-                                        'extra_total': extra,
-                                        'normal_total': line.worked_hours + almoco - extra,
-                                        'soma_total': self.extra_total + self.normal_total
-                                    })
-                        else:
-                            line.write({
-                                    'valor_total': line.valor_hora * line.worked_hours,
-                                    'normal_total': line.worked_hours + almoco,
-                                    'soma_total': self.extra_total + self.normal_total
-                                })
-#Hora noturna------------------------------------------------------------------------------------------
-#hora com periodo noturno
-                if noturna > 0 and self.hora_not:
-                    if self.tipo_contrato == 'clt':
-                        if almoco < 0:
-                                line.write({
-                                    'valor_total': ((noturna * 1.35 * line.valor_hora) + ((line.worked_hours - noturna + almoco) * line.valor_hora)),
-                                })
-                        else:
-                                line.write({
-                                    'valor_total': ((noturna * 1.35 * line.valor_hora) + ((line.worked_hours - noturna) * line.valor_hora)),
-                                })
-                    else:
-                        line.write({
-                            'valor_total': (line.worked_hours * line.valor_hora),
-                        })
-
-#hora normal + noturno + extra
-                if noturna > 0 and extra > 0 and not self.hora_not:
-                    if self.tipo_contrato == 'clt':
-                        if almoco < 0:
-                            line.write({
-                                'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra + almoco * line.valor_hora) + (extra * 1.5 * line.valor_hora)),
-                                'valor_extra_total':extra * 1.5 * line.valor_hora,
-                                'extra_total': extra,
-                                'normal_total': line.worked_hours + almoco - extra,
-                                'soma_total': self.extra_total + self.normal_total
-                            })
-                        else:
-                            line.write({
-                                'valor_total': ((noturna * 1.35 * line.valor_hora) + (line.worked_hours - noturna - extra * line.valor_hora) + (extra * 1.5 * line.valor_hora)),
-                                'valor_extra_total': extra * 1.5 * line.valor_hora,
-                                'extra_total': extra,
-                                'normal_total': line.worked_hours + almoco - extra,
-                                'soma_total': self.extra_total + self.normal_total
-
-                            })
-                    else:
-                        line.write({
-                            'valor_total': ((noturna * line.valor_hora) + (line.worked_hours - noturna - extra * line.valor_hora) + (extra * line.valor_hora)),
-                            'valor_extra_total': extra * line.valor_hora,
-                            'extra_total': extra,
-                            'normal_total': line.worked_hours + almoco - extra,
-                            'soma_total': self.extra_total + self.normal_total
-
-                        })
+        return horas_noturnas
 
 class HrReport(models.Model):
     _inherit = "hr.attendance.report"
