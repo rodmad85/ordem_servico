@@ -154,39 +154,42 @@ class HrFields(models.Model):
             inicio_almoco = tz.localize(datetime.combine(entrada.date(), horario_inicio_almoco))
             fim_almoco = tz.localize(datetime.combine(entrada.date(), horario_fim_almoco))
 
-            # Calcular horas trabalhadas totais
+            # Calcular horas trabalhadas totais (sem descontar almoço)
             horas_totais = (saida - entrada).total_seconds() / 3600
 
-            # Calcular horas dentro do período normal
+            # Calcular horas dentro do período normal (07:12 às 17:00)
             inicio_periodo_normal = max(entrada, inicio_jornada)
             fim_periodo_normal = min(saida, fim_jornada)
 
             if inicio_periodo_normal < fim_periodo_normal:
-                horas_normais = (fim_periodo_normal - inicio_periodo_normal).total_seconds() / 3600
+                horas_normais_bruto = (fim_periodo_normal - inicio_periodo_normal).total_seconds() / 3600
             else:
-                horas_normais = 0
+                horas_normais_bruto = 0
 
-            # Verificar se trabalhou durante horário de almoço e descontar 1 hora
+            # Verificar se trabalhou durante horário de almoço dentro do período normal
             trabalhou_durante_almoco = (
-                    entrada < fim_almoco and
-                    saida > inicio_almoco and
-                    horas_totais >= 6  # Só desconta se trabalhou 6+ horas
+                    inicio_periodo_normal < fim_almoco and
+                    fim_periodo_normal > inicio_almoco
             )
 
+            # Apenas descontar almoço se trabalhou durante o horário de almoço
             if trabalhou_durante_almoco:
-                # Descontar 1 hora do período normal (almoço)
-                horas_normais = max(0, horas_normais - 1)
+                horas_normais = max(0, horas_normais_bruto - 1)
+            else:
+                horas_normais = horas_normais_bruto
 
             # Calcular horas extras (total - normais)
-            horas_extras = max(0, horas_totais - horas_normais)
+            # IMPORTANTE: Não desconta almoço das horas totais, apenas do período normal
+            horas_extras = max(0, horas_totais - horas_normais_bruto)
 
             # DEBUG: Mostrar valores para verificação
-            print(f"Entrada: {entrada}")
-            print(f"Saída: {saida}")
-            print(f"Início jornada: {inicio_jornada}")
-            print(f"Fim jornada: {fim_jornada}")
+            print(f"Entrada: {entrada.time()}")
+            print(f"Saída: {saida.time()}")
+            print(f"Início jornada: {inicio_jornada.time()}")
+            print(f"Fim jornada: {fim_jornada.time()}")
             print(f"Horas totais: {horas_totais}")
-            print(f"Horas normais: {horas_normais}")
+            print(f"Horas normais bruto: {horas_normais_bruto}")
+            print(f"Horas normais (com almoço): {horas_normais}")
             print(f"Horas extras: {horas_extras}")
             print(f"Trabalhou durante almoço: {trabalhou_durante_almoco}")
 
