@@ -138,14 +138,32 @@ class HrFields(models.Model):
             # Configuração de timezone
             tz = pytz.timezone('America/Sao_Paulo')
 
-            # Converter para timezone local
-            entrada = line.check_in.astimezone(tz)
-            saida = line.check_out.astimezone(tz)
+            # IMPORTANTE: O Odoo armazena em UTC, precisamos converter para o timezone local
+            # Primeiro, garantir que estamos lidando com datetime aware
+            if line.check_in.tzinfo is None:
+                check_in_utc = pytz.utc.localize(line.check_in)
+            else:
+                check_in_utc = line.check_in
+
+            if line.check_out.tzinfo is None:
+                check_out_utc = pytz.utc.localize(line.check_out)
+            else:
+                check_out_utc = line.check_out
+
+            # Converter UTC para timezone local
+            entrada = check_in_utc.astimezone(tz)
+            saida = check_out_utc.astimezone(tz)
+
+            # DEBUG: Verificar as conversões
+            print(f"=== CONVERSÃO UTC -> LOCAL ===")
+            print(f"UTC - Entrada: {check_in_utc}, Saída: {check_out_utc}")
+            print(f"Local - Entrada: {entrada}, Saída: {saida}")
+            print(f"=================================")
 
             # Calcular horas trabalhadas totais
             horas_totais = (saida - entrada).total_seconds() / 3600
 
-            # Criar horários de referência com timezone
+            # Criar horários de referência no timezone local
             inicio_jornada = tz.localize(datetime.combine(entrada.date(), time(7, 12)))
             fim_jornada = tz.localize(datetime.combine(entrada.date(), time(17, 0)))
             inicio_almoco = tz.localize(datetime.combine(entrada.date(), time(12, 0)))
@@ -162,9 +180,9 @@ class HrFields(models.Model):
 
             # Verificar se trabalhou durante horário de almoço
             trabalhou_durante_almoco = (
-                    inicio_periodo_normal < fim_almoco and
-                    fim_periodo_normal > inicio_almoco and
-                    horas_normais_bruto >= 6  # Só desconta se trabalhou 6+ horas no período normal
+                    inicio_periodo_normal.time() < time(13, 0) and
+                    fim_periodo_normal.time() > time(12, 0) and
+                    horas_normais_bruto >= 6
             )
 
             # Aplicar desconto de almoço apenas se necessário
@@ -173,22 +191,19 @@ class HrFields(models.Model):
             else:
                 horas_normais = horas_normais_bruto
 
-            # Calcular horas extras (total - horas normais brutas, sem desconto de almoço)
+            # Calcular horas extras (total - horas normais brutas)
             horas_extras = max(0, horas_totais - horas_normais_bruto)
 
             # DEBUG DETALHADO
-            print(f"=== DEBUG DETALHADO ===")
-            print(f"Entrada: {entrada}")
-            print(f"Saída: {saida}")
-            print(f"Início jornada: {inicio_jornada}")
-            print(f"Fim jornada: {fim_jornada}")
+            print(f"=== CÁLCULO HORAS ===")
+            print(f"Entrada local: {entrada.time()}")
+            print(f"Saída local: {saida.time()}")
             print(f"Horas totais: {horas_totais}")
-            print(f"Horas normais bruto (sem almoço): {horas_normais_bruto}")
-            print(f"Trabalhou durante almoço: {trabalhou_durante_almoco}")
+            print(f"Horas normais bruto: {horas_normais_bruto}")
             print(f"Horas normais (com almoço): {horas_normais}")
             print(f"Horas extras: {horas_extras}")
-            print(f"Diferença encontrada: {horas_normais_bruto - horas_normais} horas")
-            print(f"=========================")
+            print(f"Trabalhou durante almoço: {trabalhou_durante_almoco}")
+            print(f"=====================")
 
             # Aplicar regras específicas por tipo de contrato
             valor_hora = line.valor_hora
@@ -209,9 +224,9 @@ class HrFields(models.Model):
 
             # Aplicar adicional noturno se necessário
             if line.hora_not:
-                # Calcular horas noturnas
+                # Calcular horas noturnas (também convertendo para local)
                 horas_noturnas = self._calcular_horas_noturnas(entrada, saida, tz)
-                adicional_noturno = horas_noturnas * valor_hora * 0.2  # 20% adicional
+                adicional_noturno = horas_noturnas * valor_hora * 0.2
                 valor_total += adicional_noturno
 
             # Atualizar valores
@@ -224,10 +239,8 @@ class HrFields(models.Model):
             })
 
     def _calcular_horas_noturnas(self, entrada, saida, tz):
-        """Calcula horas no período noturno (22h às 5h)"""
+        """Calcula horas no período noturno (22h às 5h) - já convertido para timezone local"""
         horas_noturnas = 0
-
-        # Para cada dia no período
         current_date = entrada.date()
         end_date = saida.date()
 
@@ -235,7 +248,6 @@ class HrFields(models.Model):
             inicio_noturno = tz.localize(datetime.combine(current_date, time(22, 0)))
             fim_noturno = tz.localize(datetime.combine(current_date + timedelta(days=1), time(5, 0)))
 
-            # Calcular interseção com período noturno
             inicio_periodo = max(entrada, inicio_noturno)
             fim_periodo = min(saida, fim_noturno)
 
