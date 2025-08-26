@@ -142,22 +142,16 @@ class HrFields(models.Model):
             entrada = line.check_in.astimezone(tz)
             saida = line.check_out.astimezone(tz)
 
-            # Definir horários de referência
-            horario_inicio_jornada = time(7, 12)  # 07:12
-            horario_fim_jornada = time(17, 0)  # 17:00
-            horario_inicio_almoco = time(12, 0)  # 12:00
-            horario_fim_almoco = time(13, 0)  # 13:00
-
-            # Criar datetime com timezone para os horários de referência
-            inicio_jornada = tz.localize(datetime.combine(entrada.date(), horario_inicio_jornada))
-            fim_jornada = tz.localize(datetime.combine(entrada.date(), horario_fim_jornada))
-            inicio_almoco = tz.localize(datetime.combine(entrada.date(), horario_inicio_almoco))
-            fim_almoco = tz.localize(datetime.combine(entrada.date(), horario_fim_almoco))
-
-            # Calcular horas trabalhadas totais (sem descontar almoço)
+            # Calcular horas trabalhadas totais
             horas_totais = (saida - entrada).total_seconds() / 3600
 
-            # Calcular horas dentro do período normal (07:12 às 17:00)
+            # Criar horários de referência com timezone
+            inicio_jornada = tz.localize(datetime.combine(entrada.date(), time(7, 12)))
+            fim_jornada = tz.localize(datetime.combine(entrada.date(), time(17, 0)))
+            inicio_almoco = tz.localize(datetime.combine(entrada.date(), time(12, 0)))
+            fim_almoco = tz.localize(datetime.combine(entrada.date(), time(13, 0)))
+
+            # Calcular horas dentro do período normal (07:12-17:00)
             inicio_periodo_normal = max(entrada, inicio_jornada)
             fim_periodo_normal = min(saida, fim_jornada)
 
@@ -166,32 +160,35 @@ class HrFields(models.Model):
             else:
                 horas_normais_bruto = 0
 
-            # Verificar se trabalhou durante horário de almoço dentro do período normal
+            # Verificar se trabalhou durante horário de almoço
             trabalhou_durante_almoco = (
                     inicio_periodo_normal < fim_almoco and
-                    fim_periodo_normal > inicio_almoco
+                    fim_periodo_normal > inicio_almoco and
+                    horas_normais_bruto >= 6  # Só desconta se trabalhou 6+ horas no período normal
             )
 
-            # Apenas descontar almoço se trabalhou durante o horário de almoço
+            # Aplicar desconto de almoço apenas se necessário
             if trabalhou_durante_almoco:
                 horas_normais = max(0, horas_normais_bruto - 1)
             else:
                 horas_normais = horas_normais_bruto
 
-            # Calcular horas extras (total - normais)
-            # IMPORTANTE: Não desconta almoço das horas totais, apenas do período normal
+            # Calcular horas extras (total - horas normais brutas, sem desconto de almoço)
             horas_extras = max(0, horas_totais - horas_normais_bruto)
 
-            # DEBUG: Mostrar valores para verificação
-            print(f"Entrada: {entrada.time()}")
-            print(f"Saída: {saida.time()}")
-            print(f"Início jornada: {inicio_jornada.time()}")
-            print(f"Fim jornada: {fim_jornada.time()}")
+            # DEBUG DETALHADO
+            print(f"=== DEBUG DETALHADO ===")
+            print(f"Entrada: {entrada}")
+            print(f"Saída: {saida}")
+            print(f"Início jornada: {inicio_jornada}")
+            print(f"Fim jornada: {fim_jornada}")
             print(f"Horas totais: {horas_totais}")
-            print(f"Horas normais bruto: {horas_normais_bruto}")
+            print(f"Horas normais bruto (sem almoço): {horas_normais_bruto}")
+            print(f"Trabalhou durante almoço: {trabalhou_durante_almoco}")
             print(f"Horas normais (com almoço): {horas_normais}")
             print(f"Horas extras: {horas_extras}")
-            print(f"Trabalhou durante almoço: {trabalhou_durante_almoco}")
+            print(f"Diferença encontrada: {horas_normais_bruto - horas_normais} horas")
+            print(f"=========================")
 
             # Aplicar regras específicas por tipo de contrato
             valor_hora = line.valor_hora
