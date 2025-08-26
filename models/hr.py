@@ -148,7 +148,7 @@ class HrFields(models.Model):
             horario_inicio_almoco = time(12, 0)  # 12:00
             horario_fim_almoco = time(13, 0)  # 13:00
 
-            # Calcular horas trabalhadas totais (sem descontar almoço ainda)
+            # Calcular horas trabalhadas totais
             horas_totais = (saida - entrada).total_seconds() / 3600
 
             # Inicializar horas normais e extras
@@ -168,43 +168,38 @@ class HrFields(models.Model):
                 inicio_almoco = tz.localize(datetime.combine(current_date, horario_inicio_almoco))
                 fim_almoco = tz.localize(datetime.combine(current_date, horario_fim_almoco))
 
-                # Calcular período trabalhado neste dia
-                inicio_dia_trabalho = max(entrada, inicio_jornada)
-                fim_dia_trabalho = min(saida, fim_jornada)
+                # Calcular período trabalhado dentro da jornada normal
+                inicio_periodo_normal = max(entrada, inicio_jornada)
+                fim_periodo_normal = min(saida, fim_jornada)
 
-                # Se há trabalho neste dia
-                if inicio_dia_trabalho < fim_dia_trabalho:
-                    # Horas trabalhadas no dia (sem descontar almoço)
-                    horas_dia = (fim_dia_trabalho - inicio_dia_trabalho).total_seconds() / 3600
+                # Horas normais dentro do período da jornada
+                if inicio_periodo_normal < fim_periodo_normal:
+                    horas_dentro_jornada = (fim_periodo_normal - inicio_periodo_normal).total_seconds() / 3600
 
                     # Verificar se trabalhou durante horário de almoço
-                    if inicio_dia_trabalho < fim_almoco and fim_dia_trabalho > inicio_almoco:
-                        # Descontar 1 hora de almoço se trabalhou 6+ horas
-                        if horas_dia >= 6:
-                            horas_dia -= 1
+                    if (inicio_periodo_normal < fim_almoco and fim_periodo_normal > inicio_almoco):
+                        # Descontar 1 hora de almoço se trabalhou durante este período
+                        horas_dentro_jornada -= 1
 
-                    # Adicionar às horas normais (máximo 9,88 horas por dia - 10:48 menos 1h almoço)
-                    horas_normais += min(horas_dia, 9.88)  # 9 horas e 53 minutos (9.88h)
+                    horas_normais += max(0, horas_dentro_jornada)
 
-                    # Se excedeu a jornada normal, o excesso é extra
-                    if horas_dia > 9.88:
-                        horas_extras += horas_dia - 9.88
+                # Calcular horas extras ANTES do início da jornada (apenas para o primeiro dia)
+                if current_date == entrada.date() and entrada < inicio_jornada:
+                    horas_extras_antes = (min(saida, inicio_jornada) - entrada).total_seconds() / 3600
+                    horas_extras += max(0, horas_extras_antes)
 
-                # Calcular horas extras antes do início da jornada
-                if entrada < inicio_jornada:
-                    inicio_extra_antes = entrada
-                    fim_extra_antes = min(saida, inicio_jornada)
-                    if inicio_extra_antes < fim_extra_antes:
-                        horas_extras += (fim_extra_antes - inicio_extra_antes).total_seconds() / 3600
-
-                # Calcular horas extras depois do fim da jornada
-                if saida > fim_jornada:
-                    inicio_extra_depois = max(entrada, fim_jornada)
-                    fim_extra_depois = saida
-                    if inicio_extra_depois < fim_extra_depois:
-                        horas_extras += (fim_extra_depois - inicio_extra_depois).total_seconds() / 3600
+                # Calcular horas extras DEPOIS do fim da jornada (apenas para o último dia)
+                if current_date == saida.date() and saida > fim_jornada:
+                    horas_extras_depois = (saida - max(entrada, fim_jornada)).total_seconds() / 3600
+                    horas_extras += max(0, horas_extras_depois)
 
                 current_date += timedelta(days=1)
+
+            # Garantir que horas normais não sejam negativas
+            horas_normais = max(0, horas_normais)
+
+            # Garantir que horas extras não sejam negativas e não ultrapassem o total
+            horas_extras = max(0, min(horas_extras, horas_totais - horas_normais))
 
             # Aplicar regras específicas por tipo de contrato
             valor_hora = line.valor_hora
@@ -232,11 +227,11 @@ class HrFields(models.Model):
 
             # Atualizar valores
             line.update({
-                'normal_total': horas_normais,
-                'extra_total': horas_extras,
-                'valor_extra_total': valor_extra,
-                'valor_total': valor_total,
-                'soma_total': horas_normais + horas_extras
+                'normal_total': round(horas_normais, 2),
+                'extra_total': round(horas_extras, 2),
+                'valor_extra_total': round(valor_extra, 2),
+                'valor_total': round(valor_total, 2),
+                'soma_total': round(horas_normais + horas_extras, 2)
             })
 
     def _calcular_horas_noturnas(self, entrada, saida, tz):
