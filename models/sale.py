@@ -22,13 +22,15 @@ class OsSale(models.Model):
 
     @api.constrains('state', 'client_order_ref', 'pedido')
     def _check_client_order_ref(self):
+        emp = self.company_id
+
         for order in self:
             if order.state in ['sale', 'done']:
-                if not order.client_order_ref:
+                if not order.client_order_ref and emp.os_refcli is True:
                     raise ValidationError("O campo Referência do Cliente é obrigatório para pedidos confirmados.")
-                if not order.pedido:
+                if not order.pedido and emp.os_pedcli is True:
                     raise ValidationError("O campo Pedido do Cliente é obrigatório para pedidos confirmados.")
-                if not order.ordem_servico:
+                if not order.ordem_servico and emp.os_req is True:
                     raise ValidationError("O campo Ordem de Serviço é obrigatório para pedidos confirmados.")
                 if not order.order_line:
                     raise ValidationError("Insira ao menos 1 item para confirmar o pedido.")
@@ -54,102 +56,6 @@ class OsSale(models.Model):
     def _action_cancel(self):
         self.ordem_servico.write({'state': 'draft'})
         return super()._action_cancel()
-
-    def _confirm_with_mto(self):
-        """Função separada para confirmar e criar MTOs (chamada pelo wizard)"""
-        # Atualiza estado das ordens de serviço
-        self.ordem_servico.write({'state': 'aberta'})
-
-        # Confirma o pedido (inclui criação de transferências)
-        res = super(OsSale, self)._action_confirm()
-
-        # Cria ordens de produção para linhas marcadas como MTO
-        for line in self.order_line.filtered(lambda l: l.mto):
-            line._create_mto_production()
-
-        return res
-
-    def action_confirm(self):
-        # Verifica se há linhas não marcadas como MTO
-        unmarked_lines = self.order_line.filtered(lambda line: not line.mto)
-
-        if unmarked_lines:
-            # Abre o wizard e PARA a execução aqui
-            return self._open_mto_confirmation_wizard()
-
-        # Se não houver linhas não marcadas, continua com a confirmação normal
-        return super(OsSale, self).action_confirm()
-
-    def _open_mto_confirmation_wizard(self):
-        """Abre o wizard de confirmação MTO"""
-        product_list = "\n- ".join(self.order_line.filtered(
-            lambda l: not l.mto).mapped('product_id.display_name'))
-
-        return {
-            'name': 'Confirmação de Produção',
-            'type': 'ir.actions.act_window',
-            'res_model': 'confirm.mto.wizard',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': {
-                'default_sale_order_id': self.id,
-                'default_message': (
-                                       "Itens não marcados para produção:\n\n- %s\n\n"
-                                       "Deseja confirmar gerando ordens APENAS para os itens marcados?"
-                                   ) % product_list
-            }
-        }
-
-    def _confirm_with_mto(self):
-        """Confirma o pedido e cria ordens de produção apenas para itens marcados"""
-        # Atualiza estado das ordens de serviço
-        self.ordem_servico.write({'state': 'aberta'})
-
-        # Confirma o pedido (chamando o método original)
-        res = super(OsSale, self).action_confirm()
-
-        # Cria ordens de produção apenas para linhas marcadas
-        for line in self.order_line.filtered(lambda l: l.mto):
-            line._create_mto_production()
-
-        return res
-    def _action_confirm(self):
-        # Verifica se há pelo menos uma linha não marcada como MTO
-        unmarked_lines = self.order_line.filtered(lambda line: not line.mto)
-
-        if unmarked_lines:
-            # Prepara a lista de produtos não marcados para a mensagem
-            product_list = "\n- ".join(unmarked_lines.mapped(lambda l: l.product_id.display_name))
-
-            # Abre o wizard de confirmação
-            return {
-                'name': 'Confirmação de Produção',
-                'type': 'ir.actions.act_window',
-                'res_model': 'confirm.mto.wizard',
-                'view_mode': 'form',
-                'target': 'new',
-                'context': {
-                    'default_sale_order_id': self.id,
-                    'default_message': (
-                                           "Existem itens não marcados para produção no pedido:\n\n- %s\n\n"
-                                           "Deseja confirmar o pedido gerando ordens de produção APENAS "
-                                           "para os itens marcados com 'Produzir'?\n\n"
-                                           "Itens não marcados não terão ordens de produção criadas."
-                                       ) % product_list
-                }
-            }
-        # Se todas as linhas estão marcadas como MTO, confirma normalmente
-        # Atualiza estado das ordens de serviço
-        self.ordem_servico.write({'state': 'aberta'})
-
-        # Confirma o pedido
-        res = super()._action_confirm()
-
-        # Cria ordens de produção para todas as linhas marcadas como MTO
-        for line in self.order_line.filtered(lambda l: l.mto):
-            line._create_mto_production()
-
-        return res
 
     def _prepare_invoice(self):
         invoice_vals = super()._prepare_invoice()
