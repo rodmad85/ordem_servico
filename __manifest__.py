@@ -66,7 +66,8 @@
         'report/resumo.xml',
         'report/sale.xml',
         'report/purchase.xml',
-    ],
+		'views/res_company.xml',
+],
     'assets': {
         'web.assets_backend': [
             'ordem_servico/static/src/css/progress_bar_color.css',

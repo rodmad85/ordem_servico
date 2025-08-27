@@ -15,6 +15,7 @@ from . import res_config_settings
 from . import resumo
 from . import sale
 from . import stock
+from . import res_company
 
 
 

@@ -154,16 +154,19 @@ class OrdemServico(models.Model):
 
     def concluida_os(self):
 
+        emp = self.pedido_venda.company_id
+
         if self.status_fat == 'nao':
             raise ValidationError("Selecione um status de faturamento diferente de Não Faturada.")
         if self.entrega_efetiva == False:
             raise ValidationError("Digite a data da entrega efetiva para encerrar a OS.")
-        if not self.apontamento:
+
+        if not self.apontamento and emp.os_aponta is True:
             if not self.terc_total:
                 raise ValidationError("Insira um apontamento para encerrar a OS.")
-        if not self.resp_fin:
+        if not self.resp_fin and emp.os_insp is True:
             raise ValidationError("Selecione um Responsável pela Inspeção Final.")
-        if not self.dt_fin:
+        if not self.dt_fin and emp.os_insp is True:
             raise  ValidationError("Insira a data da Inspeção Final")
 
         else:
