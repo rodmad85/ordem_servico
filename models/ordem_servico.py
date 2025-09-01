@@ -71,7 +71,6 @@ class OrdemServico(models.Model):
         [('normal', 'Normal'), ('repeticao', 'Repetição'), ('manutencao', 'Manutencao'), ('rafael', 'Rafael')], default='normal',
         string='Tipo', store=True, copy=True, required=True)
     terc_total = fields.Boolean(string='Totalmente Terceirizada')
-
     visual_corte = fields.Boolean(string="Visual", store=True)
     dimen_corte = fields.Boolean(string="Dimensional", store=True)
     outras_corte = fields.Char(string='Outras', store=True, default='')

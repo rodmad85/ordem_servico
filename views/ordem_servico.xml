@@ -21,7 +21,6 @@
                 <filter name="state" string="Status" domain="[('state','!=','concluida'),('state','!=','cancel')]"/>
                 <filter name="status_fat" string="Faturamento"/>
 
-
                 <group expand="0" string="Group By">
                     <filter string="Cliente" name="cliente_id" domain="[]" context="{'group_by':'cliente_id'}" />
                     <filter string="Empresa" name="empresa" domain="[]" context="{'group_by':'empresa'}" />
