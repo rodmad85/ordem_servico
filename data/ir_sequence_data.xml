@@ -8,7 +8,8 @@
             <field name="code">ordem.seq</field>
             <field name="prefix"></field>
             <field name="padding">4</field>
-            <field name="company_id" eval="False"/>
+           <field name="company_id" eval="False"/>
+
         </record>
 
         <record id="ordem_seq_manu" model="ir.sequence">
@@ -18,6 +19,7 @@
             <field name="padding">4</field>
             <field name="use_date_range">1</field>
             <field name="company_id" eval="False"/>
+
         </record>
 
         <record id="ordem_seq_rafa" model="ir.sequence">
@@ -26,6 +28,7 @@
             <field name="prefix">RF-%(range_month)s/%(range_year)s-</field>
             <field name="padding">4</field>
             <field name="company_id" eval="False"/>
+
         </record>
 
 
@@ -35,6 +38,7 @@
             <field name="prefix">INS</field>
             <field name="padding">4</field>
             <field name="company_id" eval="False"/>
+
         </record>
 
     </data>

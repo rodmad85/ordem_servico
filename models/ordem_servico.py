@@ -50,6 +50,10 @@ class OrdemServico(models.Model):
         store=False
     )
 
+    company_id = fields.Many2one('res.company', string='Empresa',
+                                 required=True,
+                                 default=lambda self: self.env.company)
+
     lista_produtos = fields.Many2many('os.listaprod','mrplist_rel_os','mrplist_id', 'os_id', string='Lista de Materiais', store=True, compute='_lista_produtos')
     consumidos = fields.Many2many('os.consumidos', 'consumidos_rel_os','consumido_id', 'os_id', string='Ordem de Serviço', compute='_consumidos')
     nao_conform =fields.Many2many('mgmtsystem.nonconformity', 'os_rel_mgmt', 'os_id','mgmt_id', string='Não Conformidades')
@@ -309,27 +313,32 @@ class OrdemServico(models.Model):
             self.write({'empresa': 1})
             self.write({'cliente_id': 2764})
 
-
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
-            if vals.get('tipo_os') == 'normal':
-                vals['name'] = self.env['ir.sequence'].next_by_code('ordem.seq') or _('New')
 
-            if vals.get('tipo_os') == 'repeticao':
-                vals['name'] = self.env['ir.sequence'].next_by_code('ordem.seq') or _('New')
+            # Determinar qual sequência usar baseado no tipo_os
+            sequence_code = False
+            if vals.get('tipo_os') in ['normal', 'repeticao']:
+                sequence_code = 'ordem.seq'
+            elif vals.get('tipo_os') == 'manutencao':
+                sequence_code = 'ordem.manu'
+            elif vals.get('tipo_os') == 'rafael':
+                sequence_code = 'ordem.rafa'
 
-            if vals.get('tipo_os') == 'manutencao':
-                vals['name'] = self.env['ir.sequence'].next_by_code('ordem.manu') or _('New')
+            if sequence_code:
+                # Usar a sequência específica da empresa
+                sequence = self.env['ir.sequence'].with_company(self.company_id)
+                vals['name'] = sequence.next_by_code(sequence_code) or _('New')
 
-            if vals.get('tipo_os') == 'rafael':
-                vals['name'] = self.env['ir.sequence'].next_by_code('ordem.rafa') or _('New')
+        # Criar o registro
+        result = super(OrdemServico, self).create(vals)
 
+        # Criar o fechamento (ajuste conforme seu modelo real)
+        val = {'os_ids': result.id}
+        self.env['os.fechamento'].create(val)
 
-            result = super(OrdemServico, self).create(vals)
-            val = {'os_ids': result.id}
-            self.env['os.fechamento'].create(val)
-            return result
+        return result
 
 
     def name_get(self):

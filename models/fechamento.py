@@ -179,10 +179,9 @@ class OsFechamento(models.Model):
             mpprev = sum(rec.os_ids.pedido_venda.mapped('materia_prima')) if rec.os_ids.pedido_venda else 0
             mpreal = sum(rec.os_ids.pedidos_compra.mapped('valor_os')) if rec.os_ids.pedidos_compra else 0
             if mpprev and mpreal:
-                if mpreal:
+                if mpreal > 0:
                     total = mpreal / mpprev
                     rec.progress_compra = total * 100
-            rec.progress_compra = 0
 
     
     def _amount_total_orcado(self):
