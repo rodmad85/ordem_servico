@@ -490,8 +490,9 @@ class OsInspecoes(models.TransientModel):
     def create(self, vals):
 
         if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('insp_os.seq') or _('New')
 
+            sequence = self.env['ir.sequence'].with_company(self.company_id)
+            vals['name'] = sequence.next_by_code('insp_os.seq') or _('New')
         result = super(OsInspecoes, self).create(vals)
 
         return result
