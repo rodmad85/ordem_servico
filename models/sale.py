@@ -20,6 +20,7 @@ class OsSale(models.Model):
         string='Pedido', copy=True, tracking=True
     )
 
+
     @api.constrains('state', 'client_order_ref', 'pedido')
     def _check_client_order_ref(self):
         emp = self.company_id

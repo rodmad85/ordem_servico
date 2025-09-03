@@ -29,10 +29,7 @@
         <field name="view_id" ref="inspecoes_form_view"/>
         <field name="context">{'default_ordem_servico': active_id}</field>
 
-
-
     </record>
-
 
      <record model="ir.actions.act_window" id="ordem_fecha_act_window">
         <field name="name">Fechamento</field>
