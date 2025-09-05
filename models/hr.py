@@ -6,7 +6,7 @@ import pytz
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
     valor_hora = fields.Float(string='Valor Hora', store=True)
-    tipo_contrato = fields.Selection([('clt', 'CLT'), ('ht', 'HT'), ('pj', 'PJ')], string='Tipo de Contrato', store=True,
+    tipo_contrato = fields.Selection([('clt', 'CLT'), ('ht', 'HT'), ('pj', 'PJ'),('estagio','Estágio')], string='Tipo de Contrato', store=True,
                             copy=True, required=True)
     horas_normais_total = fields.Float(string='Total Horas Normais', compute='_compute_horas_normais_total')
     horas_extras_total = fields.Float(string='Total Extras')
