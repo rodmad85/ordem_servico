@@ -80,60 +80,9 @@ class OsSaleLine(models.Model):
         help="Se marcado, uma Ordem de Produção será criada ao confirmar o pedido.", default=True
     )
 
-    def _create_mto_production(self):
-        """Cria uma Ordem de Produção para a linha MTO, configurando rotas primeiro."""
-        self.ensure_one()
 
-        # Obtém as rotas necessárias
-        buy_route = self.env.ref('purchase.route_warehouse0_buy', raise_if_not_found=False)
-        manufacture_route = self.env.ref('mrp.route_warehouse0_manufacture', raise_if_not_found=False)
-        mto_route = self.env.ref('stock.route_warehouse0_mto', raise_if_not_found=False)
-
-        # Configura as rotas no produto (se existirem)
-        if self.product_id and buy_route and manufacture_route and mto_route:
-            self.product_id.write({
-                'route_ids': [(6, 0, [buy_route.id, manufacture_route.id, mto_route.id])]
-            })
-
-        # Cria a ordem de produção
-        mo = self.env['mrp.production'].create({
-            'product_id': self.product_id.id,
-            'product_qty': self.product_uom_qty,
-            'product_uom_id': self.product_uom.id,
-            'origin': self.order_id.name,
-            'ordem_servico': [(6, 0, self.order_id.ordem_servico.ids)]
-        })
-
-        mo.action_confirm()
-        return mo
-        """Cria uma Ordem de Produção para a linha MTO."""
-        self.ensure_one()
-        mo = self.env['mrp.production'].create({
-            'product_id': self.product_id.id,
-            'product_qty': self.product_uom_qty,
-            'product_uom_id': self.product_uom.id,
-            'origin': self.order_id.name,
-            'ordem_servico': [(6, 0, self.order_id.ordem_servico.ids)]
-        })
-        mo.action_confirm()
-        return mo
 
     @api.depends('price_unit', 'discount', 'product_uom_qty')
     def _compute_total_desc(self):
         for line in self:
             line.valordesc = line.price_unit * (line.discount / 100.0) * line.product_uom_qty
-
-
-class ConfirmMTOWizard(models.TransientModel):
-    _name = 'confirm.mto.wizard'
-    _description = 'Wizard de Confirmação MTO'
-
-    sale_order_id = fields.Many2one('sale.order', string='Pedido de Venda')
-    message = fields.Text(string='Mensagem', readonly=True)
-
-    def action_confirm(self):
-        # Confirma o pedido via método padrão, que agora vai criar apenas os MTO marcados
-        return self.sale_order_id.with_context(bypass_mto_warning=True)._confirm_with_mto()
-
-    def action_cancel(self):
-        return {'type': 'ir.actions.act_window_close'}

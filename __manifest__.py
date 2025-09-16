@@ -77,6 +77,8 @@
     },
     'demo': [
     ],
+    "post_init_hook": "set_menu_sequence",
+    "post_update_hook": "set_menu_sequence",
     "installable": True,
     'application': True,
     'license': 'LGPL-3',

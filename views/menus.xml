@@ -50,7 +50,7 @@
               name="Ordem de Serviço"
               action="ordem_servico_act_window"
               web_icon="ordem_servico,static/img/icon.png"
-              sequence="3">
+              >
         
         <menuitem id="ordem_movi"
             name="Movimentações"

@@ -90,9 +90,7 @@
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
                     <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
                 </xpath>
-                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="before">
-                    <field name="mto" invisible="1"/>
-                </xpath>
+
             </field>
         </record>
 
