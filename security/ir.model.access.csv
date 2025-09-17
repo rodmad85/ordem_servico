@@ -24,7 +24,6 @@ access_os_total_purchase_admin,ordem.servico.admin.total.purchase,model_os_total
 access_os_listaprod,ordem.servico.listaprod,model_os_listaprod,ordem_user,1,1,1,1
 access_os_consumidos_user,ordem.servico.consumidos.user,model_os_consumidos,ordem_user,1,1,1,0
 access_os_consumidos_admin,ordem.servico.consumidos.admin,model_os_consumidos,ordem_admin,1,1,1,1
-access_os_confirm_mto_wizard,ordem.servico.mto.admin,model_confirm_mto_wizard,ordem_admin,1,1,1,1
 ordem_servico.access_missing_pix_key_wizard,access_missing_pix_key_wizard,ordem_servico.model_missing_pix_key_wizard,base.group_user,1,0,0,0
 access_os_resumo,ordem.servico.resumo,model_os_resumo,ordem_admin,1,1,1,1
 access_os_resumo_linha,ordem.servico.resumo.linha,model_os_resumo_linha,ordem_admin,1,1,1,1
