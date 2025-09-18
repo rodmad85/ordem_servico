@@ -103,17 +103,3 @@ class OSPicking(models.Model):
     )
 
 
-class StockRule(models.Model):
-    _inherit = "stock.rule"
-
-    def _run_manufacture(self, procurements):
-        productions = super()._run_manufacture(procurements)
-        for production in productions:
-            _logger.info(
-                "MO Criada: %s | Produto: %s | BoM: %s | Regra disparada: %s",
-                production.name,
-                production.product_id.display_name,
-                production.bom_id.display_name,
-                production.rule_id.name
-            )
-        return productions
