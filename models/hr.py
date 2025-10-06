@@ -103,6 +103,7 @@ class HrFields(models.Model):
     check_out = fields.Datetime(string="Check Out", default=data_atual.replace(hour=20, minute=00, second=00, microsecond=00, tzinfo=None), required=True)
     valor_hora = fields.Float(string='Valor Hora', store=True)
     retrabalho = fields.Boolean(string='Retrabalho', store=True)
+    ocioso = fields.Boolean(string='Ocioso',store = True)
     cem_porcento = fields.Boolean(string='100%', store=True)
     hora_not = fields.Boolean(string='Noturno', store=True)
     normal_total = fields.Float(string='Horas Normais', store=True, readonly=True, compute='_total')
