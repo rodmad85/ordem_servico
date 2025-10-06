@@ -99,7 +99,7 @@ class HrFields(models.Model):
 
     data_atual = datetime.now()
     ordem_servico = fields.Many2one('ordem.servico', string='Linha Apontamento', store=True, copy=True)
-    check_in = fields.Datetime(string="Check In", default=data_atual.replace(hour=10, minute=12, second=00,  microsecond=00, tzinfo=None), required=True)
+    check_in = fields.Datetime(string="Check In", default=data_atual.replace(hour=10, minute=00, second=00,  microsecond=00, tzinfo=None), required=True)
     check_out = fields.Datetime(string="Check Out", default=data_atual.replace(hour=20, minute=00, second=00, microsecond=00, tzinfo=None), required=True)
     valor_hora = fields.Float(string='Valor Hora', store=True)
     retrabalho = fields.Boolean(string='Retrabalho', store=True)

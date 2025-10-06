@@ -20,6 +20,26 @@ class OsSale(models.Model):
         string='Pedido', copy=True, tracking=True
     )
 
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        # Primeiro, faz a cópia normal
+        new_order = super(SaleOrder, self).copy(default=default)
+
+        # Depois, limpa os campos específicos
+        campos_para_limpar = []
+
+        # Identifica quais campos você quer limpar baseado em condições
+        if self.state in ['sale', 'done']:
+            campos_para_limpar.extend([
+                'ordem_servico'
+            ])
+
+        # Aplica a limpeza
+        if campos_para_limpar:
+            valores_limpos = {campo: False for campo in campos_para_limpar}
+            new_order.write(valores_limpos)
+
+        return new_order
 
     @api.constrains('state', 'client_order_ref', 'pedido')
     def _check_client_order_ref(self):
@@ -81,8 +101,9 @@ class OsSaleLine(models.Model):
     )
 
 
-
     @api.depends('price_unit', 'discount', 'product_uom_qty')
     def _compute_total_desc(self):
         for line in self:
             line.valordesc = line.price_unit * (line.discount / 100.0) * line.product_uom_qty
+
+
