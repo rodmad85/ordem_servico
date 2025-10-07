@@ -5,7 +5,7 @@ class OsSale(models.Model):
     _inherit = "sale.order"
 
     ordem_servico = fields.One2many(
-        'ordem.servico', 'pedido_venda', string='Ordem de Serviço', copy=True, tracking=True
+        'ordem.servico', 'pedido_venda', string='Ordem de Serviço', copy=False, tracking=True
     )
     partner_id = fields.Many2one(
         'res.partner', string='Customer', readonly=True,
@@ -20,26 +20,7 @@ class OsSale(models.Model):
         string='Pedido', copy=True, tracking=True
     )
 
-    @api.returns('self', lambda value: value.id)
-    def copy(self, default=None):
-        # Primeiro, faz a cópia normal
-        new_order = super(OsSale, self).copy(default=default)
 
-        # Depois, limpa os campos específicos
-        campos_para_limpar = []
-
-        # Identifica quais campos você quer limpar baseado em condições
-        if self.state in ['sale', 'done']:
-            campos_para_limpar.extend([
-                'ordem_servico'
-            ])
-
-        # Aplica a limpeza
-        if campos_para_limpar:
-            valores_limpos = {campo: False for campo in campos_para_limpar}
-            new_order.write(valores_limpos)
-
-        return new_order
 
     @api.constrains('state', 'client_order_ref', 'pedido')
     def _check_client_order_ref(self):
