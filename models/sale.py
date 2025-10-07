@@ -17,7 +17,7 @@ class OsSale(models.Model):
     mediadesc = fields.Float(string='Media Desc', compute='_mediadesc', store=True)
     pedido = fields.Many2many(
         'ir.attachment', 'pedicliente_os_rel', 'ir_attachment_id', 'pedido_id',
-        string='Pedido', copy=True, tracking=True
+        string='Pedido', copy=False, tracking=True
     )
 
 
