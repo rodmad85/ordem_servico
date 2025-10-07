@@ -36,6 +36,7 @@
                <field name="ordem_servico" string="Ordem de Serviço" />
            </xpath>
            <xpath expr="//field[@name='employee_id']" position="after">
+               <field name="ocioso"/>
                <field name="retrabalho"/>
            </xpath>
            <xpath expr="//field[@name='retrabalho']" position="after">

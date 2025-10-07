@@ -23,7 +23,7 @@ class OsSale(models.Model):
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
         # Primeiro, faz a cópia normal
-        new_order = super(SaleOrder, self).copy(default=default)
+        new_order = super(OsSale, self).copy(default=default)
 
         # Depois, limpa os campos específicos
         campos_para_limpar = []
