@@ -7,6 +7,37 @@ class OsMrp(models.Model):
 
     terceiros = fields.Selection([('nenhum','Nenhum'),('laser','Laser'),('dobra','Dobra'),('pintura','Pintura'),('tratamento','Tratamento Químico')],string='Andamento', default='nenhum',store=True, copy=True, required=False)
 
+    @api.model
+    def create(self, vals):
+        """ Sobrescreve o create para copiar ordem_servico do sale.order quando criado via MTO """
+        # Chama o create original primeiro
+        record = super(OsMrp, self).create(vals)
+
+        # Se a produção tem origem de uma venda (MTO)
+        if record.origin:
+            # Busca o sale.order pela origem
+            sale_orders = self.env['sale.order'].search([
+                ('name', '=', record.origin)
+            ])
+
+            # Alternativa: busca pelo procurement group
+            if not sale_orders and record.procurement_group_id:
+                sale_orders = self.env['sale.order'].search([
+                    ('procurement_group_id', '=', record.procurement_group_id.id)
+                ])
+
+            # Copia a ordem_servico do sale.order para a produção
+            if sale_orders and sale_orders.ordem_servico:
+                # Pega a primeira ordem de serviço do sale.order
+                ordem_servico_id = sale_orders.ordem_servico[0].id
+                record.ordem_servico = ordem_servico_id
+
+                # Log para debug
+                _logger.info(
+                    f"Ordem de serviço {ordem_servico_id} copiada da venda {sale_orders.name} para produção {record.name}")
+
+        return record
+
     def _create_backorder(self):
         backorders = super()._create_backorder()
         for backorder in backorders:
