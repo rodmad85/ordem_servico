@@ -206,7 +206,7 @@
                             </tr>
 
 
-                           <tr style="">
+                           <tr class="border-black o_subtotal" style="">
                                 <td name="amount_tax">Impostos</td>
                                 <td name="taxes" class="text-end o_price_total">
                                   <span t-field="doc.amount_tax"/>
