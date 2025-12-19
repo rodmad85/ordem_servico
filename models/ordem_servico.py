@@ -348,7 +348,7 @@ class OrdemServico(models.Model):
 
     
     @api.onchange('pedido_venda')
-    def _compute_cliente_id(self):
+    def _compute_cliente(self):
         for record in self:
             if record.pedido_venda:
                 record.cliente_id = record.pedido_venda[0].partner_id.parent_id  # Pega o primeiro pedido
