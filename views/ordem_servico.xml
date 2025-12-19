@@ -191,7 +191,7 @@
                         <group>
                             <field name="tipo_os"/>
                             <field name="cliente_id" readonly="1" force_save="1"/>
-                            <field name="responsavel" string="Responsável Técnico" widget="many2many_tags"/>
+<!--                            <field name="responsavel" string="Responsável Técnico" widget="many2many_tags"/>-->
                             <field name="data_base"/>
                             <field name="data_entrega"/>
                             <field name="entrega_efetiva"/>

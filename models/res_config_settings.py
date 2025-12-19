@@ -1,53 +1,85 @@
 from ast import literal_eval
 from odoo import fields, models, api
 
+
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    horasmensais =fields.Float(string='Horas Mensais', config_parameter='ordem_servico.horasmensais',default=176)
-    funcionarios = fields.Many2many('hr.employee','oshr_rel_config', 'conf_id', 'os_id', string='Funcionários')
-    totalhoras = fields.Float(string='Total Horas', config_parameter='ordem_servico.totalhoras', default='')
-    entrada = fields.Datetime(string="Entrada")
-    saida = fields.Datetime(string="Saida")
+    # Adicionar campos relacionados à empresa
+    horasmensais = fields.Float(
+        string='Horas Mensais',
+        related='company_id.horasmensais',
+        readonly=False
+    )
+
+    funcionarios = fields.Many2many(
+        'hr.employee',
+        'oshr_rel_config',
+        'conf_id',
+        'os_id',
+        string='Funcionários',
+        related='company_id.funcionarios',
+        readonly=False
+    )
+
+    totalhoras = fields.Float(
+        string='Total Horas',
+        related='company_id.totalhoras',
+        readonly=False
+    )
+
+    entrada = fields.Datetime(
+        string="Entrada",
+        related='company_id.entrada',
+        readonly=False
+    )
+
+    saida = fields.Datetime(
+        string="Saida",
+        related='company_id.saida',
+        readonly=False
+    )
 
     @api.onchange('funcionarios')
     def _totalhoras(self):
-        tfunc = len(self.funcionarios)
-        self.totalhoras = tfunc * self.horasmensais
-        self.write({'totalhoras': tfunc * self.horasmensais})
+        for record in self:
+            if record.company_id:
+                tfunc = len(record.funcionarios)
+                record.totalhoras = tfunc * record.horasmensais
+
+    # Os métodos set_values e get_values não são mais necessários
+    # pois estamos usando campos relacionados (related fields)
 
 
-    def set_values(self):
-        """employee setting field values"""
-        res = super(ResConfigSettings, self).set_values()
-        self.env['ir.config_parameter'].sudo().set_param('oshorasconfig.totalhoras', self.totalhoras)
-        self.env['ir.config_parameter'].sudo().set_param('ordem_servico.funcionarios', self.funcionarios.ids)
-        self.env['ir.config_parameter'].sudo().set_param('oshorasconfig.horasmensais', self.horasmensais)
-        self.env['ir.config_parameter'].sudo().set_param('oshorasconfig.entrada', self.entrada)
-        self.env['ir.config_parameter'].sudo().set_param('oshorasconfig.saida', self.saida)
+class ResCompany(models.Model):
+    _inherit = 'res.company'
 
-        return res
+    horasmensais = fields.Float(
+        string='Horas Mensais',
+        default=176,
+        help="Horas mensais padrão por funcionário"
+    )
 
-    @api.model
-    def get_values(self):
-        """employee setting field values"""
-        res = super(ResConfigSettings, self).get_values()
+    funcionarios = fields.Many2many(
+        'hr.employee',
+        'company_employee_rel',
+        'company_id',
+        'employee_id',
+        string='Funcionários da Empresa',
+        domain="[('company_id', '=', id)]"  # Filtra funcionários da mesma empresa
+    )
 
+    totalhoras = fields.Float(
+        string='Total Horas',
+        compute='_compute_total_horas',
+        store=True
+    )
 
-        total = self.env['ir.config_parameter'].sudo().get_param('oshorasconfig.totalhoras')
-        funcio = self.env['ir.config_parameter'].sudo().get_param('ordem_servico.funcionarios')
-        mensal = self.env['ir.config_parameter'].sudo().get_param('oshorasconfig.horasmensais')
-        ent = self.env['ir.config_parameter'].sudo().get_param('oshorasconfig.entrada')
-        sai = self.env['ir.config_parameter'].sudo().get_param('oshorasconfig.saida')
-        linhas = False
-        if funcio:
-            linhas = [(6,0,literal_eval(funcio))]
-        res.update(
-            totalhoras=float(total),
-            funcionarios=linhas,
-            horasmensais=float(mensal),
-            entrada=ent,
-            saida=sai,
-        )
+    entrada = fields.Datetime(string="Entrada Padrão")
+    saida = fields.Datetime(string="Saída Padrão")
 
-        return res
+    @api.depends('funcionarios', 'horasmensais')
+    def _compute_total_horas(self):
+        for company in self:
+            tfunc = len(company.funcionarios)
+            company.totalhoras = tfunc * company.horasmensais
