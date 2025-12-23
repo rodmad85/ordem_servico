@@ -5,7 +5,7 @@ class OsSale(models.Model):
     _inherit = "sale.order"
 
     ordem_servico = fields.One2many(
-        'ordem.servico', 'pedido_venda', string='Ordem de Serviço', copy=False, tracking=True
+        'ordem.servico', 'pedido_venda', string='Ordem de Serviço', copy=False
     )
     partner_id = fields.Many2one(
         'res.partner', string='Customer', readonly=True,
