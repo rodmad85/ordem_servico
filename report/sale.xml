@@ -163,11 +163,11 @@
                                 </td>
 
                                 <td t-if="line.icms_percent" class="text-end">
-                                  <span t-esc="'%.0f %%' % (line.icms_percent)"/>
+                                  <span t-esc="'%.0f %%' % (line.icms_percent,)"/>
                                 </td>
 
                                 <td t-if="line.ipi_percent" class="text-end">
-                                  <span t-esc="'%.0f %%' % (line.ipi_percent)"/>
+                                  <span t-esc="'%.0f %%' % (line.ipi_percent,)"/>
                                 </td>
 
                                <td name="td_subtotal" class="text-end o_price_total">
