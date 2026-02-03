@@ -21,7 +21,7 @@
                 <group>
                     <field name="partner_ref" position="move"/>
                     <field name="incoterm_id" position="move"/>
-                    <field name="fiscal_position_id" position="move"/>
+
                 </group>
                 <group name="pagamentos">
                     <field name="payment_term_id" position="move"/>
@@ -61,9 +61,7 @@
             <xpath expr="//field[@name='incoterm_id']" position="attributes">
                 <attribute name="required">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
-                <attribute name="required">1</attribute>
-            </xpath>
+
             <xpath expr="//field[@name='payment_term_id']" position="attributes">
                 <attribute name="required">1</attribute>
             </xpath>
