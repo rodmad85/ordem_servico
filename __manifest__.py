@@ -66,6 +66,7 @@
         'report/resumo.xml',
         'report/sale.xml',
         'report/purchase.xml',
+        'report/purchase_land.xml',
 		'views/res_company.xml',
 ],
     'assets': {
