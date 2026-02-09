@@ -6,6 +6,16 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
 
+
+            <xpath expr="//header//button[@name='print_original_po']" position="after">
+                    <button
+                        name="%(action_report_purchase_order_landscape)d"
+                        string="Pedido de Compra (Paisagem)"
+                        type="action"
+                        class="btn-secondary"
+                        icon="fa-print"/>
+                </xpath>
+
             <xpath expr="//field[@name='order_line']/tree" position="attributes">
                 <attribute name="limit">200</attribute>
             </xpath>
@@ -116,4 +126,6 @@
     <record id="purchase.purchase_form_action" model="ir.actions.act_window">
         <field name="domain">[('state', 'in', ['draft', 'sent', 'to approve','done','purchase'])]</field>
     </record>
+
+
 </odoo>
