@@ -7,15 +7,6 @@
         <field name="arch" type="xml">
 
 
-<!--            <xpath expr="//header//button[@name='print_original_po']" position="after">-->
-<!--                    <button-->
-<!--                        name="%(action_report_purchase_order_landscape)d"-->
-<!--                        string="Pedido de Compra (Paisagem)"-->
-<!--                        type="action"-->
-<!--                        class="btn-secondary"-->
-<!--                        icon="fa-print"/>-->
-<!--                </xpath>-->
-
             <xpath expr="//field[@name='order_line']/tree" position="attributes">
                 <attribute name="limit">200</attribute>
             </xpath>
