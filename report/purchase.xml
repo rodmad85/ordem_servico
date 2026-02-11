@@ -219,15 +219,7 @@
                                                     </td>
                                                 </t>
                                             </tr>
-                                            <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
-                                                <tr class="is-subtotal text-end">
-                                                    <td colspan="99" id="subtotal">
-                                                        <strong class="mr16">Subtotal</strong>
-                                                        <span t-esc="current_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
-                                                    </td>
-                                                </tr>
 
-                                        </t>
                                         </t>
                       </tbody>
                       </table>
