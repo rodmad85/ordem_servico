@@ -188,13 +188,13 @@
 
                                                       <t t-if="line.icms_percent">
                                                         <td class="text-center">
-                                                          <span t-esc="'%.0f %%' % (line.icms_percent,)"/>
+                                                          <span t-field="line.icms_percent"/>%
                                                         </td>
                                                       </t>
 
                                                       <t t-if="line.ipi_percent">
                                                         <td class="text-center">
-                                                          <span t-esc="'%.0f %%' % (line.ipi_percent,)"/>
+                                                          <span t-field="line.ipi_percent"/>%
                                                         </td>
                                                       </t>
                                                       <t t-if="line.discount">
