@@ -3,6 +3,8 @@
 <data>
     <template id="report_saleorder_document_os" inherit_id="sale.report_saleorder_document">
 
+    <data inherit_id="sale.report_saleorder_document">
+
     <xpath expr="//t[@t-call='web.external_layout']" position="replace">
 
     <t t-call="web.external_layout">
@@ -193,14 +195,6 @@
                             </t>
                         </tr>
 
-                        <t t-if="current_section and (line_last or doc.order_line[line_index+1].display_type == 'line_section')">
-                            <tr class="is-subtotal text-right">
-                                <td name="td_section_subtotal" colspan="99">
-                                    <strong class="mr16">Subtotal</strong>
-                                    <span t-esc="current_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
-                                </td>
-                            </tr>
-                        </t>
                     </t>
                 </tbody>
             </table>
@@ -300,6 +294,8 @@
 
 
     </xpath>
+
+    </data>
 
     </template>
     </data>

@@ -23,7 +23,7 @@ class OrdemServico(models.Model):
     data_faturamento = fields.Date(string='Liberado para Faturamento', store=True, copy=True)
     empresa = fields.Many2one('res.company', 'Company', store=True, compute='_compute_empresa')
     entrega_efetiva = fields.Date(string='Entrega Efetiva', store=True, copy=True)
-    fechamentos_ids = fields.Many2many('os.fechamento', 'os_fechamento_rel', 'os_id', 'os_ids', string='Fechamentos', store=True)
+    fechamentos_ids = fields.Many2many('os.fechamento', 'os_fechamento_rel', 'os_id', 'os_ids', string='Fechamentos', store=True, ondelete='cascade')
     liberado = fields.Many2one('res.users', string='Liberado por', index=True, required=True)
 
     responsavel = fields.Many2many('res.partner', 'os_partner_contact_rel', 'os_id', 'partner_id', string='Responsável Técnico', translate=True, readonly=False, required=False,

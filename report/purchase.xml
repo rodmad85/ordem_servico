@@ -168,7 +168,7 @@
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <!-- <span t-field="line.price_unit"  t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;display_currency&quot;: o.currency_id}"/> -->
+                                                        <!--<span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;display_currency&quot;: o.currency_id}"/>-->
                                                       <t t-set="unit_price" t-value="line.price_unit"/>
                                                       <t t-set="currency_symbol" t-value="o.currency_id.symbol"/>
 
@@ -186,17 +186,28 @@
                                                       </td>
 
 
-                                                      <t t-if="line.icms_percent">
-                                                        <td class="text-center">
-                                                          <span t-field="line.icms_percent"/>%
-                                                        </td>
+                                                      <t t-if="has_icms">
+                                                          <td class="text-center">
+                                                              <t t-if="line.icms_percent">
+                                                                  <span t-field="line.icms_percent"/>%
+                                                              </t>
+                                                              <t t-else="">
+                                                                  0%
+                                                              </t>
+                                                          </td>
                                                       </t>
 
-                                                      <t t-if="line.ipi_percent">
-                                                        <td class="text-center">
-                                                          <span t-field="line.ipi_percent"/>%
-                                                        </td>
+                                                       <t t-if="has_ipi">
+                                                          <td class="text-center">
+                                                              <t t-if="line.ipi_percent">
+                                                                  <span t-field="line.ipi_percent"/>%
+                                                              </t>
+                                                              <t t-else="">
+                                                                  0%
+                                                              </t>
+                                                          </td>
                                                       </t>
+
                                                       <t t-if="line.discount">
                                                         <td class="text-center">
                                                       <span t-field="line.discount" t-options="{'widget': 'percentage'}"/>
