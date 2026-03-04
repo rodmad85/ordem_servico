@@ -113,7 +113,7 @@
                         <th class="text-center"><strong>Description</strong></th>
                         <th class="text-center"><strong>OS</strong></th>
                         <th class="text-center"><strong>Entrega</strong></th>
-                        <th class="text-center"><strong>Qty</strong></th>
+                        <th name="th_quantity" class="text-center"><strong>Qty</strong></th>
                         <th class="text-center"><strong>P.Unit</strong></th>
 
                         <t t-set="has_icms" t-value="any(line.icms_percent for line in o.order_line if not line.display_type)"/>
@@ -125,7 +125,6 @@
                         <t t-if="has_ipi">
                         <th class="text-center"><strong>Ipi</strong></th>
                         </t>
-
                         <t t-set="has_discount" t-value="any(line.discount for line in o.order_line if not line.display_type)"/>
                         <t t-if="has_discount">
                             <th class="text-center"><strong>Desc.%</strong></th>
