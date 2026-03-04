@@ -50,7 +50,7 @@
             </xpath>
 
             <field name="location_dest_id" position="after">
-                <field name="carrier_id" position="move" attrs="{'required': [('picking_type_id', '=', 2)]}"/>
+<!--                <field name="carrier_id" position="move" attrs="{'required': [('picking_type_id', '=', 2)]}"/>-->
                 <field name="carrier_track_ref" string="Placa" attrs="{'required': [('picking_type_id', '=', 2)]}"/>
                 <field name="rg_cpf" attrs="{'required': [('picking_type_id', '=', 2)]}"/>
                 <field name="part_carrier" string="Motorista" attrs="{'required': [('picking_type_id', '=', 2)]}"/>
