@@ -129,6 +129,10 @@
                         <t t-if="has_discount">
                             <th class="text-center"><strong>Desc.%</strong></th>
                         </t>
+                        <t t-set="has_fiscal_operation_line" t-value="any(line.fiscal_operation_line_id for line in o.order_line if not line.display_type)"/>
+                        <t t-if="has_fiscal_operation_line">
+                            <th class="text-center"><strong>Operação</strong></th>
+                        </t>
                         <th class="text-center"><strong>Amount</strong></th>
                       </tr>
                       </thead>
@@ -212,6 +216,11 @@
                                                       <span t-field="line.discount" t-options="{'widget': 'percentage'}"/>
                                                     </td>
                                                     </t>
+                                                    <t t-if="line.fiscal_operation_line_id">
+                                                        <td class="text-center">
+                                                      <span t-field="line.fiscal_operation_line_id"/>
+                                                    </td>
+                                                    </t>
                                                       <td class="text-end">
                                                         <span t-field="line.price_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                                                       </td>
@@ -285,6 +294,7 @@
                 </t>
 
              </xpath>
+
 
         </template>
 
