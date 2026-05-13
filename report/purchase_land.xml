@@ -48,7 +48,7 @@
                                 <td style="vertical-align: middle;">
                                     <div class="oe_structure"/>
 
-                                    <strong>Endereço: </strong>
+                                    <strong>Endereço do Fornecedor: </strong>
                                         <div>
 
                                             <t t-if="o.partner_id.street"> <t t-esc="o.partner_id.street"/></t><br/>
@@ -81,7 +81,7 @@
                                     <span class="m-0"><strong>Pagamento: </strong></span><span t-field="o.payment_mode_id.name" class="m-0"/><br/>
                                       <div t-if="o.chave_pix">
 
-
+                                            <span class="m-0"><strong>Tipo: </strong></span><span t-field="o.tipo_pix" class="m-0" t-options="{&quot;fields&quot;: [&quot;key&quot;]}"/><br/>
                                             <span class="m-0"><strong>Chave: </strong></span><span t-field="o.chave_pix" class="m-0" t-options="{&quot;fields&quot;: [&quot;key&quot;]}"/>
 
                                         </div>
@@ -109,10 +109,10 @@
                             <table class="table table-sm o_main_table">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"><strong>Description</strong></th>
+                                        <th class="text-center"><strong>Descrição</strong></th>
                                         <th class="text-center"><strong>OS</strong></th>
                                         <th class="text-center"><strong>Entrega</strong></th>
-                                        <th name="th_quantity" class="text-center"><strong>Qty</strong></th>
+                                        <th name="th_quantity" class="text-center"><strong>Qtd</strong></th>
                                         <th class="text-center"><strong>P.Unit</strong></th>
 
                                         <t t-set="has_icms" t-value="any(line.icms_percent for line in o.order_line if not line.display_type)"/>
@@ -132,7 +132,7 @@
                                         <t t-if="has_fiscal_operation_line">
                                             <th class="text-center"><strong>Operação</strong></th>
                                         </t>
-                                        <th class="text-center"><strong>Amount</strong></th>
+                                        <th class="text-center"><strong>Total</strong></th>
                                     </tr>
                                 </thead>
                                 <tbody>

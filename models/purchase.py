@@ -44,15 +44,15 @@ class OsPurchase(models.Model):
     oss = fields.Many2many('os.total.purchase', 'purchase_totalos_rel','purchase_order_id', 'os_total_purchase_id', string='Total OS', store=True, copy=True)
     certificados = fields.Many2many('ir.attachment', 'certificados_os_rel', 'ir_attachment_id', 'arquivos_id',
                                     string='Certificado', store=True, copy=False, required=True)
-    tipo_pix = fields.Char (string='Chave Pix',
+    tipo_pix = fields.Char (string='Tipo',
         readonly=True,
-        store=False,  # ou True, se quiser armazenar
+        store=True,  # ou True, se quiser armazenar
         copy=False)
     chave_pix = fields.Char(
         string='Chave Pix',
         readonly=True,
         compute='_compute_chave_pix',
-        store=False,  # ou True, se quiser armazenar
+        store=True,  # ou True, se quiser armazenar
         copy=False
     )
 
@@ -109,11 +109,16 @@ class OsPurchase(models.Model):
                     rec.payment_mode_id and rec.payment_mode_id.name == 'Pix'
                     and rec.partner_id and rec.partner_id.pix_key_ids
             ):
-                # Pega o valor da chave pix do primeiro item
-                rec.chave_pix = rec.partner_id.pix_key_ids[0].key
-                rec.tipo_pix = rec.partner_id.pix_key_ids[0].key_type
+                pix_key = rec.partner_id.pix_key_ids[0]
+
+                rec.chave_pix = pix_key.key
+
+                selection = pix_key._fields['key_type']._description_selection(self.env)
+                rec.tipo_pix = dict(selection).get(pix_key.key_type, pix_key.key_type)
+
             else:
                 rec.chave_pix = False
+                rec.tipo_pix = False
 
     @api.onchange('payment_mode_id')
     def _onchange_forma_pagamento_pix(self):
@@ -127,7 +132,7 @@ class OsPurchase(models.Model):
                     }
                 }
             else:
-                self.chave_pix = False
+                _compute_chave_pix()
 
 
     def _prepare_invoice(self):
