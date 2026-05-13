@@ -98,8 +98,8 @@
 
                         <div t-if="o.chave_pix">
 
-                            <span class="m-0"><strong>Tipo: </strong></span><span t-field="o.chave_pix.key_type" class="m-0" t-options="{&quot;fields&quot;: [&quot;key_type&quot;]}"/><br/>
-                            <span class="m-0"><strong>Chave: </strong></span><span t-field="o.chave_pix.key" class="m-0" t-options="{&quot;fields&quot;: [&quot;key&quot;]}"/>
+
+                            <span class="m-0"><strong>Chave: </strong></span><span t-field="o.chave_pix" class="m-0" t-options="{&quot;fields&quot;: [&quot;key&quot;]}"/>
 
                         </div>
                       </td>
