@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+<!--Verificar posteriormente a remoção dos campos-->
+<record id="os_purchase_l10n_br_form" model="ir.ui.view">
+    <field name="name">os.purchase.l10n_br.order.form</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="l10n_br_purchase.l10n_br_purchase_order_form"/>
+    <field name="arch" type="xml">
+        <!-- 1. Removemos os campos da posição original (após partner_ref) -->
+<!--        <xpath expr="//field[@name='fiscal_operation_id']" position="attributes">-->
+
+<!--        </xpath>-->
+
+        <xpath expr="//field[@name='ind_final']" position="attributes">
+                <attribute name="invisible">1</attribute>
+        </xpath>
+
+    </field>
+</record>
+
     <record id="os_purchase_order_form" model="ir.ui.view">
         <field name="name">os.purchase.order.form</field>
         <field name="model">purchase.order</field>
@@ -15,11 +33,14 @@
                 <field name="ordem_servico" string="OS" widget="many2many_tags"/>
             </xpath>
 
+
+
             <xpath expr="//field[@name='user_id']" position="replace"/>
             <xpath expr="//field[@name='partner_ref']" position="replace"/>
 
             <xpath expr="//field[@name='partner_id']" position="after">
                 <group>
+                    <field name="vendedor"/>
                     <field name="partner_ref" position="move"/>
                     <field name="incoterm_id" position="move"/>
 
@@ -28,8 +49,9 @@
                     <field name="payment_term_id" position="move"/>
                     <field name="payment_mode_id" required="1"/>
                     <field name="payment_mode_id_name" invisible="1"/>
-                    <field name="chave_pix" attrs="{'invisible': ['|', ('payment_mode_id_name', '!=', 'PIX'), ('partner_id', '=', False), ('chave_pix', '!=', False)]}"/>
+                    <field name="chave_pix" />
                 </group>
+
                 <group>
                     <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user" style="width: 100%;"/>
                     <field name="date_order" attrs="{'invisible': [('state', 'in', ('purchase', 'done'))]}"/>

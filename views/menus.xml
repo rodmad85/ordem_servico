@@ -45,6 +45,31 @@
         
     </record>
 
+    <record id="paperformat_landscape_po" model="report.paperformat">
+            <field name="name">Purchase Order - Landscape</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">32</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">27</field>
+        </record>
+
+      <record id="action_report_purchase_order_landscape" model="ir.actions.report">
+            <field name="name">Pedido de Compra Horizontal</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">ordem_servico.report_purchase_order_landscape</field>
+            <field name="report_file">ordem_servico.report_purchase_order_landscape</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_landscape_po"/>
+        </record>
 
     <menuitem id="ordem_servico_menu"
               name="Ordem de Serviço"
