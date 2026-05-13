@@ -38,9 +38,10 @@
             <xpath expr="//field[@name='user_id']" position="replace"/>
             <xpath expr="//field[@name='partner_ref']" position="replace"/>
 
-            <xpath expr="//field[@name='partner_id']" position="after">
+            <xpath expr="//field[@name='partner_id']" position="replace">
                 <group>
-                    <field name="vendedor"/>
+                    <field name="partner_id"/>
+                    <field name="vendedor" context="{'show_only_contact_name':True}" options="{'aways_reload':True}"/>
                     <field name="partner_ref" position="move"/>
                     <field name="incoterm_id" position="move"/>
 
@@ -49,6 +50,7 @@
                     <field name="payment_term_id" position="move"/>
                     <field name="payment_mode_id" required="1"/>
                     <field name="payment_mode_id_name" invisible="1"/>
+                    <field name="tipo_pix"/>
                     <field name="chave_pix" />
                 </group>
 

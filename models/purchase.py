@@ -39,10 +39,15 @@ class OsPurchase(models.Model):
     incoterm_id = fields.Many2one(required=True)
     fiscal_position_id = fields.Many2one(required=True)
     payment_term_id = fields.Many2one(required=True)
-
+    vendedor = fields.Many2one('res.partner', string='Vendedor', readonly=False, required=False,
+                                   index=True, domain="[('parent_id','=',partner_id)]", context={'show_only_contact_name': True})
     oss = fields.Many2many('os.total.purchase', 'purchase_totalos_rel','purchase_order_id', 'os_total_purchase_id', string='Total OS', store=True, copy=True)
     certificados = fields.Many2many('ir.attachment', 'certificados_os_rel', 'ir_attachment_id', 'arquivos_id',
                                     string='Certificado', store=True, copy=False, required=True)
+    tipo_pix = fields.Char (string='Chave Pix',
+        readonly=True,
+        store=False,  # ou True, se quiser armazenar
+        copy=False)
     chave_pix = fields.Char(
         string='Chave Pix',
         readonly=True,
@@ -51,6 +56,32 @@ class OsPurchase(models.Model):
         copy=False
     )
 
+    def read(self, fields=None, load='_classic_read'):
+        # Override de read: carrega via super() (preserva todo comportamento padrão),
+        # então ajusta APENAS o label de 'vendedor' quando preenchido.
+        # Fluxo 2: reabertura do formulário usa read do purchase.order, que retorna
+        # display_name padrão 'Empresa, Contato'. Aqui substituímos por [id, partner.name]
+        # via name_get com contexto, sem alterar valor gravado.
+        # Afeta somente 'vendedor', preserva global.
+        result = super().read(fields=fields, load=load)
+        if fields and 'vendedor' in fields:
+            vendedor_ids = list(set(
+                record['vendedor'][0]
+                for record in result
+                if record.get('vendedor')
+            ))
+            if vendedor_ids:
+                partner_names = dict(
+                    self.env['res.partner']
+                    .with_context(show_only_contact_name=True)
+                    .browse(vendedor_ids)
+                    .name_get()
+                )
+                for record in result:
+                    vid_tuple = record.get('vendedor')
+                    if vid_tuple and vid_tuple[0] in partner_names:
+                        record['vendedor'] = (vid_tuple[0], partner_names[vid_tuple[0]])
+        return result
 
     def action_approve_all_purchases(self):
         for rec in self:
@@ -75,18 +106,19 @@ class OsPurchase(models.Model):
     def _compute_chave_pix(self):
         for rec in self:
             if (
-                    rec.payment_mode_id and rec.payment_mode_id.name == 'PIX'
+                    rec.payment_mode_id and rec.payment_mode_id.name == 'Pix'
                     and rec.partner_id and rec.partner_id.pix_key_ids
             ):
                 # Pega o valor da chave pix do primeiro item
                 rec.chave_pix = rec.partner_id.pix_key_ids[0].key
+                rec.tipo_pix = rec.partner_id.pix_key_ids[0].key_type
             else:
                 rec.chave_pix = False
 
     @api.onchange('payment_mode_id')
     def _onchange_forma_pagamento_pix(self):
-        if self.payment_mode_id and self.payment_mode_id.name == 'PIX':
-            if self.partner_id and not self.partner_id.pix_key_ids:
+        if self.payment_mode_id and self.payment_mode_id.name == 'Pix':
+            if not self.partner_id.pix_key_ids:
                 self.chave_pix = False
                 return {
                     'warning': {
@@ -94,8 +126,9 @@ class OsPurchase(models.Model):
                         'message': "Este parceiro não possui chave PIX cadastrada. Por favor, cadastre uma chave antes de continuar.",
                     }
                 }
-        else:
-            self.chave_pix = False
+            else:
+                self.chave_pix = False
+
 
     def _prepare_invoice(self):
         invoice_vals = super(OsPurchase,self)._prepare_invoice()

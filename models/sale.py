@@ -28,10 +28,9 @@ class OsSale(models.Model):
 
         for order in self:
             if order.state in ['sale', 'done']:
-                if not order.client_order_ref and emp.os_refcli is True:
-                    raise ValidationError("O campo Referência do Cliente é obrigatório para pedidos confirmados.")
-                if not order.pedido and emp.os_pedcli is True:
-                    raise ValidationError("O campo Pedido do Cliente é obrigatório para pedidos confirmados.")
+                if not order.client_order_ref and not order.pedido:
+                    raise ValidationError("O campo Referência do Cliente ou Anexo do Pedido é obrigatório.")
+
                 if not order.ordem_servico and emp.os_req is True:
                     raise ValidationError("O campo Ordem de Serviço é obrigatório para pedidos confirmados.")
                 if not order.order_line:
