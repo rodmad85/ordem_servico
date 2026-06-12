@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="os_crm_tree_view" model="ir.ui.view">
+            <field name="name">os.crm.tree</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="write_date"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -3,6 +3,7 @@
     <data>
         <!-- QWeb Template -->
         <template id="report_purchase_order_landscape">
+            <t t-name="ordem_servico.report_purchase_order_landscape">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.external_layout">
@@ -65,18 +66,20 @@
                                 </td>
                             <td style="vertical-align: middle;">
 
-                                    <div t-if="o.partner_ref" class="m-0">
+
                                         <strong>Vendedor: </strong><span t-if="o.vendedor" t-field="o.vendedor.name"/><br/>
                                         <strong>Referencia: </strong><span t-field="o.partner_ref" class="m-0"/><br/>
                                         <strong>Frete: </strong><span t-field="o.incoterm_id.code" class="m-0"/><br/>
-                                     <div t-if="o.payment_term_id">
-                                            <b>Prazo: </b><span t-field="o.payment_term_id" class="m-0"/>
-                                        </div>
 
-                                    </div>
+
+
                                 </td>
 
                                 <td style="vertical-align: middle;">
+
+                                     <div t-if="o.payment_term_id">
+                                            <b>Prazo: </b><span t-field="o.payment_term_id" class="m-0"/>
+                                        </div>
 
                                     <span class="m-0"><strong>Pagamento: </strong></span><span t-field="o.payment_mode_id.name" class="m-0"/><br/>
                                       <div t-if="o.chave_pix">
@@ -305,6 +308,7 @@
                     </t>
                 </t>
             </t>
+        </t>
         </template>
     </data>
 </odoo>

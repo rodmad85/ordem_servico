@@ -108,7 +108,7 @@
                       </table>
                         <div id="informations" class="row mt5 mb5"/>
                       <table class="table table-sm o_main_table">
-                      <thead>
+                      <thead style="display: table-row-group">
                       <tr>
                         <th class="text-center"><strong>Description</strong></th>
                         <th class="text-center"><strong>OS</strong></th>
@@ -234,7 +234,9 @@
                                                 </t>
                                                 <t t-if="line.display_type == 'line_note'">
                                                     <td colspan="99" id="note">
-                                                        <span t-field="line.name"/>
+                                                        <div style="page-break-inside: avoid;">
+                                                            <span t-field="line.name"/>
+                                                        </div>
                                                     </td>
                                                 </t>
                                             </tr>

@@ -17,6 +17,6 @@ from . import resumo
 from . import sale
 from . import stock
 from . import res_company
-
+from . import base_document_layout
 
 
