@@ -37,12 +37,12 @@
                         <field name="currency_id" groups="base.group_multi_currency" force_save="1"/>
                         <field name="currency_id" invisible="1" groups="!base.group_multi_currency"/>
                         <field name="is_shipped" invisible="1"/>
-                        <field name="incoterm_id" position="move"/>
                     </group>
                     <group name="pagamentos" col="1">
                         <field name="payment_term_id" position="move"/>
                         <field name="payment_mode_id" required="1"/>
                         <field name="payment_mode_id_name" invisible="1"/>
+                        <field name="incoterm_id" position="move"/>
                         <field name="tipo_pix"/>
                         <field name="chave_pix"/>
                     </group>
