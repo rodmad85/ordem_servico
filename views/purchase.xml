@@ -25,19 +25,21 @@
             <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
                 <field name="ordem_servico" string="OS" widget="many2many_tags"/>
             </xpath>
-            <xpath expr="//field[@name='user_id']" position="replace"/>
-            <xpath expr="//field[@name='partner_ref']" position="replace"/>
-            <xpath expr="//field[@name='partner_id']" position="replace">
+            <xpath expr="//form/sheet/group[group]" position="replace">
                 <group col="3" colspan="3">
                     <group col="1">
                         <field name="receipt_reminder_email" invisible="1"/>
                         <field name="partner_id"/>
                         <field name="vendedor" context="{'show_only_contact_name':True}" options="{'aways_reload':True}"/>
-                        <field name="partner_ref" position="move"/>
-                        <field name="incoterm_id" position="move"/>
+                        <field name="partner_ref"/>
+                        <field name="currency_id" groups="base.group_multi_currency" force_save="1"/>
+                        <field name="currency_id" invisible="1" groups="!base.group_multi_currency"/>
+                        <field name="incoterm_id"/>
+                        <field name="id" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
                     </group>
                     <group name="pagamentos" col="1">
-                        <field name="payment_term_id" position="move"/>
+                        <field name="payment_term_id"/>
                         <field name="payment_mode_id" required="1"/>
                         <field name="payment_mode_id_name" invisible="1"/>
                         <field name="tipo_pix"/>
@@ -46,24 +48,16 @@
                     <group col="1">
                         <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user" />
                         <field name="date_order" attrs="{'invisible': [('state', 'in', ('purchase', 'done'))]}"/>
-
-
                         <field name="date_approve" attrs="{'invisible': [('state', 'not in', ('purchase', 'done'))]}"/>
                         <field name="mail_reception_confirmed" invisible="1"/>
-                        <!--                        <span class="text-muted" attrs="{'invisible': [('mail_reception_confirmed', '=', False)]}">(confirmed by vendor)</span>-->
-
                         <field name="date_planned" attrs="{'readonly': [('state', 'not in', ('draft', 'sent', 'to approve', 'purchase'))]}"/>
                         <field name="mail_reminder_confirmed" invisible="1"/>
-                        <!--                        <span class="text-muted" attrs="{'invisible': [('mail_reminder_confirmed', '=', False)]}">(confirmed by vendor)</span>-->
                         <field name="reminder_date_before_receipt" attrs="{'invisible': [('receipt_reminder_email', '=', False)]}"/>
-                        day(s) before
-
-
                     </group>
                 </group>
             </xpath>
             <xpath expr="//button[@type='action' and contains(@context, 'search_default_partner_id')]" position="replace"/>
-            <!-- Campos obrigatórios após move -->
+            <!-- Campos obrigatórios -->
             <xpath expr="//field[@name='incoterm_id']" position="attributes">
                 <attribute name="required">1</attribute>
             </xpath>
@@ -94,7 +88,6 @@
                     <field name="certificados" widget="many2many_binary"/>
                 </page>
             </xpath>
-            <xpath expr="//group[field[@name='date_order']]" position="replace"/>
         </field>
     </record>
     <record id="os_purchase_order_tree" model="ir.ui.view">
