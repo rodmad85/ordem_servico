@@ -35,6 +35,8 @@
                         <field name="currency_id" groups="base.group_multi_currency" force_save="1"/>
                         <field name="currency_id" invisible="1" groups="!base.group_multi_currency"/>
                         <field name="is_shipped" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="id" invisible="1"/>
                     </group>
                     <group col="1">
                         <field name="payment_term_id"/>
