@@ -56,7 +56,6 @@
                     </group>
                 </group>
             </xpath>
-            <xpath expr="//button[@type='action' and contains(@context, 'search_default_partner_id')]" position="replace"/>
             <!-- Campos obrigatórios -->
             <xpath expr="//field[@name='incoterm_id']" position="attributes">
                 <attribute name="required">1</attribute>
