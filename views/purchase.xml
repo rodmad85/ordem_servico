@@ -25,21 +25,22 @@
             <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
                 <field name="ordem_servico" string="OS" widget="many2many_tags"/>
             </xpath>
-            <xpath expr="//form/sheet/group[group]" position="replace">
+            <xpath expr="//field[@name='user_id']" position="replace"/>
+            <xpath expr="//field[@name='partner_ref']" position="replace"/>
+            <xpath expr="//field[@name='partner_id']" position="replace">
                 <group col="3" colspan="3">
                     <group col="1">
                         <field name="receipt_reminder_email" invisible="1"/>
                         <field name="partner_id"/>
                         <field name="vendedor" context="{'show_only_contact_name':True}" options="{'aways_reload':True}"/>
-                        <field name="partner_ref"/>
+                        <field name="partner_ref" position="move"/>
                         <field name="currency_id" groups="base.group_multi_currency" force_save="1"/>
                         <field name="currency_id" invisible="1" groups="!base.group_multi_currency"/>
-                        <field name="incoterm_id"/>
-                        <field name="id" invisible="1"/>
-                        <field name="company_id" invisible="1"/>
+                        <field name="is_shipped" invisible="1"/>
+                        <field name="incoterm_id" position="move"/>
                     </group>
                     <group name="pagamentos" col="1">
-                        <field name="payment_term_id"/>
+                        <field name="payment_term_id" position="move"/>
                         <field name="payment_mode_id" required="1"/>
                         <field name="payment_mode_id_name" invisible="1"/>
                         <field name="tipo_pix"/>
@@ -87,6 +88,7 @@
                     <field name="certificados" widget="many2many_binary"/>
                 </page>
             </xpath>
+            <xpath expr="//group[field[@name='date_order']]" position="replace"/>
         </field>
     </record>
     <record id="os_purchase_order_tree" model="ir.ui.view">
