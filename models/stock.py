@@ -107,30 +107,5 @@ class StockRule(models.Model):
     _inherit = "stock.rule"
 
     def _run_manufacture(self, procurements):
-        productions = self.env['mrp.production']
-        for procurement, rule in procurements:
-            product = procurement.product_id
-            bom = self.env['mrp.bom']._bom_find(
-                products=product, company_id=procurement.company_id.id
-            )
-
-            # 🔹 Se não encontrar BoM, cria MO vazio mesmo assim
-            if not bom:
-                production_vals = {
-                    'product_id': product.id,
-                    'product_qty': procurement.product_qty,
-                    'product_uom_id': procurement.product_uom.id,
-                    'origin': procurement.origin,
-                    'company_id': procurement.company_id.id,
-                    'location_src_id': rule.location_src_id.id,
-                    'location_dest_id': rule.location_id.id,
-                    'ordem_servico': [(4, procurement.ordem_servico)]
-
-                }
-                production = self.env['mrp.production'].create(production_vals)
-                productions |= production
-            else:
-                # comportamento padrão (com BoM)
-                productions |= super(StockRule, self)._run_manufacture([procurement])
-        return productions
+        return super(StockRule, self)._run_manufacture(procurements)
 
