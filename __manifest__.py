@@ -31,10 +31,8 @@
         'purchase_discount',
         'purchase_last_price_info',
         'l10n_br_fiscal',
+        'crm',
         'web',
-       
-
-
     ],
     'data': [
         'security/ordem_servico.xml',
@@ -57,6 +55,7 @@
         'views/res_config_settings_view.xml',
         'views/sale.xml',
         'views/stock.xml',
+        'views/crm.xml',
         'report/capa.xml',
         'report/external_layout_boxed.xml',
         'report/inspecoes.xml',
