@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import account
+from . import crm
 from . import extra_fields
 from . import fechamento
 from . import hr
