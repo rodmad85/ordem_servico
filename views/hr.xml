@@ -31,6 +31,9 @@
 <!--                   <button name="upvalor" string="Atualiza Valor Hora" class="btn-secondary" invisible="0" type="object"/>-->
                </header>
            </xpath>
+           <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+           </xpath>
            <xpath expr="//field[@name='employee_id']" position="after">
                <field name="currency_id" invisible="1"/>
                <field name="ordem_servico" string="Ordem de Serviço" />
